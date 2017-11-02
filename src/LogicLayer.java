@@ -1,6 +1,6 @@
 
 public class LogicLayer {
-	private DataStorage data = new DataStorage();
+	protected DataStorage data = new DataStorage();
     
     //constructor
     public LogicLayer(){}

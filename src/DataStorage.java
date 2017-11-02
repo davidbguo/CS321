@@ -1,24 +1,42 @@
+import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
 public class DataStorage {
-	private Event [] currentEvents;
-    private SortedMap<String, Integer> priorityList;
-    private Map<String, String> userHabits;
-    private ASMonth[] activeMonths;
+	protected Event [] currentEvents;
+	protected SortedMap<String, Integer> priorityList;
+	protected Map<String, String> userHabits;
+	protected ASMonth[] activeMonths;
 
-    //constructor
-    public DataStorage(){}
+	//constructor
+	public DataStorage(){}
 
-    public boolean saveToFile(Path filename){
-    	boolean writeSuccess = false;
-    	
+	public boolean saveToFile(Path filename, Object data){
+		boolean writeSuccess = false;
+		try {
+			FileOutputStream fos = new FileOutputStream("PlaceHolderTextFileName");
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(data);
+			writeSuccess = true;
+			oos.close();
+		} catch(Exception e) {
+			writeSuccess = false;
+		}
 		return writeSuccess;
-    }
+	}
 
-    public boolean readFromFile(Path filename, String target){
-    	boolean readSuccess = false;
-    	
-    	return readSuccess;
-    }
+	public boolean readFromFile(Path filename, String target){
+		boolean readSuccess = false;
+		try {
+			FileInputStream fis = new FileInputStream(target);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			DataStorage result = (DataStorage) ois.readObject();
+			ois.close();
+		} catch (Exception e) {
+			readSuccess = false;
+		}
+
+
+		return readSuccess;
+	}
 }

@@ -1,7 +1,7 @@
 
 public class UserTask extends Event {
-	private int userProficiency = 3;
-    private String taskType;
-    private Double hoursLeft;
-    private Double hoursTotalEstimate;
+	protected int userProficiency = 3;
+	protected String taskType;
+	protected Double hoursLeft;
+	protected Double hoursTotalEstimate;
 }

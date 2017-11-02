@@ -1,6 +1,6 @@
 
 public class ASCalendar {
-	private ASMonth[] currentView;
+	protected ASMonth[] currentView;
 	
 	public ASCalendar() {
 		 currentView = new ASMonth[3];

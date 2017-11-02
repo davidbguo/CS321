@@ -1,4 +1,4 @@
 
 public class PreExistTask extends Event {
-	private int priority;
+	protected int priority;
 }

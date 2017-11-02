@@ -2,8 +2,8 @@ import java.nio.file.Path;
 import java.time.*;
 
 public class ASMonth {
-	private ASDay [] days;
-    private String name;
+	protected ASDay [] days;
+	protected String name;
     
     //constructor
     public ASMonth(String name) {

@@ -1,9 +1,9 @@
 import java.time.*;
 
 public class AutoSchedulerApp {
-	private ASCalendar calendar = new ASCalendar();
-    private LogicLayer logicEngine = new LogicLayer();
-    private int WindowSize = 0;
+	protected ASCalendar calendar = new ASCalendar();
+	protected LogicLayer logicEngine = new LogicLayer();
+	protected int WindowSize = 0;
     
     //constructor    
     public AutoSchedulerApp(){}
