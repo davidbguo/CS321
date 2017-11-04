@@ -35,7 +35,24 @@ public class ASDay {
     	hoursLeft = tempHoursLeft;
     	hoursWorking = tempHoursWorking;
     }
-    
+    public ArrayList<LocalTime> getOpenTimeSlot(){
+        ArrayList<LocalTime> openTimeSlot= new ArrayList<LocalTime>();
+        LocalTime tempEnd = eventsOfDay.getFirst().endTime;
+    	LocalTime tempStart = eventsOfDay.get(1).startTime;
+    	for(int i = 1; i< eventsOfDay.size(); i++){ 
+            if(tempEnd.until(tempStart,ChronoUnit.HOURS)>MINIMUM_TASK_BLOCK_LENGTH) {
+                //if there is more than 15 mins left 
+                openTimeSlot.add(tempEnd);
+                openTimeSlot.add(tempStart);
+            }
+            if(eventsOfDay.get(i).name.equals("endOfDay"))  
+                break;
+            tempEnd = eventsOfDay.get(i).endTime;
+            tempStart = eventsOfDay.get(i+1).startTime;
+    	}      
+        return openTimeSlot;        
+    }
+   
     public String[] getDailyEventsDetails(){
     	return details;
     }
