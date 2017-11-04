@@ -9,13 +9,14 @@ public class ASDay {
 	protected LocalDate date;
 	protected double hoursLeft;
 	protected double hoursWorking;
+    protected static final double MINIMUM_TASK_BLOCK_LENGTH = 0.25; //in hours
     
     public ASDay(LocalDate day) {
     	this.date = day;
     	hoursLeft = 24;
     	hoursWorking = 0;
     	eventsOfDay.addFirst(new SubTask("startOfDay", LocalTime.of(0, 0),LocalTime.of(0, 0)));
-    	eventsOfDay.addLast(new SubTask("endofDay", LocalTime.of(23, 59),LocalTime.of(23, 59)));
+    	eventsOfDay.addLast(new SubTask("endOfDay", LocalTime.of(23, 59),LocalTime.of(23, 59)));
     	updateHoursLeft();
     	
     }
@@ -23,7 +24,6 @@ public class ASDay {
     public void updateHoursLeft() {
     	double tempHoursLeft = 0;
     	double tempHoursWorking = 0;
-    	
     	LocalTime tempEnd = eventsOfDay.getFirst().endTime;
     	LocalTime tempStart = eventsOfDay.getFirst().endTime;
     	for(int i = 1; i< eventsOfDay.size(); i++) {
@@ -35,6 +35,7 @@ public class ASDay {
     	hoursLeft = tempHoursLeft;
     	hoursWorking = tempHoursWorking;
     }
+
     public ArrayList<LocalTime> getOpenTimeSlot(){
         ArrayList<LocalTime> openTimeSlot= new ArrayList<LocalTime>();
         LocalTime tempEnd = eventsOfDay.getFirst().endTime;
@@ -52,7 +53,6 @@ public class ASDay {
     	}      
         return openTimeSlot;        
     }
-   
     public String[] getDailyEventsDetails(){
     	return details;
     }
