@@ -6,6 +6,7 @@ public class SubTask extends Event{
 	protected LocalTime startTime;
 	protected LocalTime endTime;
 	protected double timeLength;
+	protected String name;
 	
 	//constructor
 	public SubTask(String name, LocalTime start, LocalTime end) {
