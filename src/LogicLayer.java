@@ -14,6 +14,7 @@ public class LogicLayer {
 
 	public void createBreakdown(){}
 
+	//helper function
 	private double findTaskBreakLength(double timeSlotLength) {
 		double breakLength = 5.0/60.0;
 		if (timeSlotLength < (1+5/60)) {}
