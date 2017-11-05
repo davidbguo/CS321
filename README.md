@@ -22,3 +22,8 @@ General notes for Todo
 11/4
 	
 	added implementation of break time between tasks in task.java
+	
+11/5
+
+	MyCalendar.java still needs a partner driver to make use of it
+	MyCalendar.java name need reconciliation with class NewJFrame name inside it
