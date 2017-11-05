@@ -8,7 +8,13 @@ public class TestDriver {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-			
+		testASDay();	
+		
+		
+
+	}
+	
+	public static void testASDay() {
 		LocalDate day = LocalDate.of(2015, 12, 31);
 		ASDay test = new ASDay(day);
 		SubTask	s1 = new SubTask("test",LocalTime.of(13, 0),LocalTime.of(14,00));
@@ -21,8 +27,6 @@ public class TestDriver {
 		test.eventsOfDay.add(s1);
 		test.eventsOfDay.add(s2);
 		System.out.print(test.getOpenTimeSlot());
-		
-
 	}
 
 }
