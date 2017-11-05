@@ -48,7 +48,7 @@ public class LogicLayer {
 				//temptasklength if either hours left or temptasklength
 				tempNewTaskTimeLength = tempNewTaskTimeLength > hoursLeft ? hoursLeft : tempNewTaskTimeLength;
 				//reduced hours left
-				hoursLeft = hoursLeft - tempNewTaskTimeLength;
+				hoursLeft = hoursLeft - tempNewTaskTimeLength;				
 				//create LocalTime start end variables to creating new subtasks
 				LocalTime tempTaskStart = openSlots.get(counter);
 				LocalTime tempTaskEnd = openSlots.get(counter).plus((long)tempNewTaskTimeLength*60, ChronoUnit.MINUTES);
