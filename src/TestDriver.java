@@ -1,5 +1,5 @@
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
+
 
 
 public class TestDriver {
@@ -8,8 +8,8 @@ public class TestDriver {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		testASDay();	
-		
+		//testASDay();	
+		testLogicLayer();
 		
 
 	}
@@ -29,4 +29,15 @@ public class TestDriver {
 		System.out.print(test.getOpenTimeSlot());
 	}
 
+	public static void testLogicLayer() {
+		LogicLayer llayer = new LogicLayer();
+		ASDay day = new ASDay(LocalDate.now());
+		
+		UserTask task = new UserTask("testTask", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59));
+		llayer.breakdownForSingleDay(day, task);
+		System.out.println(day.eventsOfDay);
+		System.out.println(task.breakdown);
+		
+	}
+	
 }
