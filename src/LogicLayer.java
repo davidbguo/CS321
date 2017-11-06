@@ -29,19 +29,23 @@ public class LogicLayer {
 	}
 
 
-	//still needs testing
+	//so far works, need more restraints
 	public void breakdownForSingleDay(ASDay day, UserTask task){
 		ArrayList<LocalTime> openSlots = day.getOpenTimeSlot();
 		double hoursLeft = task.hoursLeft;
 		ArrayList<SubTask> subTasksToBeAdded = new ArrayList<SubTask>();
 		int counter = 0;
-		while (counter < openSlots.size() || hoursLeft == 0){
+		int taskPartCounter = 1;
+		while (counter < openSlots.size()){
+			if(hoursLeft < 0.01) {
+				break;
+			}
 			//check length of next open slot
 			double tempTimeLength = openSlots.get(counter).until(openSlots.get(counter+1), ChronoUnit.HOURS);
 			//if next open slot is more than actual min task block hours, do stuff
 			if (tempTimeLength >= task.actualMinTaskBlockHours){
 				//temp new timeslot time length is either actualmaxtaskblock hours or length of open slot
-				double tempNewTimeSlotLength = tempTimeLength >= task.actualMaxTaskBlockHours ? task.actualMaxTaskBlockHours : tempTimeLength;
+				double tempNewTimeSlotLength = (tempTimeLength >= task.actualMaxTaskBlockHours) ? task.actualMaxTaskBlockHours : tempTimeLength;
 				//find new temp tasklength based on timeslot - break
 				double tempTaskBreakLength = findTaskBreakLength(tempNewTimeSlotLength);
 				double tempNewTaskTimeLength = tempNewTimeSlotLength - tempTaskBreakLength;
@@ -51,10 +55,12 @@ public class LogicLayer {
 				hoursLeft = hoursLeft - tempNewTaskTimeLength;				
 				//create LocalTime start end variables to creating new subtasks
 				LocalTime tempTaskStart = openSlots.get(counter);
-				LocalTime tempTaskEnd = openSlots.get(counter).plus((long)tempNewTaskTimeLength*60, ChronoUnit.MINUTES);
-				LocalTime tempTaskBreakEnd = tempTaskEnd.plus((long)tempTaskBreakLength*60, ChronoUnit.MINUTES);
-				SubTask tempTask = new SubTask(task.name, tempTaskStart, tempTaskEnd);
-				SubTask tempTaskBreak = new SubTask("Break after " + task.name, tempTaskEnd, tempTaskBreakEnd);
+				LocalTime tempTaskEnd = (openSlots.get(counter).plus((long)(tempNewTaskTimeLength*60), ChronoUnit.MINUTES));
+				LocalTime tempTaskBreakEnd = tempTaskEnd.plus((long)(tempTaskBreakLength*60), ChronoUnit.MINUTES);
+				String tempTaskName = task.name + " part " + (taskPartCounter++);
+				SubTask tempTask = new SubTask(tempTaskName, tempTaskStart, tempTaskEnd);
+				String tempTaskBreakName = "Break after " + tempTaskName;
+				SubTask tempTaskBreak = new SubTask(tempTaskBreakName, tempTaskEnd, tempTaskBreakEnd);
 				//add subtasks to array
 				subTasksToBeAdded.add(tempTask);
 				subTasksToBeAdded.add(tempTaskBreak);
@@ -68,6 +74,7 @@ public class LogicLayer {
 			
 			task.hoursLeft = hoursLeft;
 		}
+		
 		day.insertSubTasks(subTasksToBeAdded);
 		task.addSubTasks(subTasksToBeAdded);
 

@@ -15,5 +15,10 @@ public class SubTask extends Event{
 		this.startTime = start;
 		this.timeLength = start.until(end, ChronoUnit.HOURS);
 	}
+	
+	@Override
+	public String toString() {
+		return " [ " + name + ": " + startTime.toString() + " - " + endTime.toString() + " ]";
+	}
 
 }

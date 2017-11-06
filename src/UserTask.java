@@ -29,7 +29,7 @@ public class UserTask extends Event {
 		this.actualMinTaskBlockHours = minTaskBlockHours + minBreaktimeLengthHours;
 		this.maxBreaktimeLengthHours = (int)(maxTaskBlockHours + 1) * 5/60;
 		this.maxBreaktimeLengthHours = this.maxBreaktimeLengthHours > 20/60 ? 20/60 : this.maxBreaktimeLengthHours;
-		this.actualMinTaskBlockHours = maxTaskBlockHours + maxBreaktimeLengthHours;
+		this.actualMaxTaskBlockHours = maxTaskBlockHours + maxBreaktimeLengthHours;
 		
 	}
 	//to be implemented
