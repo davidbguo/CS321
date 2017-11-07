@@ -69,7 +69,8 @@ public class ASDay {
     public boolean insertSubTask(SubTask newTask){
         boolean success = false;
         for (int i = 0; i < (eventsOfDay.size()-1); i++){
-            if (eventsOfDay.get(i).endTime.isBefore(newTask.startTime) && newTask.endTime.isBefore(eventsOfDay.get(i+1).startTime)){
+            if ((eventsOfDay.get(i).endTime.isBefore(newTask.startTime) || eventsOfDay.get(i).endTime.equals(newTask.startTime) )
+            		&& (newTask.endTime.isBefore(eventsOfDay.get(i+1).startTime)) || newTask.endTime.equals(eventsOfDay.get(i+1).startTime)){
                 eventsOfDay.add(i + 1, newTask);
                 success = true;
                 break;
