@@ -15,9 +15,9 @@ public class UserTask extends Event {
 	protected double actualMinTaskBlockHours, actualMaxTaskBlockHours;
 	protected double minTaskBlockHours, maxTaskBlockHours, minBreaktimeLengthHours, maxBreaktimeLengthHours;
 	protected double hoursTotalEstimate;
-	TaskTypeEnum type;
+	protected TaskTypeEnum type;
 	
-	public UserTask(String name, String taskType, LocalDateTime endDateTime) {
+	public UserTask(String name, String taskType, LocalDateTime endDateTime,TaskTypeEnum type) {
 		this.name = name;
 		this.taskType = taskType;
 		this.endDateTime = endDateTime;
@@ -31,7 +31,7 @@ public class UserTask extends Event {
 		this.maxBreaktimeLengthHours = (int)(maxTaskBlockHours + 1) * 5/60;
 		this.maxBreaktimeLengthHours = this.maxBreaktimeLengthHours > 20/60 ? 20/60 : this.maxBreaktimeLengthHours;
 		this.actualMaxTaskBlockHours = maxTaskBlockHours + maxBreaktimeLengthHours;
-		type = TaskTypeEnum.HOMEWORK;
+		this.type = type;
 	}
 	//to be implemented
 	public boolean addSubTasks(ArrayList<SubTask> subTasks) {
