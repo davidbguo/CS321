@@ -8,15 +8,16 @@ public class TestDriver {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//testASDay();	
-		testLogicLayer();
+		LogicLayer logicEngine = new LogicLayer();
+		//testASDay(logicEngine);	
+		testLogicLayer(logicEngine);
 		
 
 	}
 	
-	public static void testASDay() {
+	public static void testASDay(LogicLayer logic) {
 		LocalDate day = LocalDate.of(2015, 12, 31);
-		ASDay test = new ASDay(day);
+		ASDay test = new ASDay(day, logic.data.preExistTaskList);
 		SubTask	s1 = new SubTask("test",LocalTime.of(3, 0),LocalTime.of(8,00));
 		SubTask	s2 = new SubTask("test",LocalTime.of(14, 15),LocalTime.of(15,00));
 			/*
@@ -29,10 +30,9 @@ public class TestDriver {
 		System.out.print(test.getOpenTimeSlot());
 	}
 
-	public static void testLogicLayer() {
-		LogicLayer llayer = new LogicLayer();
+	public static void testLogicLayer(LogicLayer llayer) {
 		LocalDate day = LocalDate.of(2015, 12, 31);
-		ASDay test = new ASDay(day);
+		ASDay test = new ASDay(day, llayer.data.preExistTaskList);
 		SubTask	s1 = new SubTask("test",LocalTime.of(3, 0),LocalTime.of(8,00));
 		SubTask	s2 = new SubTask("test",LocalTime.of(14, 15),LocalTime.of(15,00));
 		test.insertSubTask(s1);

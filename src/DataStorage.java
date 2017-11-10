@@ -3,11 +3,14 @@ import java.nio.file.*;
 import java.util.*;
 
 public class DataStorage {
-	protected Event [] currentEvents;
-	protected SortedMap<String, Integer> priorityList;
-	protected Map<String, String> userHabits;
-	protected ASMonth[] activeMonths;
-
+	//protected Event [] currentEvents;
+	protected ArrayList<PreExistTask> preExistTaskList;
+	protected ArrayList<UserTask> priorityUserTaskList;
+	protected Map<String, String> userData;
+	protected ASMonth[] archivedMonths;
+	
+	
+	
 	//constructor
 	public DataStorage(){}
 

@@ -13,12 +13,13 @@ public class ASDay {
 	protected double hoursWorking;
     protected static final double MINIMUM_TASK_BLOCK_LENGTH = 0.25; //in hours
     
-    public ASDay(LocalDate day) {
+    public ASDay(LocalDate day, ArrayList<PreExistTask> preExistTasks) {
     	this.date = day;
     	hoursLeft = 24;
     	hoursWorking = 0;
     	eventsOfDay.addFirst(new SubTask("startOfDay", LocalTime.of(0, 0),LocalTime.of(0, 0)));
     	eventsOfDay.addLast(new SubTask("endOfDay", LocalTime.of(23, 59),LocalTime.of(23, 59)));
+    	addPreExistTasks(preExistTasks);
     	updateHoursLeft();
     	
     }
@@ -61,8 +62,7 @@ public class ASDay {
 	public boolean insertSubTasks(ArrayList<SubTask> toBeAdded){
         boolean success = true;
         for (int i = 0; i < toBeAdded.size(); i++){
-            success = success & insertSubTask(toBeAdded.get(i));
-        }
+            success = success & insertSubTask(toBeAdded.get(i));        }
 		return success;
 	}
     
@@ -78,6 +78,17 @@ public class ASDay {
         }
         return success;
         
+    }
+    
+    private void addPreExistTasks(ArrayList<PreExistTask> preExistTasks) {
+    	
+    	for (int i = 0; i < preExistTasks.size(); i++) {
+    		if (preExistTasks.get(i).day.equals(this.date.getDayOfWeek())) {
+    			SubTask temp = new SubTask(preExistTasks.get(i).name, preExistTasks.get(i).startTime, preExistTasks.get(i).endTime);
+    			insertSubTask(temp);
+    		}
+    	}
+    	
     }
     
     public String[] getDailyEventsDetails(){
