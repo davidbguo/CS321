@@ -18,7 +18,7 @@ public class TestDriver {
 		
 
 	}
-	
+	//continue testing to see is pre existing taks are being taken into consideration/represented properly
 	public static void setupLogicLayer(LogicLayer llayer) {
 		System.out.println("inside setup");
 		PreExistTask pet1 = new PreExistTask("pet1", DayOfWeek.MONDAY, LocalTime.of(11, 0), LocalTime.of(23, 0));
