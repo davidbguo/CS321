@@ -37,6 +37,7 @@ public class ASDay {
     	}
     	hoursLeft = tempHoursLeft;
     	hoursWorking = tempHoursWorking;
+    	//System.out.println(hoursLeft + "" + hoursWorking);
     }
 
     public ArrayList<LocalTime> getOpenTimeSlot(){

@@ -4,9 +4,9 @@ import java.util.*;
 
 public class DataStorage {
 	//protected Event [] currentEvents;
-	protected ArrayList<PreExistTask> preExistTaskList;
-	protected ArrayList<UserTask> priorityUserTaskList;
-	protected Map<String, String> userData;
+	protected ArrayList<PreExistTask> preExistTaskList = new ArrayList<PreExistTask>();
+	protected ArrayList<UserTask> priorityUserTaskList = new ArrayList<UserTask>();
+	protected HashMap<String, String> userData = new HashMap<String, String>();
 	protected ASMonth[] archivedMonths;
 	
 	
