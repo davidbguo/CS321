@@ -15,8 +15,14 @@ public class TestDriver {
 		//testBreakdownSingleDay(logicEngine);
 		//testTaskType();
 		testBreakdown(logicEngine);
-		
-
+		testDataStorage(logicEngine);
+	}
+	public static void testDataStorage(LogicLayer ll){
+		DataStorage data = new DataStorage(ll.data.preExistTaskList);
+		data.saveToFile("Trial1.txt");
+		//data = (DataStorage)DataStorage.readFromFile("Trial1.txt");
+		System.out.println("Done");
+		System.out.println(data.preExistTaskList);
 	}
 	//continue testing to see is pre existing taks are being taken into consideration/represented properly
 	public static void setupLogicLayer(LogicLayer llayer) {
@@ -26,12 +32,14 @@ public class TestDriver {
 		PreExistTask pet3 = new PreExistTask("pet3", DayOfWeek.WEDNESDAY, LocalTime.of(3, 0), LocalTime.of(6, 0));
 		PreExistTask pet4 = new PreExistTask("pet4", DayOfWeek.THURSDAY, LocalTime.of(1, 0), LocalTime.of(3, 0));
 		PreExistTask pet5 = new PreExistTask("pet5", DayOfWeek.FRIDAY, LocalTime.of(0, 0), LocalTime.of(1, 0));
+
 		ArrayList<PreExistTask> petList = new ArrayList<PreExistTask>();
 		petList.add(pet1);
 		petList.add(pet2);
 		petList.add(pet3);
 		petList.add(pet4);
 		petList.add(pet5);
+		
 		llayer.data.preExistTaskList = petList;
 		UserTask ut1 = new UserTask("ut1", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.QUEST);
 		UserTask ut2 = new UserTask("ut2", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.QUIZ);
