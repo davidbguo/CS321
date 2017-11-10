@@ -17,8 +17,12 @@ public class TestDriver {
 
 	}
 	public static void testTaskType(){
-		UserTask task = new UserTask("testTask", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.HOMEWORK);
-		System.out.println(task.type.getHourFactor());
+		UserTask task = new UserTask("testTask", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.READING);
+		task.type.setPageNumer(30);
+		System.out.println(task.type.getHourRequired());
+		UserTask task1 = new UserTask("testTask", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.ESSAY);
+		task1.type.setWordCount(500);
+		System.out.println(task1.type.getHourRequired());
 	}
 	
 	public static void testASDay(LogicLayer logic) {
