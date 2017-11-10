@@ -10,9 +10,14 @@ public class TestDriver {
 	public static void main(String[] args) {
 		LogicLayer logicEngine = new LogicLayer();
 		//testASDay(logicEngine);	
-		testLogicLayer(logicEngine);
+		//testLogicLayer(logicEngine);
+		testTaskType();
 		
 
+	}
+	public static void testTaskType(){
+		UserTask task = new UserTask("testTask", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.HOMEWORK);
+		System.out.println(task.type.getHourFactor());
 	}
 	
 	public static void testASDay(LogicLayer logic) {
@@ -38,7 +43,7 @@ public class TestDriver {
 		test.insertSubTask(s1);
 		test.insertSubTask(s2);
 		
-		UserTask task = new UserTask("testTask", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59));
+		UserTask task = new UserTask("testTask", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.HOMEWORK);
 		llayer.breakdownForSingleDay(test, task);
 		System.out.println(test.eventsOfDay);
 		System.out.println(task.breakdown);
