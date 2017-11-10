@@ -12,9 +12,7 @@ public class DataStorage {
 	
 	
 	//constructor
-	public DataStorage(ArrayList<PreExistTask> preExistTaskList){
-		this.preExistTaskList = preExistTaskList;
-	}
+	public DataStorage(){}
 
 	public boolean saveToFile(String filename){
 		boolean writeSuccess = false;
