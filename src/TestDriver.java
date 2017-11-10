@@ -8,7 +8,7 @@ public class TestDriver {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		LogicLayer logicEngine = new LogicLayer();
+		//LogicLayer logicEngine = new LogicLayer();
 		//testASDay(logicEngine);	
 		//testLogicLayer(logicEngine);
 		testTaskType();
@@ -47,7 +47,7 @@ public class TestDriver {
 		test.insertSubTask(s1);
 		test.insertSubTask(s2);
 		
-		UserTask task = new UserTask("testTask", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.HOMEWORK);
+		UserTask task = new UserTask("testTask", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.PROBLEMSET);
 		llayer.breakdownForSingleDay(test, task);
 		System.out.println(test.eventsOfDay);
 		System.out.println(task.breakdown);

@@ -7,17 +7,16 @@ public enum TaskTypeEnum {
 	QUIZ,			//duration of the quiz
 	TEST,			//duration of the test
 	ESSAY,			//word count of the essay
-	STUDY,			//
-	PROBLEMSET,		//
-	HOMEWORK,		//
-	PROJECT,		//
-	TOPIC_RESEARCH,	//
-	PRELAB;			//duration of the lab
+	STUDY,			//credit hours
+	PRELAB, 		//duration of the lab
+	PROBLEMSET,		//number question 6 question per hour // adapt to user
+	PROJECT;		// > two weeks won't be track otherwise 10 hours per week
 	//protected double hoursFactor=0;
 	protected int pages=0;	//pages for reading
 	protected int wordCount=0; //word count for essay
 	protected double time = 0;
-	
+	protected int creditHour = 0;
+	protected int problems = 0;
 	public void setTime(double time){
 		this.time = time;
 	}
@@ -36,9 +35,6 @@ public enum TaskTypeEnum {
 	public double getHourRequired(){
 		double s;
 		switch(this){
-			case TOPIC_RESEARCH:
-				s = 4;	//default of 4 hours
-				break;
 			case READING:
 				if(pages>0)
 					s = (double) ((1/60.0)*pages); //1 page per minute
@@ -77,13 +73,16 @@ public enum TaskTypeEnum {
 					s = 4*time;
 				break;
 			case STUDY:
-				s = 4;
-				break;
-			case HOMEWORK:
-				s = 4;
+				if(time==0)
+					s = 3;
+				else
+					s = 3 * this.creditHour;
 				break;
 			case PROBLEMSET:
-				s = 4;
+				if(this.problems == 0)
+					s = 5;
+				else
+					s = this.problems/6;
 				break;
 			case PROJECT:
 				s = 4;
