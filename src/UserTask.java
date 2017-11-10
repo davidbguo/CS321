@@ -14,7 +14,7 @@ public class UserTask extends Event {
 	protected double hoursLeft;
 	protected double actualMinTaskBlockHours, actualMaxTaskBlockHours;
 	protected double minTaskBlockHours, maxTaskBlockHours, minBreaktimeLengthHours, maxBreaktimeLengthHours;
-	protected double hoursTotalEstimate;
+	protected double hoursTotalEstimate, maxHoursPerDay;
 	protected TaskTypeEnum type;
 	
 	public UserTask(String name, String taskType, LocalDateTime endDateTime,TaskTypeEnum type) {
