@@ -12,14 +12,16 @@ public class DataStorage {
 	
 	
 	//constructor
-	public DataStorage(){}
+	public DataStorage(ArrayList<PreExistTask> preExistTaskList){
+		this.preExistTaskList = preExistTaskList;
+	}
 
-	public boolean saveToFile(Path filename, Object data){
+	public boolean saveToFile(String filename){
 		boolean writeSuccess = false;
 		try {
-			FileOutputStream fos = new FileOutputStream("PlaceHolderTextFileName");
+			FileOutputStream fos = new FileOutputStream(filename);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(data);
+			oos.writeObject(this);
 			writeSuccess = true;
 			oos.close();
 		} catch(Exception e) {
@@ -28,18 +30,17 @@ public class DataStorage {
 		return writeSuccess;
 	}
 
-	public boolean readFromFile(Path filename, String target){
+	public static DataStorage readFromFile(String target){
 		boolean readSuccess = false;
+		DataStorage data1 = null;
 		try {
 			FileInputStream fis = new FileInputStream(target);
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			DataStorage result = (DataStorage) ois.readObject();
+			data1 = (DataStorage) ois.readObject();
 			ois.close();
 		} catch (Exception e) {
 			readSuccess = false;
 		}
-
-
-		return readSuccess;
+		return data1;
 	}
 }
