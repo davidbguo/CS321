@@ -4,20 +4,31 @@ import java.util.*;
 
 public class LogicLayer {
 	protected DataStorage data = new DataStorage();
-	protected ArrayList<ASDay> currentDays;
+	protected ArrayList<ASDay> currentDays = new ArrayList<ASDay>();
 
 	//constructor
 	public LogicLayer(){
+		//temp data
+		data.userData.put("semStartYear", "2017");
+		data.userData.put("semStartMonth", "11");
+		data.userData.put("semStartDay", "1");
+		data.userData.put("semEndYear", "2017");
+		data.userData.put("semEndMonth", "12");
+		data.userData.put("semEndDay", "31");
+		
+		
 		setCurrentDays();
 	}
 
 	private void setCurrentDays() {
+		System.out.println("inside setcurrentdays");
 		currentDays.clear();
 		LocalDate semStart = LocalDate.of(Integer.parseInt(data.userData.get("semStartYear")), Integer.parseInt(data.userData.get("semStartMonth")), Integer.parseInt(data.userData.get("semStartDay")));
 		LocalDate semEnd = LocalDate.of(Integer.parseInt(data.userData.get("semEndYear")), Integer.parseInt(data.userData.get("semEndMonth")), Integer.parseInt(data.userData.get("semEndDay")));
 		LocalDate current = semStart;
-		while (current != semEnd) {
-			current = semStart.plusDays(1);
+		while (!current.equals(semEnd)) {
+			//System.out.println(current);
+			current = current.plusDays(1);
 			ASDay newTemp = new ASDay(current, data.preExistTaskList);
 			currentDays.add(newTemp);
 		}
@@ -29,11 +40,16 @@ public class LogicLayer {
 	public void conflictDetection(){}
 
 	public void createBreakdown(){
+		System.out.println("inside createBreakdown");
 		ArrayList<UserTask> tasksByPriority = data.priorityUserTaskList;
-		int currDayCounter = currentDays.indexOf(LocalDate.now());
+		int daysDiff = (int) currentDays.get(0).date.until(LocalDate.now(), ChronoUnit.DAYS);
+		int currDayCounter = daysDiff;
+		System.out.println(tasksByPriority.size());
 		for (int i = 0 ; i < tasksByPriority.size(); i++) {
+			System.out.println("inside " + currentDays.get(currDayCounter).date);
 			while(tasksByPriority.get(i).hoursLeft > 0) {
-				while(currentDays.get(currDayCounter).hoursLeft > 0) {
+				while((currentDays.get(currDayCounter).hoursLeft) < 0.01 && (currDayCounter < currentDays.size())) {
+					System.out.println(currDayCounter);
 					currDayCounter++;
 				}
 				breakdownForSingleDay(currentDays.get(currDayCounter), tasksByPriority.get(i));
@@ -99,7 +115,7 @@ public class LogicLayer {
 			}
 			
 		}
-		task.hoursLeft = hoursAssigned - hoursLeftForDay;
+		task.hoursLeft = task.hoursLeft - (hoursAssigned - hoursLeftForDay);
 		day.insertSubTasks(subTasksToBeAdded);
 		task.addSubTasks(subTasksToBeAdded);
 

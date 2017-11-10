@@ -17,7 +17,7 @@ public class UserTask extends Event {
 	protected double hoursTotalEstimate, maxHoursPerDay;
 	protected TaskTypeEnum type;
 	
-	public UserTask(String name, String taskType, LocalDateTime endDateTime,TaskTypeEnum type) {
+	public UserTask(String name, String taskType, LocalDateTime endDateTime, TaskTypeEnum type) {
 		this.name = name;
 		this.taskType = taskType;
 		this.endDateTime = endDateTime;
@@ -31,6 +31,7 @@ public class UserTask extends Event {
 		this.maxBreaktimeLengthHours = (int)(maxTaskBlockHours + 1) * 5/60;
 		this.maxBreaktimeLengthHours = this.maxBreaktimeLengthHours > 20/60 ? 20/60 : this.maxBreaktimeLengthHours;
 		this.actualMaxTaskBlockHours = maxTaskBlockHours + maxBreaktimeLengthHours;
+		this.maxHoursPerDay = 8;
 		this.type = type;
 	}
 	//to be implemented
