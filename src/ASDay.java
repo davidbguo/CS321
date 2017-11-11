@@ -1,6 +1,5 @@
 	import java.time.*;
-import java.time.LocalDate;
-import java.time.temporal.ChronoU	nit;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 
@@ -54,7 +53,9 @@ public class ASDay {
                 break;
             tempEnd = eventsOfDay.get(i).endTime;
             tempStart = eventsOfDay.get(i+1).startTime;
-    	}      
+
+    	}
+    	
         return openTimeSlot;        
     }
 

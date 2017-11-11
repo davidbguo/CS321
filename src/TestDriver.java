@@ -11,12 +11,63 @@ public class TestDriver {
 	public static void main(String[] args) {
 		LogicLayer logicEngine = new LogicLayer();
 		setupLogicLayer(logicEngine);
+		logicEngine.setCurrentDays();
 		//testASDay(logicEngine);	
 		//testBreakdownSingleDay(logicEngine);
 		//testTaskType();
 		testBreakdown(logicEngine);
 		testDataStorage(logicEngine);
 	}
+
+	//continue testing to see is pre existing tasks are being taken into consideration/represented properly
+	public static void setupLogicLayer(LogicLayer llayer) {
+			System.out.println("inside setup");
+			ArrayList<PreExistTask> petList = new ArrayList<PreExistTask>();
+			petList.add(new PreExistTask("MONDAY SLEEP", DayOfWeek.MONDAY, LocalTime.of(0, 0), LocalTime.of(9, 0)));
+			petList.add(new PreExistTask("MONDAY PET1", DayOfWeek.MONDAY, LocalTime.of(10, 0), LocalTime.of(2, 0)));
+			petList.add(new PreExistTask("MONDAY PET2", DayOfWeek.MONDAY, LocalTime.of(17, 0), LocalTime.of(22, 0)));
+			petList.add(new PreExistTask("TUESDAY SLEEP", DayOfWeek.TUESDAY, LocalTime.of(0, 0), LocalTime.of(9, 0)));
+			petList.add(new PreExistTask("TUESDAY PET1", DayOfWeek.TUESDAY, LocalTime.of(12, 0), LocalTime.of(16, 0)));
+			petList.add(new PreExistTask("TUESDAY PET2", DayOfWeek.TUESDAY, LocalTime.of(18, 0), LocalTime.of(21, 0)));
+			petList.add(new PreExistTask("WEDNESDAY SLEEP", DayOfWeek.WEDNESDAY, LocalTime.of(0, 0), LocalTime.of(9, 0)));
+			petList.add(new PreExistTask("WEDNESDAY PET1", DayOfWeek.WEDNESDAY, LocalTime.of(9, 0), LocalTime.of(11, 0)));
+			petList.add(new PreExistTask("WEDNESDAY PET2", DayOfWeek.WEDNESDAY, LocalTime.of(13, 0), LocalTime.of(17, 0)));
+			petList.add(new PreExistTask("THURSDAY SLEEP", DayOfWeek.THURSDAY, LocalTime.of(0, 0), LocalTime.of(9, 0)));
+			petList.add(new PreExistTask("THURSDAY PET1", DayOfWeek.THURSDAY, LocalTime.of(17, 0), LocalTime.of(8, 0)));
+			petList.add(new PreExistTask("THURSDAY PET2", DayOfWeek.THURSDAY, LocalTime.of(22, 0), LocalTime.of(23, 0)));
+			petList.add(new PreExistTask("FRIDAY SLEEP", DayOfWeek.FRIDAY, LocalTime.of(0, 0), LocalTime.of(9, 0)));
+			petList.add(new PreExistTask("FRIDAY PET1", DayOfWeek.FRIDAY, LocalTime.of(11, 30), LocalTime.of(16, 45)));
+			petList.add(new PreExistTask("FRIDAY PET2", DayOfWeek.FRIDAY, LocalTime.of(21, 0), LocalTime.of(23, 59)));
+			petList.add(new PreExistTask("SATURDAY SLEEP", DayOfWeek.SATURDAY, LocalTime.of(0, 0), LocalTime.of(9, 0)));
+			petList.add(new PreExistTask("SATURDAY PET1", DayOfWeek.SATURDAY, LocalTime.of(18, 0), LocalTime.of(18, 13)));
+			petList.add(new PreExistTask("SATURDAY PET2", DayOfWeek.SATURDAY, LocalTime.of(21, 0), LocalTime.of(22, 45)));
+			petList.add(new PreExistTask("SUNDAY SLEEP", DayOfWeek.SUNDAY, LocalTime.of(0, 0), LocalTime.of(9, 0)));
+			petList.add(new PreExistTask("SUNDAY PET1", DayOfWeek.SUNDAY, LocalTime.of(14, 0), LocalTime.of(16,29)));
+			petList.add(new PreExistTask("SUNDAY PET2", DayOfWeek.SUNDAY, LocalTime.of(22, 0), LocalTime.of(23, 30)));
+			
+			
+			llayer.data.preExistTaskList = petList;
+			UserTask ut1 = new UserTask("ut1", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.QUEST);
+			UserTask ut2 = new UserTask("ut2", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.QUIZ);
+			UserTask ut3 = new UserTask("ut3", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.TEST);
+			ut1.hoursLeft = 20;
+			ut2.hoursLeft = 20;
+			ut3.hoursLeft = 20;
+			ArrayList<UserTask> utList = new ArrayList<UserTask>();
+			utList.add(ut1);
+			utList.add(ut2);
+			utList.add(ut3);
+			llayer.data.priorityUserTaskList = utList;
+			llayer.data.userData.put("semStartYear", "2017");
+			llayer.data.userData.put("semStartMonth", "11");
+			llayer.data.userData.put("semStartDay", "9");
+			llayer.data.userData.put("semEndYear", "2017");
+			llayer.data.userData.put("semEndMonth", "12");
+			llayer.data.userData.put("semEndDay", "20");
+			
+		}
+	
+
 	public static void testDataStorage(LogicLayer ll){
 		DataStorage data = new DataStorage();
 		data.preExistTaskList = ll.data.preExistTaskList;
@@ -27,42 +78,7 @@ public class TestDriver {
 	}
 
 
-	//continue testing to see is pre existing taks are being taken into consideration/represented properly
-	public static void setupLogicLayer(LogicLayer llayer) {
-		System.out.println("inside setup");
-		PreExistTask pet1 = new PreExistTask("pet1", DayOfWeek.MONDAY, LocalTime.of(11, 0), LocalTime.of(23, 0));
-		PreExistTask pet2 = new PreExistTask("pet2", DayOfWeek.TUESDAY, LocalTime.of(6, 0), LocalTime.of(11, 0));
-		PreExistTask pet3 = new PreExistTask("pet3", DayOfWeek.WEDNESDAY, LocalTime.of(3, 0), LocalTime.of(6, 0));
-		PreExistTask pet4 = new PreExistTask("pet4", DayOfWeek.THURSDAY, LocalTime.of(1, 0), LocalTime.of(3, 0));
-		PreExistTask pet5 = new PreExistTask("pet5", DayOfWeek.FRIDAY, LocalTime.of(0, 0), LocalTime.of(1, 0));
 
-		ArrayList<PreExistTask> petList = new ArrayList<PreExistTask>();
-		petList.add(pet1);
-		petList.add(pet2);
-		petList.add(pet3);
-		petList.add(pet4);
-		petList.add(pet5);
-		
-		llayer.data.preExistTaskList = petList;
-		UserTask ut1 = new UserTask("ut1", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.QUEST);
-		UserTask ut2 = new UserTask("ut2", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.QUIZ);
-		UserTask ut3 = new UserTask("ut3", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.TEST);
-		ut1.hoursLeft = 20;
-		ut2.hoursLeft = 20;
-		ut3.hoursLeft = 20;
-		ArrayList<UserTask> utList = new ArrayList<UserTask>();
-		utList.add(ut1);
-		utList.add(ut2);
-		utList.add(ut3);
-		llayer.data.priorityUserTaskList = utList;
-		llayer.data.userData.put("semStartYear", "2017");
-		llayer.data.userData.put("semStartMonth", "11");
-		llayer.data.userData.put("semStartDay", "1");
-		llayer.data.userData.put("semEndYear", "2017");
-		llayer.data.userData.put("semEndMonth", "12");
-		llayer.data.userData.put("semEndDay", "31");
-		
-	}
 	public static void testTaskType(){
 		UserTask task = new UserTask("testTask", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.READING);
 		task.type.setPageNumer(30);
