@@ -26,7 +26,11 @@ public enum TaskTypeEnum {
 	public void setWordCount(int wordCount){
 		this.wordCount = wordCount;
 	}
-
+	public void setAttributes(double time, int pages, int wordCount){
+		this.time = time;
+		this.pages = pages;
+		this.wordCount = wordCount;
+	}
 	/*
 	public void updateHourFactor(int hours){
 		this.hoursFactor = hours;
