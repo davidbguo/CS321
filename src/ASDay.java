@@ -58,6 +58,7 @@ public class ASDay {
             tempStart = eventsOfDay.get(i+1).startTime;
     	}
     	
+    	
         return openTimeSlot;        
     }
 
