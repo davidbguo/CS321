@@ -1,7 +1,11 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class UserTask extends Event {
+public class UserTask extends Event implements java.io.Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/* From Event.java
 	 * protected int priority;
 	protected LocalDateTime dateTimeCreated;

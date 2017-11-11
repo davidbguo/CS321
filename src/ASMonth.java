@@ -1,7 +1,11 @@
 import java.nio.file.Path;
 import java.time.*;
 
-public class ASMonth {
+public class ASMonth implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected ASDay [] days;
 	protected String name;
     

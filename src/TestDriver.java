@@ -18,12 +18,12 @@ public class TestDriver {
 		testDataStorage(logicEngine);
 	}
 	public static void testDataStorage(LogicLayer ll){
-		//DataStorage data = new DataStorage();
-		//data.preExistTaskList = ll.data.preExistTaskList;
-		//data.saveToFile("Trial1.txt");
-		DataStorage data = DataStorage.readFromFile("Trial1.txt");
+		DataStorage data = new DataStorage();
+		data.preExistTaskList = ll.data.preExistTaskList;
+		data.saveToFile("Trial1.txt");
+		DataStorage dataOld = DataStorage.readFromFile("Trial1.txt");
 		System.out.println("Done");
-		System.out.println(data.preExistTaskList);
+		System.out.println(dataOld.preExistTaskList);
 	}
 
 
