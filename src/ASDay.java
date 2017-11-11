@@ -1,6 +1,6 @@
-import java.time.*;
+	import java.time.*;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+import java.time.temporal.ChronoU	nit;
 import java.util.*;
 
 
@@ -14,7 +14,6 @@ public class ASDay {
     protected static final double MINIMUM_TASK_BLOCK_LENGTH = 0.25; //in hours
     
     public ASDay(LocalDate day, ArrayList<PreExistTask> preExistTasks) {
-    	//System.out.println("inside asday constructor");
     	this.date = day;
     	hoursLeft = 24;
     	hoursWorking = 0;
@@ -50,14 +49,12 @@ public class ASDay {
                 //if there is more than 15 mins left 
                 openTimeSlot.add(tempEnd);
                 openTimeSlot.add(tempStart);
-                
             }
             if(eventsOfDay.get(i).name.equals("endOfDay"))  
                 break;
             tempEnd = eventsOfDay.get(i).endTime;
             tempStart = eventsOfDay.get(i+1).startTime;
-    	}
-    	
+    	}      
         return openTimeSlot;        
     }
 
@@ -87,7 +84,6 @@ public class ASDay {
     private void addPreExistTasks(ArrayList<PreExistTask> preExistTasks) {
     	
     	for (int i = 0; i < preExistTasks.size(); i++) {
-    		//System.out.println(preExistTasks.get(i).day);
     		if (preExistTasks.get(i).day.equals(this.date.getDayOfWeek())) {
     			SubTask temp = new SubTask(preExistTasks.get(i).name, preExistTasks.get(i).startTime, preExistTasks.get(i).endTime);
     			insertSubTask(temp);
@@ -105,8 +101,4 @@ public class ASDay {
     	
     	return detailSummary;
     } 
-    
-    public String toString() {
-    	return date.toString() + " " + date.getDayOfWeek().toString() + eventsOfDay.toString();
-    }
 }
