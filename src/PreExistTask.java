@@ -1,8 +1,13 @@
 import java.time.*;
 import java.util.ArrayList;
 
-public class PreExistTask extends Event {
-	/* From Event.java
+public class PreExistTask extends Event implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/* From Event.javas
 	 * protected int priority;
 	protected LocalDateTime dateTimeCreated;
 	protected String name;

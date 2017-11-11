@@ -18,13 +18,15 @@ public class TestDriver {
 		testDataStorage(logicEngine);
 	}
 	public static void testDataStorage(LogicLayer ll){
-		DataStorage data = new DataStorage();
-		data.preExistTaskList = ll.data.preExistTaskList;
-		data.saveToFile("Trial1.txt");
-		//data = (DataStorage)DataStorage.readFromFile("Trial1.txt");
+		//DataStorage data = new DataStorage();
+		//data.preExistTaskList = ll.data.preExistTaskList;
+		//data.saveToFile("Trial1.txt");
+		DataStorage data = DataStorage.readFromFile("Trial1.txt");
 		System.out.println("Done");
 		System.out.println(data.preExistTaskList);
 	}
+
+
 	//continue testing to see is pre existing taks are being taken into consideration/represented properly
 	public static void setupLogicLayer(LogicLayer llayer) {
 		System.out.println("inside setup");
