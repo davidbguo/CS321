@@ -70,12 +70,11 @@ public class TestDriver {
 		DataStorage data = new DataStorage();
 		data.preExistTaskList = ll.data.preExistTaskList;
 		data.saveToFile("Trial1.txt");
-		//data = (DataStorage)DataStorage.readFromFile("Trial1.txt");
+		DataStorage dataOld = DataStorage.readFromFile("Trial1.txt");
 		System.out.println("Done");
-		System.out.println(data.preExistTaskList);
+		System.out.println(dataOld.preExistTaskList);
 	}
-	
-	
+
 	public static void testTaskType(){
 		UserTask task = new UserTask("testTask", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.READING);
 		task.type.setPageNumer(30);

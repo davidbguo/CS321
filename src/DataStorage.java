@@ -13,8 +13,43 @@ public class DataStorage {
 	
 	//constructor
 	public DataStorage(){}
-
+	
 	public boolean saveToFile(String filename){
+		boolean writeSuccess = false;
+		try{
+			FileOutputStream fos = new FileOutputStream(filename);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(this.preExistTaskList);
+			oos.writeObject(this.priorityUserTaskList);
+			oos.writeObject(this.userData);
+			oos.writeObject(this.archivedMonths);
+			oos.close();
+		}catch(Exception e){
+			writeSuccess = false;
+			e.printStackTrace();
+		}
+		return writeSuccess;
+	}
+	public static DataStorage readFromFile(String filename){
+		DataStorage ds = new DataStorage();
+		try{
+			FileInputStream fis = new FileInputStream(filename);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			ds.preExistTaskList = (ArrayList<PreExistTask>) ois.readObject();
+			ds.priorityUserTaskList = (ArrayList<UserTask>) ois.readObject();
+			ds.userData = (HashMap<String, String>) ois.readObject();
+			ds.archivedMonths = (ASMonth[]) ois.readObject();
+			ois.close();
+			fis.close();
+		}catch(Exception e){	
+			e.printStackTrace();
+		}
+		return ds;
+	}
+
+	
+/*
+	public boolean saveTreadSuccessoFile(String filename){
 		boolean writeSuccess = false;
 		try {
 			FileOutputStream fos = new FileOutputStream(filename);
@@ -41,4 +76,7 @@ public class DataStorage {
 		}
 		return data1;
 	}
+	
+	*/
+	
 }
