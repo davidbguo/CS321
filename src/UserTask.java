@@ -22,15 +22,16 @@ public class UserTask extends Event {
 		this.taskType = taskType;
 		this.endDateTime = endDateTime;
 		//Temp For Testing
-		this.hoursTotalEstimate = 5;
+		this.hoursTotalEstimate = 5.0;
 		this.hoursLeft = hoursTotalEstimate;
 		this.minTaskBlockHours = 0.5;
-		this.maxTaskBlockHours = 2;
-		this.minBreaktimeLengthHours = (int)(minTaskBlockHours + 1) * 5/60;
+		this.maxTaskBlockHours = 2.0;
+		this.minBreaktimeLengthHours = (double)((int)(minTaskBlockHours + 1)) * 5.0/60.0;
 		this.actualMinTaskBlockHours = minTaskBlockHours + minBreaktimeLengthHours;
-		this.maxBreaktimeLengthHours = (int)(maxTaskBlockHours + 1) * 5/60;
-		this.maxBreaktimeLengthHours = this.maxBreaktimeLengthHours > 20/60 ? 20/60 : this.maxBreaktimeLengthHours;
+		this.maxBreaktimeLengthHours = (double)((int)(maxTaskBlockHours + 1)) * 5.0/60.0;
+		this.maxBreaktimeLengthHours = this.maxBreaktimeLengthHours > 20.0/60.0 ? 20.0/60.0 : this.maxBreaktimeLengthHours;
 		this.actualMaxTaskBlockHours = maxTaskBlockHours + maxBreaktimeLengthHours;
+		//System.out.println(maxTaskBlockHours + " " + actualMaxTaskBlockHours);
 		this.maxHoursPerDay = 8;
 		this.type = type;
 	}

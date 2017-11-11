@@ -9,18 +9,10 @@ public class LogicLayer {
 	//constructor
 	public LogicLayer(){
 		//temp data
-		data.userData.put("semStartYear", "2017");
-		data.userData.put("semStartMonth", "11");
-		data.userData.put("semStartDay", "1");
-		data.userData.put("semEndYear", "2017");
-		data.userData.put("semEndMonth", "12");
-		data.userData.put("semEndDay", "31");
-		
-		
-		setCurrentDays();
+
 	}
 
-	private void setCurrentDays() {
+	public void setCurrentDays() {
 		System.out.println("inside setcurrentdays");
 		currentDays.clear();
 		LocalDate semStart = LocalDate.of(Integer.parseInt(data.userData.get("semStartYear")), Integer.parseInt(data.userData.get("semStartMonth")), Integer.parseInt(data.userData.get("semStartDay")));
@@ -28,9 +20,9 @@ public class LogicLayer {
 		LocalDate current = semStart;
 		while (!current.equals(semEnd)) {
 			//System.out.println(current);
-			current = current.plusDays(1);
 			ASDay newTemp = new ASDay(current, data.preExistTaskList);
 			currentDays.add(newTemp);
+			current = current.plusDays(1);
 		}
 	}
 	
@@ -47,6 +39,7 @@ public class LogicLayer {
 		System.out.println(tasksByPriority.size());
 		for (int i = 0 ; i < tasksByPriority.size(); i++) {
 			System.out.println("inside " + currentDays.get(currDayCounter).date);
+			currDayCounter = daysDiff;
 			while(tasksByPriority.get(i).hoursLeft > 0) {
 				while((currentDays.get(currDayCounter).hoursLeft) < 0.01 && (currDayCounter < currentDays.size())) {
 					System.out.println(currDayCounter);
@@ -61,10 +54,10 @@ public class LogicLayer {
 	//helper function
 	private double findTaskBreakLength(double timeSlotLength) {
 		double breakLength = 5.0/60.0;
-		if (timeSlotLength < (1+5/60)) {}
-		else if (timeSlotLength < (2+10.0/60)) {
+		if (timeSlotLength <= (1.0+5.0/60.0)) {}
+		else if (timeSlotLength <= (2+10.0/60)) {
 			breakLength = 10.0/60.0;
-		} else if (timeSlotLength < (3+15.0/60.0)) {
+		} else if (timeSlotLength <= (3+15.0/60.0)) {
 			breakLength = 15.0/60.0;
 		} else {
 			breakLength = 20.0/60.0;
@@ -83,7 +76,8 @@ public class LogicLayer {
 		int taskPartCounter = 1;
 		while (counter < openSlots.size() && hoursLeftForDay > 0){
 				//check length of next open slot
-			double tempTimeLength = openSlots.get(counter).until(openSlots.get(counter+1), ChronoUnit.HOURS);
+			double tempTimeLength = (openSlots.get(counter).until(openSlots.get(counter+1), ChronoUnit.MINUTES))/60.0;
+			
 				//if next open slot is more than actual min task block hours, do stuff
 			if (tempTimeLength >= task.actualMinTaskBlockHours){
 					//temp new timeslot time length is either actualmaxtaskblock hours or length of open slot
@@ -97,19 +91,20 @@ public class LogicLayer {
 				hoursLeftForDay = hoursLeftForDay - tempNewTaskTimeLength;				
 					//create LocalTime start end variables to creating new subtasks
 				LocalTime tempTaskStart = openSlots.get(counter);
-				LocalTime tempTaskEnd = (openSlots.get(counter).plus((long)(tempNewTaskTimeLength*60), ChronoUnit.MINUTES));
+				LocalTime tempTaskEnd = (openSlots.get(counter).plus((long)((tempNewTaskTimeLength*60)), ChronoUnit.MINUTES));
 				LocalTime tempTaskBreakEnd = tempTaskEnd.plus((long)(tempTaskBreakLength*60), ChronoUnit.MINUTES);
-				String tempTaskName = task.name + " part " + (taskPartCounter++);
+				String tempTaskName = task.name + " P" + (taskPartCounter++);
 				SubTask tempTask = new SubTask(tempTaskName, tempTaskStart, tempTaskEnd);
-				String tempTaskBreakName = "Break after " + tempTaskName;
+				String tempTaskBreakName = tempTaskName + " Break";
 				SubTask tempTaskBreak = new SubTask(tempTaskBreakName, tempTaskEnd, tempTaskBreakEnd);
 				//add subtasks to array
 				subTasksToBeAdded.add(tempTask);
 				subTasksToBeAdded.add(tempTaskBreak);
 				//update openSlots with new end time point 
-				openSlots.set(counter, openSlots.get(counter).plus((long)(tempNewTaskTimeLength + tempTaskBreakLength)*60, ChronoUnit.MINUTES));
+				openSlots.set(counter, openSlots.get(counter).plus((long)((tempNewTaskTimeLength + tempTaskBreakLength)*60), ChronoUnit.MINUTES));
 			}
 			tempTimeLength = openSlots.get(counter).until(openSlots.get(counter+1), ChronoUnit.HOURS);
+			//System.out.println(day.date + " " + openSlots);
 			if (tempTimeLength < task.actualMinTaskBlockHours){
 				counter+=2;
 			}

@@ -18,7 +18,7 @@ public class SubTask extends Event{
 	
 	@Override
 	public String toString() {
-		return " [ " + name + ": " + startTime.toString() + " - " + endTime.toString() + " ]";
+		return "\n[ " + name + ": " + startTime.toString() + " - " + endTime.toString() + " ]";
 	}
 
 }
