@@ -18,12 +18,20 @@ public class PreExistTask extends Event implements java.io.Serializable {
 	protected LocalTime startTime;
 	protected LocalTime endTime;
 	
-	public PreExistTask(String name, DayOfWeek day, LocalTime start, LocalTime end) {
+	public PreExistTask(String name, DayOfWeek day, LocalTime start, LocalTime end, LocalDateTime endDateTime) {
 		this.name = name;	
 		this.priority = 1;
 		this.dateTimeCreated = LocalDateTime.now();
 		this.day = day;
 		this.startTime = start;
 		this.endTime = end;
+		this.endDateTime = endDateTime;
 	}
+	
+	//tobeimplemented
+	public PreExistTask(String name, LocalDateTime start, LocalDateTime end) {
+		//to be filled out
+	}
+	
+	
 }
