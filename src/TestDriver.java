@@ -71,10 +71,12 @@ public class TestDriver {
 	public static void testDataStorage(LogicLayer ll){
 		DataStorage data = new DataStorage();
 		data.preExistTaskList = ll.data.preExistTaskList;
-		data.saveToFile("Trial1.txt");
-		DataStorage dataOld = DataStorage.readFromFile("Trial1.txt");
-		System.out.println("Done");
+		data.saveToFile("Trial1.ser");
+		DataStorage dataOld = DataStorage.readFromFile("Trial1.ser");
+		System.out.println("Done Reading! ");
+		
 		System.out.println(dataOld.preExistTaskList);
+		System.out.println(dataOld.priorityUserTaskList);
 	}
 
 

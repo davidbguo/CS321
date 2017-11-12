@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class PreExistTask extends Event implements java.io.Serializable {
 	/**
-	 * s
+	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -25,5 +25,9 @@ public class PreExistTask extends Event implements java.io.Serializable {
 		this.day = day;
 		this.startTime = start;
 		this.endTime = end;
+	}
+	public String toString(){
+		return "PreExistingTask "+ name + ": Starting @ " + this.day + " " +  this.startTime+  "-"+ this.endTime+ 
+				" Created On: "+ this.dateTimeCreated +"\n";
 	}
 }
