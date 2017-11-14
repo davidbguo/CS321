@@ -82,7 +82,8 @@ public class ASDay {
         
     }
     
-    private void addPreExistTasks(ArrayList<PreExistTask> preExistTasks) {
+    //also use this to re add all PETs after user deletes one from the day
+    public void addPreExistTasks(ArrayList<PreExistTask> preExistTasks) {
     	
     	for (int i = 0; i < preExistTasks.size(); i++) {
     		if (preExistTasks.get(i).day.equals(this.date.getDayOfWeek())) {

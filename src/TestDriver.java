@@ -47,9 +47,9 @@ public class TestDriver {
 			
 			
 			llayer.data.preExistTaskList = petList;
-			UserTask ut1 = new UserTask("ut1", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.QUEST);
-			UserTask ut2 = new UserTask("ut2", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.QUIZ);
-			UserTask ut3 = new UserTask("ut3", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.TEST);
+			UserTask ut1 = new UserTask("ut1", "testCat", LocalDateTime.now(), LocalDateTime.now().plusDays(3), TaskTypeEnum.QUEST, 2);
+			UserTask ut2 = new UserTask("ut2", "testCat", LocalDateTime.now(), LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.QUIZ, 3);
+			UserTask ut3 = new UserTask("ut3", "testCat", LocalDateTime.now().plusDays(7), LocalDateTime.of(2017, 12, 10, 23, 59),TaskTypeEnum.TEST, 4);
 			ut1.hoursLeft = 20;
 			ut2.hoursLeft = 20;
 			ut3.hoursLeft = 20;
@@ -82,10 +82,10 @@ public class TestDriver {
 
 
 	public static void testTaskType(){
-		UserTask task = new UserTask("testTask", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.READING);
+		UserTask task = new UserTask("task", "testCat", LocalDateTime.now(), LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.QUIZ, 3);
 		task.type.setPageNumer(30);
 		System.out.println(task.type.getHourRequired());
-		UserTask task1 = new UserTask("testTask", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.ESSAY);
+		UserTask task1 = new UserTask("task1", "testCat", LocalDateTime.now().plusDays(7), LocalDateTime.of(2017, 12, 10, 23, 59),TaskTypeEnum.TEST, 4);
 		task1.type.setWordCount(500);
 		System.out.println(task1.type.getHourRequired());
 	}
@@ -113,7 +113,7 @@ public class TestDriver {
 		test.insertSubTask(s1);
 		test.insertSubTask(s2);
 		
-		UserTask task = new UserTask("testTask", "testCat", LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.PROBLEMSET);
+		UserTask task = new UserTask("task", "testCat", LocalDateTime.now(), LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.QUIZ, 3);
 		task.hoursLeft = 20;
 		llayer.breakdownForSingleDay(test, task);
 		System.out.println(test.eventsOfDay);
