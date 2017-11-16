@@ -8,7 +8,7 @@ public class PreExistTask extends Event implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/* From Event.javas
-	 * protected int priority;
+	 * protected double priority;
 	protected LocalDateTime dateTimeCreated;
 	protected String name;
 	protected ArrayList<LocalDateTime> breakdown;

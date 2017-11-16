@@ -26,8 +26,29 @@ public class LogicLayer {
 		}
 	}
 	
-	
+	//use comparator for usertask
 	public void prioritization(){}
+	
+	/*
+	 * P1 reserved for Pre Existing Tasks
+	 * P2 start of most important user tasks
+	 * P3 start of standard user tasks
+	 * P4 start of not important user tasks
+	 */
+	public void setPriority(UserTask newUT) {
+		if (newUT.priority == 2) {
+			
+			double timeToWork = LocalDateTime.now().until(newUT.endDateTime, ChronoUnit.DAYS)/LocalDateTime.now().until(currentDays.get(currentDays.size()).date, ChronoUnit.DAYS);
+			newUT.priority += timeToWork;
+		} else if (newUT.priority == 3) {
+			double timeToWork = LocalDateTime.now().until(newUT.endDateTime, ChronoUnit.DAYS)/LocalDateTime.now().until(currentDays.get(currentDays.size()).date, ChronoUnit.DAYS);
+			newUT.priority += timeToWork;
+		} else {
+			double timeToWork = LocalDateTime.now().until(newUT.endDateTime, ChronoUnit.DAYS)/LocalDateTime.now().until(currentDays.get(currentDays.size()).date, ChronoUnit.DAYS);
+			newUT.priority += timeToWork;
+		}
+		
+	}
 
 	public void conflictDetection(){}
 
