@@ -43,4 +43,10 @@ public class UserTask extends Event implements java.io.Serializable{
 	public boolean addSubTasks(ArrayList<SubTask> subTasks) {
 		return true;
 	}
+	public String toString(){
+		return "UserTask: " + this.taskType + " " + this.endDateTime
+				+"hours left  "+ "" ;
+		
+		
+	}
 }

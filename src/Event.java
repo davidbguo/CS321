@@ -1,7 +1,7 @@
 import java.time.*;
 import java.util.*;
 
-public abstract class Event {
+public abstract class Event implements java.io.Serializable {
 	protected int priority;
 	protected LocalDateTime dateTimeCreated;
 	protected String name;
