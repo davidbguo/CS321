@@ -10,25 +10,31 @@ public class SubTask extends Event{
 	protected DayOfWeek dayOfWeek;
 	protected LocalDate day;
 	protected String name;
+	//LocalDateTime.of(0, 0, 0, 0, 0)) = startOfDay or endOfDay never delete
+	protected LocalDateTime dateCreated;
+	
+	
 	
 	//constructor for usertask
-	public SubTask(String name, LocalDate day, LocalTime start, LocalTime end) {
+	public SubTask(String name, LocalDate day, LocalTime start, LocalTime end, LocalDateTime dateCreated) {
 		this.name = name;
 		this.day = day;
 		this.dayOfWeek = this.day.getDayOfWeek();
 		this.endTime = end;
 		this.startTime = start;
 		this.timeLength = start.until(end, ChronoUnit.HOURS);
+		this.dateCreated = dateCreated;
 	}
 	
 	//constructor for reoccuring pet
-	public SubTask(String name, DayOfWeek dayOfWeek, LocalTime start, LocalTime end) {
+	public SubTask(String name, DayOfWeek dayOfWeek, LocalTime start, LocalTime end, LocalDateTime dateCreated) {
 		this.name = name;
 		this.day = null;
 		this.dayOfWeek = dayOfWeek;
 		this.endTime = end;
 		this.startTime = start;
 		this.timeLength = start.until(end, ChronoUnit.HOURS);
+		this.dateCreated = dateCreated;
 	}
 	
 	public void printString() {

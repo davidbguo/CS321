@@ -7,8 +7,8 @@ public class DataStorage {
 	protected ArrayList<PreExistTask> preExistTaskList = new ArrayList<PreExistTask>();
 	protected ArrayList<UserTask> priorityUserTaskList = new ArrayList<UserTask>();
 	protected HashMap<String, String> userData = new HashMap<String, String>();
-	protected ASMonth[] archivedMonths;
-	
+	protected ArrayList<ASMonth> archivedMonths = new ArrayList<ASMonth>();
+	protected ArrayList<ASDay> currentDays = new ArrayList<ASDay>();
 	
 	
 	//constructor
@@ -73,7 +73,7 @@ public class DataStorage {
 			ds.preExistTaskList = (ArrayList<PreExistTask>) ois.readObject();
 			ds.priorityUserTaskList = (ArrayList<UserTask>) ois.readObject();
 			ds.userData = (HashMap<String, String>) ois.readObject();
-			ds.archivedMonths = (ASMonth[]) ois.readObject();
+			ds.archivedMonths = (ArrayList<ASMonth>) ois.readObject();
 			ois.close();
 			fis.close();
 		}catch(Exception e){	

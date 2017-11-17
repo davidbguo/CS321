@@ -4,24 +4,44 @@ import java.util.*;
 
 public class LogicLayer {
 	protected DataStorage data = new DataStorage();
-	protected ArrayList<ASDay> currentDays = new ArrayList<ASDay>();
 
 	//constructor
 	public LogicLayer(){
 		//temp data
 
 	}
+	
+	public void updateDataCalendar() {
+		ArrayList<ASMonth> monthList = new ArrayList<ASMonth>();
+		ASDay start = data.currentDays.get(0);
+		ASDay end = data.currentDays.get(data.currentDays.size());
+		ASDay temp = start;
+		int counter = 0;
+		for (int i = 0; i < start.date.until(end.date, ChronoUnit.MONTHS); ) {
+			ASMonth newMonth = new ASMonth(YearMonth.of(temp.date.getYear(), temp.date.getMonth()));
+			for (int j = 0; j < temp.date.until(end.date, ChronoUnit.DAYS); j++ ) {
+				temp = data.currentDays.get(counter+j);
+				newMonth.days.add(temp);
+				if (!data.currentDays.get(j).date.getMonth().equals(data.currentDays.get(j+1).date.getMonth())){
+					i++;
+					counter += j+1;
+					break;
+				}
+			}
+		}
+		
+	}
 
 	public void setCurrentDays() {
 		System.out.println("inside setcurrentdays");
-		currentDays.clear();
+		data.currentDays.clear();
 		LocalDate semStart = LocalDate.of(Integer.parseInt(data.userData.get("semStartYear")), Integer.parseInt(data.userData.get("semStartMonth")), Integer.parseInt(data.userData.get("semStartDay")));
 		LocalDate semEnd = LocalDate.of(Integer.parseInt(data.userData.get("semEndYear")), Integer.parseInt(data.userData.get("semEndMonth")), Integer.parseInt(data.userData.get("semEndDay")));
 		LocalDate current = semStart;
 		while (!current.equals(semEnd)) {
 			//System.out.println(current);
 			ASDay newTemp = new ASDay(current, data.preExistTaskList);
-			currentDays.add(newTemp);
+			data.currentDays.add(newTemp);
 			current = current.plusDays(1);
 		}
 	}
@@ -36,18 +56,18 @@ public class LogicLayer {
 	public void createBreakdown(){
 		System.out.println("inside createBreakdown");
 		ArrayList<UserTask> tasksByPriority = data.priorityUserTaskList;
-		int daysDiff = (int) currentDays.get(0).date.until(LocalDate.now(), ChronoUnit.DAYS);
+		int daysDiff = (int) data.currentDays.get(0).date.until(LocalDate.now(), ChronoUnit.DAYS);
 		int currDayCounter = daysDiff;
 		//System.out.println(tasksByPriority.size());
 		for (int i = 0 ; i < tasksByPriority.size(); i++) {
-			//System.out.println("inside " + currentDays.get(currDayCounter).date);
+			//System.out.println("inside " + data.currentDays.get(currDayCounter).date);
 			currDayCounter = daysDiff;
 			while(tasksByPriority.get(i).hoursLeft > 0) {
-				while((currentDays.get(currDayCounter).hoursLeft) < 0.01 && (currDayCounter < currentDays.size())) {
+				while((data.currentDays.get(currDayCounter).hoursLeft) < 0.01 && (currDayCounter < data.currentDays.size())) {
 					//System.out.println(currDayCounter);
 					currDayCounter++;
 				}
-				breakdownForSingleDay(currentDays.get(currDayCounter), tasksByPriority.get(i));
+				breakdownForSingleDay(data.currentDays.get(currDayCounter), tasksByPriority.get(i));
 				currDayCounter++;
 			}
 		}
@@ -96,9 +116,9 @@ public class LogicLayer {
 				LocalTime tempTaskEnd = (openSlots.get(counter).plus((long)((tempNewTaskTimeLength*60)), ChronoUnit.MINUTES));
 				LocalTime tempTaskBreakEnd = tempTaskEnd.plus((long)(tempTaskBreakLength*60), ChronoUnit.MINUTES);
 				String tempTaskName = task.name + " P" + (taskPartCounter++);
-				SubTask tempTask = new SubTask(tempTaskName, day.date, tempTaskStart, tempTaskEnd);
+				SubTask tempTask = new SubTask(tempTaskName, day.date, tempTaskStart, tempTaskEnd, task.dateTimeCreated);
 				String tempTaskBreakName = tempTaskName + " Break";
-				SubTask tempTaskBreak = new SubTask(tempTaskBreakName, day.date, tempTaskEnd, tempTaskBreakEnd);
+				SubTask tempTaskBreak = new SubTask(tempTaskBreakName, day.date, tempTaskEnd, tempTaskBreakEnd, task.dateTimeCreated);
 				//add subtasks to array
 				subTasksToBeAdded.add(tempTask);
 				subTasksToBeAdded.add(tempTaskBreak);
@@ -118,7 +138,9 @@ public class LogicLayer {
 
 	}
 
-
+	public void deleteEvent() {
+		
+	}
 
 	public void kickoffTask(){}
 
