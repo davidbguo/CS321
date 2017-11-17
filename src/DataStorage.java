@@ -14,6 +14,41 @@ public class DataStorage {
 	//constructor
 	public DataStorage(){}
 	
+	public boolean deletePreExistTask(PreExistTask task){
+		boolean wasDeleted=false;
+		int i=0;
+		for(PreExistTask existTask:preExistTaskList){
+			i++;
+			if(task.equals(existTask)){
+				preExistTaskList.remove(i);
+				wasDeleted = true;
+				break;
+			}					
+		}
+		return wasDeleted;
+	}
+	public boolean deleteUserTask(UserTask task){
+		boolean wasDeleted=false;
+		int i=0;
+		for(UserTask existTask:priorityUserTaskList){
+			i++;
+			if(task.equals(existTask)){
+				priorityUserTaskList.remove(i);
+				wasDeleted = true;
+				break;
+			}					
+		}
+		return wasDeleted;
+	}
+	public boolean editPreExistTask(PreExistTask task){
+		
+		return false;
+	}
+	public boolean editUserTask(UserTask task){
+		
+		return false;
+	}
+	
 	public boolean saveToFile(String filename){
 		boolean writeSuccess = false;
 		try{

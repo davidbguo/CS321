@@ -2,7 +2,8 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public abstract class Event {
+public abstract class Event implements java.io.Serializable {
+
 	protected double priority;
 	protected LocalDateTime dateTimeCreated;
 	protected String name;

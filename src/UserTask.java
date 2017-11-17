@@ -56,6 +56,5 @@ public class UserTask extends Event implements java.io.Serializable{
 
 		
 	}
-	
-	
+
 }
