@@ -30,7 +30,7 @@ public class UserTask extends Event implements java.io.Serializable{
 		this.startDateTime = startDateTime;
 		this.priority = userGivenPriority;
 		this.dateTimeCreated = LocalDateTime.now();
-		//Temp For Testing
+		//Temp For Testings
 		this.hoursTotalEstimate = 5.0;
 		this.hoursLeft = hoursTotalEstimate;
 		this.minTaskBlockHours = 0.5;
@@ -48,10 +48,6 @@ public class UserTask extends Event implements java.io.Serializable{
 		return true;
 	}
 	public String toString(){
-		return "UserTask: " + this.taskType + " " + this.endDateTime +"hours left  "+ "" ;
-		
-		
+		return "UserTask: " + this.taskType + " " + this.endDateTime +"hours left "+ "\n" ;	
 	}
-
-
 }
