@@ -8,7 +8,6 @@ public class LogicLayer {
 	//constructor
 	public LogicLayer(){
 		//temp data
-
 	}
 	
 	public void updateDataCalendar() {
@@ -32,6 +31,31 @@ public class LogicLayer {
 		
 	}
 
+	public int callDeletePreExistTask(PreExistTask task){
+		for(int i = 0; i < data.preExistTaskList.size(); i++){
+			if(task == data.preExistTaskList.get(i)){
+				return data.deletePreExistTask(i);
+			}	
+		}
+		return -1;
+	}
+	public int callDeleteUserTask(UserTask task){
+		for(int i = 0; i < data.priorityUserTaskList.size(); i++){
+			if(task == data.priorityUserTaskList.get(i)){
+				return data.deleteUserTask(i);
+			}	
+		}
+		return -1;
+	}
+	public void callEditPreExistTask(PreExistTask task,PreExistTask newTask){
+		int i = callDeletePreExistTask(newTask);
+		data.editPreExistTask(i, newTask);
+	}
+	public void callEditUserTask(UserTask task,UserTask newTask){
+		int i = callDeleteUserTask(newTask);
+		data.editUserTask(i, newTask);
+	}
+	
 	public void setCurrentDays() {
 		System.out.println("inside setcurrentdays");
 		data.currentDays.clear();
@@ -136,10 +160,6 @@ public class LogicLayer {
 		day.insertSubTasks(subTasksToBeAdded);
 		task.addSubTasks(subTasksToBeAdded);
 
-	}
-
-	public void deleteEvent() {
-		
 	}
 
 	public void kickoffTask(){}

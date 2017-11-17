@@ -14,39 +14,21 @@ public class DataStorage {
 	//constructor
 	public DataStorage(){}
 	
-	public boolean deletePreExistTask(PreExistTask task){
-		boolean wasDeleted=false;
-		int i=0;
-		for(PreExistTask existTask:preExistTaskList){
-			i++;
-			if(task.equals(existTask)){
-				preExistTaskList.remove(i);
-				wasDeleted = true;
-				break;
-			}					
-		}
-		return wasDeleted;
+	public int deletePreExistTask(int i){
+		this.preExistTaskList.remove(i);
+		return i;
 	}
-	public boolean deleteUserTask(UserTask task){
-		boolean wasDeleted=false;
-		int i=0;
-		for(UserTask existTask:priorityUserTaskList){
-			i++;
-			if(task.equals(existTask)){
-				priorityUserTaskList.remove(i);
-				wasDeleted = true;
-				break;
-			}					
-		}
-		return wasDeleted;
+	public int deleteUserTask(int i){
+		this.priorityUserTaskList.remove(i);
+		return i;
 	}
-	public boolean editPreExistTask(PreExistTask task){
-		
-		return false;
+	public void editPreExistTask(int i,PreExistTask newTask){
+		this.preExistTaskList.remove(i);
+		this.preExistTaskList.add(i, newTask);	
 	}
-	public boolean editUserTask(UserTask task){
-		
-		return false;
+	public void editUserTask(int i,UserTask newTask){
+		priorityUserTaskList.remove(i);
+		priorityUserTaskList.add(i, newTask);
 	}
 	
 	public boolean saveToFile(String filename){

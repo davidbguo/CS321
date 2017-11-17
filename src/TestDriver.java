@@ -15,8 +15,11 @@ public class TestDriver {
 		//testASDay(logicEngine);	
 		//testBreakdownSingleDay(logicEngine);
 		//testTaskType();
-		testBreakdown(logicEngine);
+
+		//testBreakdown(logicEngine);
 		//testDataStorage(logicEngine);
+		testEventDeletion(logicEngine);
+
 	}
 
 	//continue testing to see is pre existing tasks are being taken into consideration/represented properly
@@ -78,7 +81,28 @@ public class TestDriver {
 		System.out.println(dataOld.preExistTaskList);
 		System.out.println(dataOld.priorityUserTaskList);
 	}
+	
+	public static void testEventDeletion(LogicLayer ll){
+		System.out.println("Before---------------------");
+		System.out.println(ll.data.preExistTaskList);
+		System.out.println(ll.data.priorityUserTaskList);
+		PreExistTask preTask = ll.data.preExistTaskList.get(1);
+		UserTask userTask = ll.data.priorityUserTaskList.get(2);
+		System.out.println("Going to Delete------------");
+		System.out.println("PreTask Delete:"+ preTask);
+		System.out.println("UserTask Delete:"+ userTask);
+		ll.callDeletePreExistTask(preTask);
+		ll.callDeleteUserTask(userTask);
 
+		System.out.println("After---------------------");
+		System.out.println(ll.data.preExistTaskList);
+		System.out.println(ll.data.priorityUserTaskList);
+	}
+	public static void testEventEditing(LogicLayer ll){
+		
+		//ll.callEditPreExistTask(preTask, preNewTask);
+		//ll.callEditUserTask(userTask, userNewTask);
+	}
 
 
 	public static void testTaskType(){
