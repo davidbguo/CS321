@@ -47,10 +47,7 @@ public class UserTask extends Event implements java.io.Serializable{
 		//
 		setPriority();
 	}
-	//to be implemented
-	public boolean addSubTasks(ArrayList<SubTask> subTasks) {
-		return true;
-	}
+	
 	public String toString(){
 		return "UserTask: " + this.taskType + " " + this.endDateTime +"hours left "+ "\n" ;	
 	}
