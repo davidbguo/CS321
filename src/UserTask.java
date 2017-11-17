@@ -17,18 +17,20 @@ public class UserTask extends Event implements java.io.Serializable{
 	protected LocalDateTime startDateTime;
 	protected int userProficiency = 3;
 	protected String taskType;
+	protected int userGivenPriority;
 	protected double hoursLeft;
 	protected double actualMinTaskBlockHours, actualMaxTaskBlockHours;
 	protected double minTaskBlockHours, maxTaskBlockHours, minBreaktimeLengthHours, maxBreaktimeLengthHours;
 	protected double hoursTotalEstimate, maxHoursPerDay;
 	protected TaskTypeEnum type;
 	
-	public UserTask(String name, String taskType, LocalDateTime startDateTime, LocalDateTime endDateTime, TaskTypeEnum type, double userGivenPriority) {
+	public UserTask(String name, String taskType, LocalDateTime startDateTime, LocalDateTime endDateTime, TaskTypeEnum type, int userGivenPriority) {
 		this.name = name;
 		this.taskType = taskType;
 		this.endDateTime = endDateTime;
 		this.startDateTime = startDateTime;
-		this.priority = userGivenPriority;
+		this.userGivenPriority = userGivenPriority;
+		this.priority = 200;
 		this.dateTimeCreated = LocalDateTime.now();
 		//Temp For Testings
 		this.hoursTotalEstimate = 5.0;
@@ -42,7 +44,10 @@ public class UserTask extends Event implements java.io.Serializable{
 		this.actualMaxTaskBlockHours = maxTaskBlockHours + maxBreaktimeLengthHours;
 		this.maxHoursPerDay = 8;
 		this.type = type;
+		//
+		setPriority();
 	}
+<<<<<<< HEAD
 	//to be implemented
 	public boolean addSubTasks(ArrayList<SubTask> subTasks) {
 		return true;
@@ -50,4 +55,16 @@ public class UserTask extends Event implements java.io.Serializable{
 	public String toString(){
 		return "UserTask: " + this.taskType + " " + this.endDateTime +"hours left "+ "\n" ;	
 	}
+=======
+	
+	public void setPriority() {
+		double timeToWork = LocalDateTime.now().until(this.endDateTime, ChronoUnit.DAYS);
+		//double avgHoursPerDay= this.hoursLeft/timeToWork;
+		this.priority = timeToWork;
+
+
+		
+	}
+
+>>>>>>> c530f663f814791fa88627a2e4389bf3e3bde604
 }

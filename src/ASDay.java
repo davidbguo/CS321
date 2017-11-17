@@ -16,8 +16,8 @@ public class ASDay {
     	this.date = day;
     	hoursLeft = 24;
     	hoursWorking = 0;
-    	eventsOfDay.addFirst(new SubTask("startOfDay", LocalTime.of(0, 0),LocalTime.of(0, 0)));
-    	eventsOfDay.addLast(new SubTask("endOfDay", LocalTime.of(23, 59),LocalTime.of(23, 59)));
+    	eventsOfDay.addFirst(new SubTask("startOfDay", day, LocalTime.of(0, 0),LocalTime.of(0, 0)));
+    	eventsOfDay.addLast(new SubTask("endOfDay", day, LocalTime.of(23, 59),LocalTime.of(23, 59)));
     	addPreExistTasks(preExistTasks);
     	updateHoursLeft();
     	
@@ -59,8 +59,6 @@ public class ASDay {
         return openTimeSlot;        
     }
 
-    //to be implemented
-    //return a list of SubTask that weren't inserted
 	public boolean insertSubTasks(ArrayList<SubTask> toBeAdded){
         boolean success = true;
         for (int i = 0; i < toBeAdded.size(); i++){
@@ -87,7 +85,7 @@ public class ASDay {
     	
     	for (int i = 0; i < preExistTasks.size(); i++) {
     		if (preExistTasks.get(i).day.equals(this.date.getDayOfWeek())) {
-    			SubTask temp = new SubTask(preExistTasks.get(i).name, preExistTasks.get(i).startTime, preExistTasks.get(i).endTime);
+    			SubTask temp = new SubTask(preExistTasks.get(i).name, preExistTasks.get(i).day, preExistTasks.get(i).startTime, preExistTasks.get(i).endTime);
     			insertSubTask(temp);
     		}
     	}

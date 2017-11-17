@@ -15,9 +15,14 @@ public class TestDriver {
 		//testASDay(logicEngine);	
 		//testBreakdownSingleDay(logicEngine);
 		//testTaskType();
+<<<<<<< HEAD
 		//testBreakdown(logicEngine);
 		//testDataStorage(logicEngine);
 		testEventDeletion(logicEngine);
+=======
+		testBreakdown(logicEngine);
+		//testDataStorage(logicEngine);
+>>>>>>> c530f663f814791fa88627a2e4389bf3e3bde604
 	}
 
 	//continue testing to see is pre existing tasks are being taken into consideration/represented properly
@@ -115,8 +120,8 @@ public class TestDriver {
 	public static void testASDay(LogicLayer logic) {
 		LocalDate day = LocalDate.of(2015, 12, 31);
 		ASDay test = new ASDay(day, logic.data.preExistTaskList);
-		SubTask	s1 = new SubTask("test",LocalTime.of(3, 0),LocalTime.of(8,00));
-		SubTask	s2 = new SubTask("test",LocalTime.of(14, 15),LocalTime.of(15,00));
+		SubTask	s1 = new SubTask("test", LocalDate.now(), LocalTime.of(3, 0),LocalTime.of(8,00));
+		SubTask	s2 = new SubTask("test", LocalDate.now(), LocalTime.of(14, 15),LocalTime.of(15,00));
 			/*
 				SubTask	s3 = new SubTask("test",LocalTime.of(13, 0),LocalTime.of(14,00));
 				SubTask	s4 = new SubTask("test",LocalTime.of(13, 0),LocalTime.of(14,00));
@@ -130,8 +135,8 @@ public class TestDriver {
 	public static void testBreakdownSingleDay(LogicLayer llayer) {
 		LocalDate day = LocalDate.of(2015, 12, 31);
 		ASDay test = new ASDay(day, llayer.data.preExistTaskList);
-		SubTask	s1 = new SubTask("BLOCKED",LocalTime.of(3, 0),LocalTime.of(8,00));
-		SubTask	s2 = new SubTask("BLOCKED",LocalTime.of(14, 15),LocalTime.of(15,00));
+		SubTask	s1 = new SubTask("BLOCKED", LocalDate.now(), LocalTime.of(3, 0),LocalTime.of(8,00));
+		SubTask	s2 = new SubTask("BLOCKED", LocalDate.now(), LocalTime.of(14, 15),LocalTime.of(15,00));
 		test.insertSubTask(s1);
 		test.insertSubTask(s2);
 		
@@ -143,11 +148,23 @@ public class TestDriver {
 		
 	}
 	
+	//also prints out data stored in PriorityUserTaskList, LLayer.currentDays and PreExistTaskList
 	public static void testBreakdown(LogicLayer llayer) {
 		System.out.println("inside test");
 		llayer.createBreakdown();
-		for (int i = 0 ; i < llayer.currentDays.size(); i++) {
+		/*for (int i = 0 ; i < llayer.currentDays.size(); i++) {
 			System.out.println(llayer.currentDays.get(i).date.toString() + " " + llayer.currentDays.get(i).eventsOfDay.toString());
 		}
+		
+		for (int i = 0 ; i < llayer.data.priorityUserTaskList.size(); i++) {
+			llayer.data.priorityUserTaskList.get(i).printString();
+			for (int j = 0 ; j < llayer.data.priorityUserTaskList.get(i).breakdown.size(); j++) {
+				llayer.data.priorityUserTaskList.get(i).breakdown.get(j).printString();
+			}
+		}
+		
+		for (int i = 0 ; i < llayer.data.preExistTaskList.size(); i++) {
+			llayer.data.preExistTaskList.get(i).printString();
+		}*/
 	}
 }
