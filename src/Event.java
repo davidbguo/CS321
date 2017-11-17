@@ -11,7 +11,7 @@ public abstract class Event implements java.io.Serializable {
 	protected LocalDateTime endDateTime;
 	
 	//to be implemented
-	public void addSubTasks(ArrayList<SubTask> subTasks) {
+	public boolean addSubTasks(ArrayList<SubTask> subTasks) {
 		breakdown.addAll(subTasks);
 		Collections.sort(breakdown, new SortByDay());
 	}

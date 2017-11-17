@@ -15,14 +15,11 @@ public class TestDriver {
 		//testASDay(logicEngine);	
 		//testBreakdownSingleDay(logicEngine);
 		//testTaskType();
-<<<<<<< HEAD
+
 		//testBreakdown(logicEngine);
 		//testDataStorage(logicEngine);
 		testEventDeletion(logicEngine);
-=======
-		testBreakdown(logicEngine);
-		//testDataStorage(logicEngine);
->>>>>>> c530f663f814791fa88627a2e4389bf3e3bde604
+
 	}
 
 	//continue testing to see is pre existing tasks are being taken into consideration/represented properly

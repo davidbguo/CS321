@@ -47,7 +47,6 @@ public class UserTask extends Event implements java.io.Serializable{
 		//
 		setPriority();
 	}
-<<<<<<< HEAD
 	//to be implemented
 	public boolean addSubTasks(ArrayList<SubTask> subTasks) {
 		return true;
@@ -55,8 +54,7 @@ public class UserTask extends Event implements java.io.Serializable{
 	public String toString(){
 		return "UserTask: " + this.taskType + " " + this.endDateTime +"hours left "+ "\n" ;	
 	}
-=======
-	
+
 	public void setPriority() {
 		double timeToWork = LocalDateTime.now().until(this.endDateTime, ChronoUnit.DAYS);
 		//double avgHoursPerDay= this.hoursLeft/timeToWork;
@@ -65,6 +63,4 @@ public class UserTask extends Event implements java.io.Serializable{
 
 		
 	}
-
->>>>>>> c530f663f814791fa88627a2e4389bf3e3bde604
 }
