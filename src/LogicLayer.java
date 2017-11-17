@@ -27,27 +27,8 @@ public class LogicLayer {
 	}
 	
 	//use comparator for usertask
-	public void prioritization(){}
-	
-	/*
-	 * P1 reserved for Pre Existing Tasks
-	 * P2 start of most important user tasks
-	 * P3 start of standard user tasks
-	 * P4 start of not important user tasks
-	 */
-	public void setPriority(UserTask newUT) {
-		if (newUT.priority == 2) {
-			
-			double timeToWork = LocalDateTime.now().until(newUT.endDateTime, ChronoUnit.DAYS)/LocalDateTime.now().until(currentDays.get(currentDays.size()).date, ChronoUnit.DAYS);
-			newUT.priority += timeToWork;
-		} else if (newUT.priority == 3) {
-			double timeToWork = LocalDateTime.now().until(newUT.endDateTime, ChronoUnit.DAYS)/LocalDateTime.now().until(currentDays.get(currentDays.size()).date, ChronoUnit.DAYS);
-			newUT.priority += timeToWork;
-		} else {
-			double timeToWork = LocalDateTime.now().until(newUT.endDateTime, ChronoUnit.DAYS)/LocalDateTime.now().until(currentDays.get(currentDays.size()).date, ChronoUnit.DAYS);
-			newUT.priority += timeToWork;
-		}
-		
+	public void prioritization(){
+		Collections.sort(data.priorityUserTaskList, new SortByPriority());
 	}
 
 	public void conflictDetection(){}
@@ -57,13 +38,13 @@ public class LogicLayer {
 		ArrayList<UserTask> tasksByPriority = data.priorityUserTaskList;
 		int daysDiff = (int) currentDays.get(0).date.until(LocalDate.now(), ChronoUnit.DAYS);
 		int currDayCounter = daysDiff;
-		System.out.println(tasksByPriority.size());
+		//System.out.println(tasksByPriority.size());
 		for (int i = 0 ; i < tasksByPriority.size(); i++) {
-			System.out.println("inside " + currentDays.get(currDayCounter).date);
+			//System.out.println("inside " + currentDays.get(currDayCounter).date);
 			currDayCounter = daysDiff;
 			while(tasksByPriority.get(i).hoursLeft > 0) {
 				while((currentDays.get(currDayCounter).hoursLeft) < 0.01 && (currDayCounter < currentDays.size())) {
-					System.out.println(currDayCounter);
+					//System.out.println(currDayCounter);
 					currDayCounter++;
 				}
 				breakdownForSingleDay(currentDays.get(currDayCounter), tasksByPriority.get(i));
@@ -115,9 +96,9 @@ public class LogicLayer {
 				LocalTime tempTaskEnd = (openSlots.get(counter).plus((long)((tempNewTaskTimeLength*60)), ChronoUnit.MINUTES));
 				LocalTime tempTaskBreakEnd = tempTaskEnd.plus((long)(tempTaskBreakLength*60), ChronoUnit.MINUTES);
 				String tempTaskName = task.name + " P" + (taskPartCounter++);
-				SubTask tempTask = new SubTask(tempTaskName, tempTaskStart, tempTaskEnd);
+				SubTask tempTask = new SubTask(tempTaskName, day.date, tempTaskStart, tempTaskEnd);
 				String tempTaskBreakName = tempTaskName + " Break";
-				SubTask tempTaskBreak = new SubTask(tempTaskBreakName, tempTaskEnd, tempTaskBreakEnd);
+				SubTask tempTaskBreak = new SubTask(tempTaskBreakName, day.date, tempTaskEnd, tempTaskBreakEnd);
 				//add subtasks to array
 				subTasksToBeAdded.add(tempTask);
 				subTasksToBeAdded.add(tempTaskBreak);
