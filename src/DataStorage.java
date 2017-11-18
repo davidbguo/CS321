@@ -9,6 +9,7 @@ public class DataStorage {
 	protected HashMap<String, String> userData = new HashMap<String, String>();
 	protected ArrayList<ASMonth> archivedMonths = new ArrayList<ASMonth>();
 	protected ArrayList<ASDay> currentDays = new ArrayList<ASDay>();
+	protected ASCalendar calendar = new ASCalendar();
 	
 	
 	//constructor

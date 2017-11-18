@@ -11,23 +11,31 @@ public class LogicLayer {
 	}
 	
 	public void updateDataCalendar() {
+		System.out.println("inside updateDataCalendar");
 		ArrayList<ASMonth> monthList = new ArrayList<ASMonth>();
 		ASDay start = data.currentDays.get(0);
-		ASDay end = data.currentDays.get(data.currentDays.size());
+		ASDay end = data.currentDays.get(data.currentDays.size()-1);
 		ASDay temp = start;
+		//System.out.println(start.date.until(end.date, ChronoUnit.MONTHS));
 		int counter = 0;
-		for (int i = 0; i < start.date.until(end.date, ChronoUnit.MONTHS); ) {
-			ASMonth newMonth = new ASMonth(YearMonth.of(temp.date.getYear(), temp.date.getMonth()));
-			for (int j = 0; j < temp.date.until(end.date, ChronoUnit.DAYS); j++ ) {
-				temp = data.currentDays.get(counter+j);
+		for (int i = 0; i < start.date.until(end.date, ChronoUnit.MONTHS)+1; i++) {
+			//System.out.println(i);
+			ASMonth newMonth = new ASMonth(YearMonth.of(start.date.plusMonths(i).getYear(), start.date.plusMonths(i).getMonth()));
+			monthList.add(newMonth);
+			int monthDayCount = 0;
+			temp = data.currentDays.get(counter+monthDayCount);
+			while(temp.date.getMonth().equals(newMonth.monthID.getMonth())){
 				newMonth.days.add(temp);
-				if (!data.currentDays.get(j).date.getMonth().equals(data.currentDays.get(j+1).date.getMonth())){
-					i++;
-					counter += j+1;
+				monthDayCount++;
+				if (counter + monthDayCount == data.currentDays.size())
 					break;
-				}
+				temp = data.currentDays.get(counter+monthDayCount);
+				
 			}
+			counter += monthDayCount;
 		}
+		data.calendar.currentView = monthList;
+		
 		
 	}
 
@@ -61,6 +69,7 @@ public class LogicLayer {
 		data.currentDays.clear();
 		LocalDate semStart = LocalDate.of(Integer.parseInt(data.userData.get("semStartYear")), Integer.parseInt(data.userData.get("semStartMonth")), Integer.parseInt(data.userData.get("semStartDay")));
 		LocalDate semEnd = LocalDate.of(Integer.parseInt(data.userData.get("semEndYear")), Integer.parseInt(data.userData.get("semEndMonth")), Integer.parseInt(data.userData.get("semEndDay")));
+		semEnd = semEnd.plusDays(1);
 		LocalDate current = semStart;
 		while (!current.equals(semEnd)) {
 			//System.out.println(current);
@@ -71,11 +80,20 @@ public class LogicLayer {
 	}
 	
 	//use comparator for usertask
-	public void prioritization(){
+	public void prioritize(){
 		Collections.sort(data.priorityUserTaskList, new SortByPriority());
 	}
 
-	public void conflictDetection(){}
+	public ArrayList<UserTask> listTasksNotDone(){
+		ArrayList<UserTask> tasksNotDone = new ArrayList<UserTask>();
+		for (int i = 0; i < data.priorityUserTaskList.size(); i++) {
+			if (data.priorityUserTaskList.get(i).hoursLeft > 0) {
+				tasksNotDone.add(data.priorityUserTaskList.get(i));
+			}
+		}
+		
+		return tasksNotDone;
+	}
 
 	public void createBreakdown(){
 		System.out.println("inside createBreakdown");
@@ -86,7 +104,7 @@ public class LogicLayer {
 		for (int i = 0 ; i < tasksByPriority.size(); i++) {
 			//System.out.println("inside " + data.currentDays.get(currDayCounter).date);
 			currDayCounter = daysDiff;
-			while(tasksByPriority.get(i).hoursLeft > 0) {
+			while(tasksByPriority.get(i).hoursLeft > 0 && !data.currentDays.get(currDayCounter).date.equals(tasksByPriority.get(i).endDateTime.toLocalDate().plusDays(1))) {
 				while((data.currentDays.get(currDayCounter).hoursLeft) < 0.01 && (currDayCounter < data.currentDays.size())) {
 					//System.out.println(currDayCounter);
 					currDayCounter++;
@@ -95,6 +113,7 @@ public class LogicLayer {
 				currDayCounter++;
 			}
 		}
+		updateDataCalendar();
 	}
 
 	//helper function
