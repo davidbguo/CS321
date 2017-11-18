@@ -24,11 +24,9 @@ public class DataStorage {
 		return i;
 	}
 	public void editPreExistTask(int i,PreExistTask newTask){
-		this.preExistTaskList.remove(i);
-		this.preExistTaskList.add(i, newTask);	
+		preExistTaskList.add(i, newTask);	
 	}
 	public void editUserTask(int i,UserTask newTask){
-		priorityUserTaskList.remove(i);
 		priorityUserTaskList.add(i, newTask);
 	}
 	
