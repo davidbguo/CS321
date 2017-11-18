@@ -16,8 +16,8 @@ public class ASDay {
     	this.date = day;
     	hoursLeft = 24;
     	hoursWorking = 0;
-    	eventsOfDay.addFirst(new SubTask("startOfDay", day, LocalTime.of(0, 0),LocalTime.of(0, 0)));
-    	eventsOfDay.addLast(new SubTask("endOfDay", day, LocalTime.of(23, 59),LocalTime.of(23, 59)));
+    	eventsOfDay.addFirst(new SubTask("startOfDay", day, LocalTime.of(0, 0),LocalTime.of(0, 0), LocalDateTime.of(2017, 1, 2, 1, 1)));
+    	eventsOfDay.addLast(new SubTask("endOfDay", day, LocalTime.of(23, 59),LocalTime.of(23, 59), LocalDateTime.of(2017, 1, 2, 1, 1)));
     	addPreExistTasks(preExistTasks);
     	updateHoursLeft();
     	
@@ -85,7 +85,7 @@ public class ASDay {
     	
     	for (int i = 0; i < preExistTasks.size(); i++) {
     		if (preExistTasks.get(i).day.equals(this.date.getDayOfWeek())) {
-    			SubTask temp = new SubTask(preExistTasks.get(i).name, preExistTasks.get(i).day, preExistTasks.get(i).startTime, preExistTasks.get(i).endTime);
+    			SubTask temp = new SubTask(preExistTasks.get(i).name, preExistTasks.get(i).day, preExistTasks.get(i).startTime, preExistTasks.get(i).endTime, preExistTasks.get(i).dateTimeCreated);
     			insertSubTask(temp);
     		}
     	}

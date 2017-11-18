@@ -4,12 +4,33 @@ import java.util.*;
 
 public class LogicLayer {
 	protected DataStorage data = new DataStorage();
-	protected ArrayList<ASDay> currentDays = new ArrayList<ASDay>();
 
 	//constructor
 	public LogicLayer(){
 		//temp data
 	}
+	
+	public void updateDataCalendar() {
+		ArrayList<ASMonth> monthList = new ArrayList<ASMonth>();
+		ASDay start = data.currentDays.get(0);
+		ASDay end = data.currentDays.get(data.currentDays.size());
+		ASDay temp = start;
+		int counter = 0;
+		for (int i = 0; i < start.date.until(end.date, ChronoUnit.MONTHS); ) {
+			ASMonth newMonth = new ASMonth(YearMonth.of(temp.date.getYear(), temp.date.getMonth()));
+			for (int j = 0; j < temp.date.until(end.date, ChronoUnit.DAYS); j++ ) {
+				temp = data.currentDays.get(counter+j);
+				newMonth.days.add(temp);
+				if (!data.currentDays.get(j).date.getMonth().equals(data.currentDays.get(j+1).date.getMonth())){
+					i++;
+					counter += j+1;
+					break;
+				}
+			}
+		}
+		
+	}
+
 	public int callDeletePreExistTask(PreExistTask task){
 		for(int i = 0; i < data.preExistTaskList.size(); i++){
 			if(task == data.preExistTaskList.get(i)){
@@ -21,15 +42,6 @@ public class LogicLayer {
 	public int callDeleteUserTask(UserTask task){
 		for(int i = 0; i < data.priorityUserTaskList.size(); i++){
 			if(task == data.priorityUserTaskList.get(i)){
-				for(int j=0; j<this.currentDays.size();j++){
-					for(int k=0;k<this.currentDays.size();k++){
-						if(this.currentDays.get(j).eventsOfDay.get(k).name.equals(task.name)){
-							this.currentDays.get(j).eventsOfDay.remove(k);
-							k--;
-						}
-						
-					}
-				}
 				return data.deleteUserTask(i);
 			}	
 		}
@@ -37,13 +49,38 @@ public class LogicLayer {
 	}
 	public void callEditPreExistTask(PreExistTask task,String name, DayOfWeek day, LocalTime start, LocalTime end
 									, LocalDateTime endDateTime){
+
+		if(name == null)
+			name = task.name;
+		if(day == null)
+			day = task.day;
+		if(start == null)
+			start = task.startTime;
+		if(end == null)
+			end = task.endTime;
+		if(endDateTime == null)
+			endDateTime = task.endDateTime;
+		
 		PreExistTask newTask = new PreExistTask(name, day, start, end,endDateTime );
 		newTask.dateTimeCreated = task.dateTimeCreated;
 		int i = callDeletePreExistTask(task);
 		data.editPreExistTask(i, newTask);
 	}
-	public void callEditUserTask(UserTask task,String name, String taskType, LocalDateTime startDateTime
+	public void callEditUserTask(UserTask task, String name, String taskType, LocalDateTime startDateTime
 							, LocalDateTime endDateTime, TaskTypeEnum type, int userGivenPriority){
+		if(name == null)
+			name = task.name;
+		if(taskType == null)
+			taskType = task.taskType;
+		if(startDateTime == null)
+			startDateTime = task.startDateTime;
+		if(endDateTime == null)
+			endDateTime = task.endDateTime;
+		if(type == null)
+			type = task.type;
+		if(userGivenPriority == -1)
+			userGivenPriority = task.userGivenPriority;
+		
 		UserTask newTask = new UserTask(name, taskType, startDateTime, endDateTime, type, userGivenPriority);
 		newTask.dateTimeCreated = task.dateTimeCreated;
 		int i = callDeleteUserTask(task);
@@ -52,14 +89,14 @@ public class LogicLayer {
 	
 	public void setCurrentDays() {
 		System.out.println("inside setcurrentdays");
-		currentDays.clear();
+		data.currentDays.clear();
 		LocalDate semStart = LocalDate.of(Integer.parseInt(data.userData.get("semStartYear")), Integer.parseInt(data.userData.get("semStartMonth")), Integer.parseInt(data.userData.get("semStartDay")));
 		LocalDate semEnd = LocalDate.of(Integer.parseInt(data.userData.get("semEndYear")), Integer.parseInt(data.userData.get("semEndMonth")), Integer.parseInt(data.userData.get("semEndDay")));
 		LocalDate current = semStart;
 		while (!current.equals(semEnd)) {
 			//System.out.println(current);
 			ASDay newTemp = new ASDay(current, data.preExistTaskList);
-			currentDays.add(newTemp);
+			data.currentDays.add(newTemp);
 			current = current.plusDays(1);
 		}
 	}
@@ -74,18 +111,18 @@ public class LogicLayer {
 	public void createBreakdown(){
 		System.out.println("inside createBreakdown");
 		ArrayList<UserTask> tasksByPriority = data.priorityUserTaskList;
-		int daysDiff = (int) currentDays.get(0).date.until(LocalDate.now(), ChronoUnit.DAYS);
+		int daysDiff = (int) data.currentDays.get(0).date.until(LocalDate.now(), ChronoUnit.DAYS);
 		int currDayCounter = daysDiff;
 		//System.out.println(tasksByPriority.size());
 		for (int i = 0 ; i < tasksByPriority.size(); i++) {
-			//System.out.println("inside " + currentDays.get(currDayCounter).date);
+			//System.out.println("inside " + data.currentDays.get(currDayCounter).date);
 			currDayCounter = daysDiff;
 			while(tasksByPriority.get(i).hoursLeft > 0) {
-				while((currentDays.get(currDayCounter).hoursLeft) < 0.01 && (currDayCounter < currentDays.size())) {
+				while((data.currentDays.get(currDayCounter).hoursLeft) < 0.01 && (currDayCounter < data.currentDays.size())) {
 					//System.out.println(currDayCounter);
 					currDayCounter++;
 				}
-				breakdownForSingleDay(currentDays.get(currDayCounter), tasksByPriority.get(i));
+				breakdownForSingleDay(data.currentDays.get(currDayCounter), tasksByPriority.get(i));
 				currDayCounter++;
 			}
 		}
@@ -134,9 +171,9 @@ public class LogicLayer {
 				LocalTime tempTaskEnd = (openSlots.get(counter).plus((long)((tempNewTaskTimeLength*60)), ChronoUnit.MINUTES));
 				LocalTime tempTaskBreakEnd = tempTaskEnd.plus((long)(tempTaskBreakLength*60), ChronoUnit.MINUTES);
 				String tempTaskName = task.name + " P" + (taskPartCounter++);
-				SubTask tempTask = new SubTask(tempTaskName, day.date, tempTaskStart, tempTaskEnd);
+				SubTask tempTask = new SubTask(tempTaskName, day.date, tempTaskStart, tempTaskEnd, task.dateTimeCreated);
 				String tempTaskBreakName = tempTaskName + " Break";
-				SubTask tempTaskBreak = new SubTask(tempTaskBreakName, day.date, tempTaskEnd, tempTaskBreakEnd);
+				SubTask tempTaskBreak = new SubTask(tempTaskBreakName, day.date, tempTaskEnd, tempTaskBreakEnd, task.dateTimeCreated);
 				//add subtasks to array
 				subTasksToBeAdded.add(tempTask);
 				subTasksToBeAdded.add(tempTaskBreak);
@@ -155,8 +192,6 @@ public class LogicLayer {
 		task.addSubTasks(subTasksToBeAdded);
 
 	}
-
-
 
 	public void kickoffTask(){}
 

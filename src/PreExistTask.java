@@ -30,10 +30,12 @@ public class PreExistTask extends Event implements java.io.Serializable {
 	public String toString(){
 		return "PreExistingTask "+ name + ": Starting @ " + this.day + " " +  this.startTime+  "-"+ this.endTime+ 
 				" Created On: "+ this.dateTimeCreated +"\n";
+
 	}
 	//tobeimplemented
 	public PreExistTask(String name, LocalDateTime start, LocalDateTime end) {
 		//to be filled out
 	}
 	
+
 }

@@ -13,12 +13,13 @@ public class TestDriver {
 		setupLogicLayer(logicEngine);
 		logicEngine.setCurrentDays();
 		testASDay(logicEngine);	
-		testBreakdownSingleDay(logicEngine);
+		//testBreakdownSingleDay(logicEngine);
 		//testTaskType();
 
 		testBreakdown(logicEngine);
 		//testDataStorage(logicEngine);
-		testEventDeletion(logicEngine);
+		//testEventDeletion(logicEngine);
+		testEventEditing(logicEngine);
 
 	}
 
@@ -104,11 +105,16 @@ public class TestDriver {
 		System.out.println(ll.data.priorityUserTaskList);
 		PreExistTask preTask = ll.data.preExistTaskList.get(1);
 		UserTask userTask = ll.data.priorityUserTaskList.get(2);
+		
 		System.out.println("Going to Edit------------");
 		System.out.println("PreTask Edit:"+ preTask);
 		System.out.println("UserTask Edit:"+ userTask);
-//		ll.callEditPreExistTask(preTask, newTask);
-	//	ll.callEditUserTask(userTask, newUserTask);
+		
+		ll.callEditPreExistTask(preTask,"Test",null,null,null,null );
+		ll.callEditUserTask(userTask,"HELP",null,null,null,null,-1 );
+		System.out.println("After---------------------");
+		System.out.println(ll.data.preExistTaskList);
+		System.out.println(ll.data.priorityUserTaskList);
 	}
 
 
@@ -124,8 +130,8 @@ public class TestDriver {
 	public static void testASDay(LogicLayer logic) {
 		LocalDate day = LocalDate.of(2015, 12, 31);
 		ASDay test = new ASDay(day, logic.data.preExistTaskList);
-		SubTask	s1 = new SubTask("test", LocalDate.now(), LocalTime.of(3, 0),LocalTime.of(8,00));
-		SubTask	s2 = new SubTask("test", LocalDate.now(), LocalTime.of(14, 15),LocalTime.of(15,00));
+		SubTask	s1 = new SubTask("test", LocalDate.now(), LocalTime.of(3, 0),LocalTime.of(8,00), null);
+		SubTask	s2 = new SubTask("test", LocalDate.now(), LocalTime.of(14, 15),LocalTime.of(15,00), null);
 			/*
 				SubTask	s3 = new SubTask("test",LocalTime.of(13, 0),LocalTime.of(14,00));
 				SubTask	s4 = new SubTask("test",LocalTime.of(13, 0),LocalTime.of(14,00));
@@ -139,8 +145,8 @@ public class TestDriver {
 	public static void testBreakdownSingleDay(LogicLayer llayer) {
 		LocalDate day = LocalDate.of(2015, 12, 31);
 		ASDay test = new ASDay(day, llayer.data.preExistTaskList);
-		SubTask	s1 = new SubTask("BLOCKED", LocalDate.now(), LocalTime.of(3, 0),LocalTime.of(8,00));
-		SubTask	s2 = new SubTask("BLOCKED", LocalDate.now(), LocalTime.of(14, 15),LocalTime.of(15,00));
+		SubTask	s1 = new SubTask("BLOCKED", LocalDate.now(), LocalTime.of(3, 0),LocalTime.of(8,00), null);
+		SubTask	s2 = new SubTask("BLOCKED", LocalDate.now(), LocalTime.of(14, 15),LocalTime.of(15,00), null);
 		test.insertSubTask(s1);
 		test.insertSubTask(s2);
 		
@@ -171,4 +177,7 @@ public class TestDriver {
 			llayer.data.preExistTaskList.get(i).printString();
 		}*/
 	}
+	
+	//need testing on updateDataCalendar
+	
 }
