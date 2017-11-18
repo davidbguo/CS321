@@ -12,11 +12,11 @@ public class TestDriver {
 		LogicLayer logicEngine = new LogicLayer();
 		setupLogicLayer(logicEngine);
 		logicEngine.setCurrentDays();
-		//testASDay(logicEngine);	
-		//testBreakdownSingleDay(logicEngine);
+		testASDay(logicEngine);	
+		testBreakdownSingleDay(logicEngine);
 		//testTaskType();
 
-		//testBreakdown(logicEngine);
+		testBreakdown(logicEngine);
 		//testDataStorage(logicEngine);
 		testEventDeletion(logicEngine);
 
@@ -99,9 +99,16 @@ public class TestDriver {
 		System.out.println(ll.data.priorityUserTaskList);
 	}
 	public static void testEventEditing(LogicLayer ll){
-		
-		//ll.callEditPreExistTask(preTask, preNewTask);
-		//ll.callEditUserTask(userTask, userNewTask);
+		System.out.println("Before---------------------");
+		System.out.println(ll.data.preExistTaskList);
+		System.out.println(ll.data.priorityUserTaskList);
+		PreExistTask preTask = ll.data.preExistTaskList.get(1);
+		UserTask userTask = ll.data.priorityUserTaskList.get(2);
+		System.out.println("Going to Edit------------");
+		System.out.println("PreTask Edit:"+ preTask);
+		System.out.println("UserTask Edit:"+ userTask);
+//		ll.callEditPreExistTask(preTask, newTask);
+	//	ll.callEditUserTask(userTask, newUserTask);
 	}
 
 

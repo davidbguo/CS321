@@ -21,18 +21,33 @@ public class LogicLayer {
 	public int callDeleteUserTask(UserTask task){
 		for(int i = 0; i < data.priorityUserTaskList.size(); i++){
 			if(task == data.priorityUserTaskList.get(i)){
+				for(int j=0; j<this.currentDays.size();j++){
+					for(int k=0;k<this.currentDays.size();k++){
+						if(this.currentDays.get(j).eventsOfDay.get(k).name.equals(task.name)){
+							this.currentDays.get(j).eventsOfDay.remove(k);
+							k--;
+						}
+						
+					}
+				}
 				return data.deleteUserTask(i);
 			}	
 		}
 		return -1;
 	}
-	public void callEditPreExistTask(PreExistTask task,PreExistTask newTask){
-		int i = callDeletePreExistTask(newTask);
+	public void callEditPreExistTask(PreExistTask task,String name, DayOfWeek day, LocalTime start, LocalTime end
+									, LocalDateTime endDateTime){
+		PreExistTask newTask = new PreExistTask(name, day, start, end,endDateTime );
+		newTask.dateTimeCreated = task.dateTimeCreated;
+		int i = callDeletePreExistTask(task);
 		data.editPreExistTask(i, newTask);
 	}
-	public void callEditUserTask(UserTask task,UserTask newTask){
-		int i = callDeleteUserTask(newTask);
-		data.editUserTask(i, newTask);
+	public void callEditUserTask(UserTask task,String name, String taskType, LocalDateTime startDateTime
+							, LocalDateTime endDateTime, TaskTypeEnum type, int userGivenPriority){
+		UserTask newTask = new UserTask(name, taskType, startDateTime, endDateTime, type, userGivenPriority);
+		newTask.dateTimeCreated = task.dateTimeCreated;
+		int i = callDeleteUserTask(task);
+		data.editUserTask(i, task);
 	}
 	
 	public void setCurrentDays() {
