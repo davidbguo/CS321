@@ -12,17 +12,18 @@ public class TestDriver {
 		LogicLayer logicEngine = new LogicLayer();
 		setupLogicLayer(logicEngine);
 		logicEngine.setCurrentDays();
-		testASDay(logicEngine);	
+		//testASDay(logicEngine);	
 		//testBreakdownSingleDay(logicEngine);
 		//testTaskType();
 
 		testBreakdown(logicEngine);
 		//testDataStorage(logicEngine);
 		//testEventDeletion(logicEngine);
+		//testUpdateDataCalendar(logicEngine);
 
 		testEventEditing(logicEngine);
 
-		testUpdateDataCalendar(logicEngine);
+		
 
 
 	}
