@@ -19,7 +19,11 @@ public class TestDriver {
 		testBreakdown(logicEngine);
 		//testDataStorage(logicEngine);
 		//testEventDeletion(logicEngine);
+
 		testEventEditing(logicEngine);
+
+		testUpdateDataCalendar(logicEngine);
+
 
 	}
 
@@ -63,11 +67,11 @@ public class TestDriver {
 			utList.add(ut3);
 			llayer.data.priorityUserTaskList = utList;
 			llayer.data.userData.put("semStartYear", "2017");
-			llayer.data.userData.put("semStartMonth", "11");
-			llayer.data.userData.put("semStartDay", "9");
+			llayer.data.userData.put("semStartMonth", "9");
+			llayer.data.userData.put("semStartDay", "1");
 			llayer.data.userData.put("semEndYear", "2017");
 			llayer.data.userData.put("semEndMonth", "12");
-			llayer.data.userData.put("semEndDay", "20");
+			llayer.data.userData.put("semEndDay", "15");
 			
 		}
 	
@@ -179,5 +183,10 @@ public class TestDriver {
 	}
 	
 	//need testing on updateDataCalendar
-	
+	public static void testUpdateDataCalendar(LogicLayer llayer) {
+		llayer.createBreakdown();
+		//llayer.data.currentDays.get(llayer.data.currentDays.size()-1).printDay();
+		//System.out.println(llayer.data.calendar.currentView.size());
+		llayer.data.calendar.printToConsole();
+	}
 }
