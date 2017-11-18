@@ -4,11 +4,6 @@ import java.util.*;
 
 public class LogicLayer {
 	protected DataStorage data = new DataStorage();
-
-	//constructor
-	public LogicLayer(){
-		//temp data
-	}
 	
 	public void updateDataCalendar() {
 		System.out.println("inside updateDataCalendar");
@@ -119,7 +114,7 @@ public class LogicLayer {
 	}
 	
 	//use comparator for usertask
-	public void prioritize(){
+	private void prioritize(){
 		Collections.sort(data.priorityUserTaskList, new SortByPriority());
 	}
 
@@ -136,6 +131,7 @@ public class LogicLayer {
 
 	public void createBreakdown(){
 		System.out.println("inside createBreakdown");
+		prioritize();
 		ArrayList<UserTask> tasksByPriority = data.priorityUserTaskList;
 		int daysDiff = (int) data.currentDays.get(0).date.until(LocalDate.now(), ChronoUnit.DAYS);
 		int currDayCounter = daysDiff;
@@ -171,7 +167,7 @@ public class LogicLayer {
 
 
 	//so far works, need more restraints
-	public void breakdownForSingleDay(ASDay day, UserTask task){
+	protected void breakdownForSingleDay(ASDay day, UserTask task){
 		ArrayList<LocalTime> openSlots = day.getOpenTimeSlot();
 		double hoursAssigned = task.hoursLeft > task.maxHoursPerDay ? task.maxHoursPerDay : task.hoursLeft;
 		double hoursLeftForDay = hoursAssigned;
@@ -220,12 +216,9 @@ public class LogicLayer {
 
 	}
 
-	public void kickoffTask(){}
 
 	public ASCalendar viewBuilder(){
-		ASCalendar newCalendar = new ASCalendar();
-
-		return newCalendar;
+		return data.calendar;
 	}
 
 
