@@ -16,14 +16,13 @@ public class TestDriver {
 		//testBreakdownSingleDay(logicEngine);
 		//testTaskType();
 
-		testBreakdown(logicEngine);
-		//testDataStorage(logicEngine);
-		//testEventDeletion(logicEngine);
-		//testUpdateDataCalendar(logicEngine);
-
-		testEventEditing(logicEngine);
-
 		
+		//testDataStorage(logicEngine);
+		testEventDeletion(logicEngine);
+
+		//testEventEditing(logicEngine);
+		//testBreakdown(logicEngine);
+		//testUpdateDataCalendar(logicEngine);
 
 
 	}

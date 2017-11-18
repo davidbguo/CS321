@@ -39,6 +39,8 @@ public class LogicLayer {
 	public int callDeletePreExistTask(PreExistTask task){
 		for(int i = 0; i < data.preExistTaskList.size(); i++){
 			if(task == data.preExistTaskList.get(i)){
+				this.setCurrentDays();
+				this.createBreakdown();
 				return data.deletePreExistTask(i);
 			}	
 		}
@@ -47,6 +49,7 @@ public class LogicLayer {
 	public int callDeleteUserTask(UserTask task){
 		for(int i = 0; i < data.priorityUserTaskList.size(); i++){
 			if(task == data.priorityUserTaskList.get(i)){
+				this.createBreakdown();
 				return data.deleteUserTask(i);
 			}	
 		}
@@ -66,10 +69,14 @@ public class LogicLayer {
 		if(endDateTime == null)
 			endDateTime = task.endDateTime;
 		
+
+		
 		PreExistTask newTask = new PreExistTask(name, day, start, end,endDateTime );
 		newTask.dateTimeCreated = task.dateTimeCreated;
 		int i = callDeletePreExistTask(task);
 		data.editPreExistTask(i, newTask);
+		this.setCurrentDays();
+		this.createBreakdown();
 	}
 	public void callEditUserTask(UserTask task, String name, String taskType, LocalDateTime startDateTime
 							, LocalDateTime endDateTime, TaskTypeEnum type, int userGivenPriority){
@@ -90,6 +97,7 @@ public class LogicLayer {
 		newTask.dateTimeCreated = task.dateTimeCreated;
 		int i = callDeleteUserTask(task);
 		data.editUserTask(i, task);
+		this.createBreakdown();
 	}
 	
 	public void setCurrentDays() {
