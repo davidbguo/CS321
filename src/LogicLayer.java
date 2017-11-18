@@ -4,11 +4,6 @@ import java.util.*;
 
 public class LogicLayer {
 	protected DataStorage data = new DataStorage();
-
-	//constructor
-	public LogicLayer(){
-		//temp data
-	}
 	
 	public void updateDataCalendar() {
 		System.out.println("inside updateDataCalendar");
