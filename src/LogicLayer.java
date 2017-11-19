@@ -4,7 +4,7 @@ import java.util.*;
 
 public class LogicLayer {
 	protected DataStorage data = new DataStorage();
-	
+
 	public void updateDataCalendar() {
 		System.out.println("inside updateDataCalendar");
 		ArrayList<ASMonth> monthList = new ArrayList<ASMonth>();
@@ -25,38 +25,59 @@ public class LogicLayer {
 				if (counter + monthDayCount == data.currentDays.size())
 					break;
 				temp = data.currentDays.get(counter+monthDayCount);
-				
+
 			}
 			counter += monthDayCount;
 		}
 		data.calendar.currentView = monthList;
-		
-		
+
+
+	}
+
+	public void addPreExistTask(String name, DayOfWeek day, LocalTime start, LocalTime end, LocalDateTime endDateTime) {
+		PreExistTask newPet = new PreExistTask(name, day, start, end, endDateTime);
+		data.preExistTaskList.add(newPet);
+		setCurrentDays();
+		createBreakdown();
+	}
+
+	public void addUserTask(String name, LocalDateTime startDateTime, LocalDateTime endDateTime, TaskTypeEnum type) {
+		UserTask newTask = new UserTask(name, startDateTime, endDateTime, type);
+		data.priorityUserTaskList.add(newTask);
+		createBreakdown();
+	}
+
+	private int findPreExistTask(PreExistTask task) {
+		for(int i = 0; i < data.preExistTaskList.size(); i++){
+			if(task.equals(data.preExistTaskList.get(i))){
+				return i;
+			}	
+		}
+		return -1;
+	}
+
+	private int findUserTask(UserTask task) {
+		for(int i = 0; i < data.priorityUserTaskList.size(); i++){
+			if(task.equals(data.priorityUserTaskList.get(i))){
+				return i;
+			}	
+		}
+		return -1;
 	}
 
 	
-	
-	public int callDeletePreExistTask(PreExistTask task){
-		for(int i = 0; i < data.preExistTaskList.size(); i++){
-			if(task == data.preExistTaskList.get(i)){
-				this.setCurrentDays();
-				this.createBreakdown();
-				return data.deletePreExistTask(i);
-			}	
-		}
-		return -1;
+	public void deletePreExistTask(PreExistTask task){
+		data.deletePreExistTask(findPreExistTask(task));
+		this.setCurrentDays();
+		this.createBreakdown();
 	}
-	public int callDeleteUserTask(UserTask task){
-		for(int i = 0; i < data.priorityUserTaskList.size(); i++){
-			if(task == data.priorityUserTaskList.get(i)){
-				this.createBreakdown();
-				return data.deleteUserTask(i);
-			}	
-		}
-		return -1;
+	public void deleteUserTask(UserTask task){
+		data.deletePreExistTask(findUserTask(task));
+		this.createBreakdown();
 	}
-	public void callEditPreExistTask(PreExistTask task,String name, DayOfWeek day, LocalTime start, LocalTime end
-									, LocalDateTime endDateTime){
+
+	public void editPreExistTask(PreExistTask task,String name, DayOfWeek day, LocalTime start, LocalTime end
+			, LocalDateTime endDateTime){
 
 		if(name == null)
 			name = task.name;
@@ -68,38 +89,30 @@ public class LogicLayer {
 			end = task.endTime;
 		if(endDateTime == null)
 			endDateTime = task.endDateTime;
-		
 
-		
 		PreExistTask newTask = new PreExistTask(name, day, start, end,endDateTime );
 		newTask.dateTimeCreated = task.dateTimeCreated;
-		int i = callDeletePreExistTask(task);
-		data.editPreExistTask(i, newTask);
+		data.editPreExistTask(findPreExistTask(task), newTask);
 		this.setCurrentDays();
 		this.createBreakdown();
 	}
-	public void callEditUserTask(UserTask task, String name, String taskType, LocalDateTime startDateTime
-							, LocalDateTime endDateTime, TaskTypeEnum type, int userGivenPriority){
+	public void editUserTask(UserTask task, String name, String taskType, LocalDateTime startDateTime
+			, LocalDateTime endDateTime, TaskTypeEnum type){
 		if(name == null)
 			name = task.name;
-		if(taskType == null)
-			taskType = task.taskType;
 		if(startDateTime == null)
 			startDateTime = task.startDateTime;
 		if(endDateTime == null)
 			endDateTime = task.endDateTime;
 		if(type == null)
 			type = task.type;
-		if(userGivenPriority == -1)
-			userGivenPriority = task.userGivenPriority;
-		
-		UserTask newTask = new UserTask(name, taskType, startDateTime, endDateTime, type, userGivenPriority);
+
+		UserTask newTask = new UserTask(name, startDateTime, endDateTime, type);
 		newTask.dateTimeCreated = task.dateTimeCreated;
-		int i = callDeleteUserTask(task);
-		data.editUserTask(i, task);
+		data.editUserTask(findUserTask(task), newTask);
 		this.createBreakdown();
 	}
-	
+
 	public void setCurrentDays() {
 		System.out.println("inside setcurrentdays");
 		data.currentDays.clear();
@@ -114,7 +127,7 @@ public class LogicLayer {
 			current = current.plusDays(1);
 		}
 	}
-	
+
 	//use comparator for usertask
 	private void prioritize(){
 		Collections.sort(data.priorityUserTaskList, new SortByPriority());
@@ -127,7 +140,7 @@ public class LogicLayer {
 				tasksNotDone.add(data.priorityUserTaskList.get(i));
 			}
 		}
-		
+
 		return tasksNotDone;
 	}
 
@@ -177,21 +190,21 @@ public class LogicLayer {
 		int counter = 0;
 		int taskPartCounter = 1;
 		while (counter < openSlots.size() && hoursLeftForDay > 0){
-				//check length of next open slot
+			//check length of next open slot
 			double tempTimeLength = (openSlots.get(counter).until(openSlots.get(counter+1), ChronoUnit.MINUTES))/60.0;
-			
-				//if next open slot is more than actual min task block hours, do stuff
+
+			//if next open slot is more than actual min task block hours, do stuff
 			if (tempTimeLength >= task.actualMinTaskBlockHours){
-					//temp new timeslot time length is either actualmaxtaskblock hours or length of open slot
+				//temp new timeslot time length is either actualmaxtaskblock hours or length of open slot
 				double tempNewTimeSlotLength = (tempTimeLength >= task.actualMaxTaskBlockHours) ? task.actualMaxTaskBlockHours : tempTimeLength;
-					//find new temp tasklength based on timeslot - break
+				//find new temp tasklength based on timeslot - break
 				double tempTaskBreakLength = findTaskBreakLength(tempNewTimeSlotLength);
 				double tempNewTaskTimeLength = tempNewTimeSlotLength - tempTaskBreakLength;
-					//temptasklength if either hours left or temptasklength
+				//temptasklength if either hours left or temptasklength
 				tempNewTaskTimeLength = tempNewTaskTimeLength > hoursLeftForDay ? hoursLeftForDay : tempNewTaskTimeLength;
-					//reduced hours left
+				//reduced hours left
 				hoursLeftForDay = hoursLeftForDay - tempNewTaskTimeLength;				
-					//create LocalTime start end variables to creating new subtasks
+				//create LocalTime start end variables to creating new subtasks
 				LocalTime tempTaskStart = openSlots.get(counter);
 				LocalTime tempTaskEnd = (openSlots.get(counter).plus((long)((tempNewTaskTimeLength*60)), ChronoUnit.MINUTES));
 				LocalTime tempTaskBreakEnd = tempTaskEnd.plus((long)(tempTaskBreakLength*60), ChronoUnit.MINUTES);
@@ -210,7 +223,7 @@ public class LogicLayer {
 			if (tempTimeLength < task.actualMinTaskBlockHours){
 				counter+=2;
 			}
-			
+
 		}
 		task.hoursLeft = task.hoursLeft - (hoursAssigned - hoursLeftForDay);
 		day.insertSubTasks(subTasksToBeAdded);

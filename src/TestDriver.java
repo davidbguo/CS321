@@ -18,11 +18,11 @@ public class TestDriver {
 
 		
 		//testDataStorage(logicEngine);
-		testEventDeletion(logicEngine);
+		//testEventDeletion(logicEngine);
 
 		//testEventEditing(logicEngine);
 		//testBreakdown(logicEngine);
-		//testUpdateDataCalendar(logicEngine);
+		testUpdateDataCalendar(logicEngine);
 
 
 	}
@@ -55,9 +55,9 @@ public class TestDriver {
 			
 			
 			llayer.data.preExistTaskList = petList;
-			UserTask ut1 = new UserTask("ut1", "testCat", LocalDateTime.now(), LocalDateTime.now().plusDays(3), TaskTypeEnum.QUEST, 2);
-			UserTask ut2 = new UserTask("ut2", "testCat", LocalDateTime.now(), LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.QUIZ, 3);
-			UserTask ut3 = new UserTask("ut3", "testCat", LocalDateTime.now().plusDays(7), LocalDateTime.of(2017, 12, 10, 23, 59),TaskTypeEnum.TEST, 4);
+			UserTask ut1 = new UserTask("ut1", LocalDateTime.now(), LocalDateTime.now().plusDays(3), TaskTypeEnum.QUEST);
+			UserTask ut2 = new UserTask("ut2", LocalDateTime.now(), LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.QUIZ);
+			UserTask ut3 = new UserTask("ut3", LocalDateTime.now().plusDays(7), LocalDateTime.of(2017, 12, 10, 23, 59),TaskTypeEnum.TEST);
 			ut1.hoursLeft = 20;
 			ut2.hoursLeft = 20;
 			ut3.hoursLeft = 20;
@@ -96,8 +96,8 @@ public class TestDriver {
 		System.out.println("Going to Delete------------");
 		System.out.println("PreTask Delete:"+ preTask);
 		System.out.println("UserTask Delete:"+ userTask);
-		ll.callDeletePreExistTask(preTask);
-		ll.callDeleteUserTask(userTask);
+		ll.deletePreExistTask(preTask);
+		ll.deleteUserTask(userTask);
 
 		System.out.println("After---------------------");
 		System.out.println(ll.data.preExistTaskList);
@@ -114,8 +114,8 @@ public class TestDriver {
 		System.out.println("PreTask Edit:"+ preTask);
 		System.out.println("UserTask Edit:"+ userTask);
 		
-		ll.callEditPreExistTask(preTask,"Test",null,null,null,null );
-		ll.callEditUserTask(userTask,"HELP",null,null,null,null,-1 );
+		ll.editPreExistTask(preTask,"Test",null,null,null,null );
+		ll.editUserTask(userTask,"HELP",null,null,null,null );
 		System.out.println("After---------------------");
 		System.out.println(ll.data.preExistTaskList);
 		System.out.println(ll.data.priorityUserTaskList);
@@ -123,10 +123,10 @@ public class TestDriver {
 
 
 	public static void testTaskType(){
-		UserTask task = new UserTask("task", "testCat", LocalDateTime.now(), LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.QUIZ, 3);
+		UserTask task = new UserTask("task", LocalDateTime.now(), LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.QUIZ);
 		task.type.setPageNumer(30);
 		System.out.println(task.type.getHourRequired());
-		UserTask task1 = new UserTask("task1", "testCat", LocalDateTime.now().plusDays(7), LocalDateTime.of(2017, 12, 10, 23, 59),TaskTypeEnum.TEST, 4);
+		UserTask task1 = new UserTask("task1", LocalDateTime.now().plusDays(7), LocalDateTime.of(2017, 12, 10, 23, 59),TaskTypeEnum.TEST);
 		task1.type.setWordCount(500);
 		System.out.println(task1.type.getHourRequired());
 	}
@@ -154,7 +154,7 @@ public class TestDriver {
 		test.insertSubTask(s1);
 		test.insertSubTask(s2);
 		
-		UserTask task = new UserTask("task", "testCat", LocalDateTime.now(), LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.QUIZ, 3);
+		UserTask task = new UserTask("task", LocalDateTime.now(), LocalDateTime.of(2017, 11, 25, 23, 59),TaskTypeEnum.QUIZ);
 		task.hoursLeft = 20;
 		llayer.breakdownForSingleDay(test, task);
 		System.out.println(test.eventsOfDay);
@@ -187,6 +187,10 @@ public class TestDriver {
 		llayer.createBreakdown();
 		//llayer.data.currentDays.get(llayer.data.currentDays.size()-1).printDay();
 		//System.out.println(llayer.data.calendar.currentView.size());
-		llayer.data.calendar.printToConsole();
+		//llayer.data.calendar.printToConsole();
+		int i;
+		if ((i = 0)  < 5) {
+			
+		}
 	}
 }

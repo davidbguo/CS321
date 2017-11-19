@@ -29,4 +29,8 @@ public abstract class Event implements java.io.Serializable {
 		//return "\n[ " + this.name + " \t\t Created on: " + this.dateTimeCreated + "\t End Date: " + this.endDateTime + "\t\t Priority: " + this.priority + "]"; 
 	}
 	
+	public boolean equals(Event event) {
+		return ((this.name.equals(event.name))&& (this.dateTimeCreated.equals(event.dateTimeCreated)));
+	}
+	
 }
