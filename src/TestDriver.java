@@ -18,7 +18,7 @@ public class TestDriver {
 
 		
 		//testDataStorage(logicEngine);
-		//testEventDeletion(logicEngine);
+		testEventDeletion(logicEngine);
 
 		//testEventEditing(logicEngine);
 		//testBreakdown(logicEngine);

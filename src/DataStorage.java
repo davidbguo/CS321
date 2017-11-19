@@ -15,18 +15,18 @@ public class DataStorage {
 	//constructor
 	public DataStorage(){}
 	
-	public int deletePreExistTask(int i){
+	public void deletePreExistTask(int i){
 		this.preExistTaskList.remove(i);
-		return i;
 	}
-	public int deleteUserTask(int i){
+	public void deleteUserTask(int i){
 		this.priorityUserTaskList.remove(i);
-		return i;
 	}
 	public void editPreExistTask(int i,PreExistTask newTask){
+		this.preExistTaskList.remove(i);
 		preExistTaskList.add(i, newTask);	
 	}
 	public void editUserTask(int i,UserTask newTask){
+		this.priorityUserTaskList.remove(i);
 		priorityUserTaskList.add(i, newTask);
 	}
 	
@@ -39,6 +39,8 @@ public class DataStorage {
 			oos.writeObject(this.priorityUserTaskList);
 			oos.writeObject(this.userData);
 			oos.writeObject(this.archivedMonths);
+			oos.writeObject(this.currentDays);
+			oos.writeObject(this.calendar);
 			oos.close();
 		}catch(Exception e){
 			writeSuccess = false;
@@ -55,6 +57,8 @@ public class DataStorage {
 			ds.priorityUserTaskList = (ArrayList<UserTask>) ois.readObject();
 			ds.userData = (HashMap<String, String>) ois.readObject();
 			ds.archivedMonths = (ArrayList<ASMonth>) ois.readObject();
+			ds.currentDays = (ArrayList<ASDay>) ois.readObject();
+			ds.calendar = (ASCalendar) ois.readObject();
 			ois.close();
 			fis.close();
 		}catch(Exception e){	

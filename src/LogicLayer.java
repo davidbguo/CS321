@@ -72,7 +72,8 @@ public class LogicLayer {
 		this.createBreakdown();
 	}
 	public void deleteUserTask(UserTask task){
-		data.deletePreExistTask(findUserTask(task));
+		data.deleteUserTask(findUserTask(task));
+		this.prioritize();
 		this.createBreakdown();
 	}
 
@@ -110,7 +111,9 @@ public class LogicLayer {
 		UserTask newTask = new UserTask(name, startDateTime, endDateTime, type);
 		newTask.dateTimeCreated = task.dateTimeCreated;
 		data.editUserTask(findUserTask(task), newTask);
+		this.prioritize();
 		this.createBreakdown();
+
 	}
 
 	public void setCurrentDays() {
@@ -129,7 +132,7 @@ public class LogicLayer {
 	}
 
 	//use comparator for usertask
-	private void prioritize(){
+		private void prioritize(){
 		Collections.sort(data.priorityUserTaskList, new SortByPriority());
 	}
 
