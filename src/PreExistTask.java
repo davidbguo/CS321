@@ -1,4 +1,5 @@
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class PreExistTask extends Event implements java.io.Serializable {
@@ -27,14 +28,16 @@ public class PreExistTask extends Event implements java.io.Serializable {
 		this.endTime = end;
 		this.endDateTime = endDateTime;
 	}
+	
 	public String toString(){
-		return "PreExistingTask "+ name + ": Starting @ " + this.day + " " +  this.startTime+  "-"+ this.endTime+ 
-				" Created On: "+ this.dateTimeCreated +"\n";
+		String format = "%-35s %-25s %-35s %-35s";
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");		
+		return String.format(format, 
+				this.name, 
+				"Recurring: " + this.day, 
+				"Start: " + this.startTime.format(formatter), 
+				"End: " + this.endTime.format(formatter)); 
 
-	}
-	//tobeimplemented
-	public PreExistTask(String name, LocalDateTime start, LocalDateTime end) {
-		//to be filled out
 	}
 	
 

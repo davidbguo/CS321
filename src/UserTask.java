@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
@@ -47,8 +48,18 @@ public class UserTask extends Event implements java.io.Serializable{
 	public void addSubTasks(ArrayList<SubTask> subTasks) {
 		//return true;
 	}
-	public String toString(){
-		return "Name " + this.name + " UserTask: " + this.type + " " + this.endDateTime +"hours left "+ "\n" ;	
+
+	public String toString() {
+		String format = "%-35s %-15s %-35s %-35s %-15s %-15s %-15s";
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm MM-dd-yy");		
+		return String.format(format, 
+				this.name, 
+				"Type: " + this.type, 
+				"Start: " + this.startDateTime.format(formatter), 
+				"End: " + this.endDateTime.format(formatter),
+				"Hours Estimated: " + this.hoursTotalEstimate,
+				"Hours Unscheduled: " + this.hoursLeft,
+				"Priority: " + this.priority); 
 	}
 
 	public void setPriority() {

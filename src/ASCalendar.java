@@ -11,12 +11,11 @@ public class ASCalendar {
     	
     }
     
-    public void printToConsole() {
-    	System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    	System.out.println("CALENDAR");
-    	System.out.println("");
+    public String toString() {
+    	String retVal = "CURRENT SEMESTER CALENDAR \n";
     	for (int i = 0; i < currentView.size(); i++) {
-    		currentView.get(i).printMonth();
+    		retVal += currentView.get(i).toString() + "\n";
     	}
+    	return retVal;
     }
 }

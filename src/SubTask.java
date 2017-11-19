@@ -54,11 +54,17 @@ public class SubTask extends Event{
 	public String toString() {
 		String dayVal = "";
 		if (this.day == null)
-			dayVal = "Recurring PET " + this.dayOfWeek;
+			dayVal = "Recurring PET: " + this.dayOfWeek;
 		else
-			dayVal = this.day.toString();
-		
-		return "\n[ " + name + "\t\t " + dayVal + ":\t " + startTime.toString() + " - " + endTime.toString() + " ]";
+			dayVal = "Date: " + this.day.toString();
+		String format = "%-35s %-30s %-20s %-20s %-30s";
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");		
+		return String.format(format, 
+				this.name, 
+				dayVal, 
+				"Start: " + this.startTime.format(formatter), 
+				"End: " + this.endTime.format(formatter),
+				"Time Length Hours: " + this.timeLength);
 	}
 
 }

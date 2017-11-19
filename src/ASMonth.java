@@ -27,10 +27,11 @@ public class ASMonth implements java.io.Serializable {
     	return readSuccess;
     }
     
-    public void printMonth() {
-    	System.out.println(monthID);
+    public String toString() {
+    	String retVal = monthID + "\n";
     	for (int i = 0; i < days.size(); i ++) {
-    		days.get(i).printDay();
+    		retVal += days.get(i).toString() + "\n";
     	}
+    	return retVal;
     }
 }
