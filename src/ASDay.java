@@ -119,10 +119,11 @@ public class ASDay {
     		
     	return Integer.parseInt(key);
     }
-    public void printDay() {
-    	System.out.println(date);
-    	for (int i = 0; i < eventsOfDay.size(); i ++) {
-    		eventsOfDay.get(i).printString();
+    public String toString() {
+    	String retVal = date + "\n";
+    	for (int i = 1; i < eventsOfDay.size()-1; i ++) {
+    		retVal += eventsOfDay.get(i).toString() + "\n";
     	}
+    	return retVal;
     }
 }

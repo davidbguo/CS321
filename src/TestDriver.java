@@ -12,19 +12,16 @@ public class TestDriver {
 		LogicLayer logicEngine = new LogicLayer();
 		setupLogicLayer(logicEngine);
 		logicEngine.setCurrentDays();
-		//testASDay(logicEngine);	
-		//testBreakdownSingleDay(logicEngine);
-		//testTaskType();
-
 		
 		//testDataStorage(logicEngine);
-		testEventDeletion(logicEngine);
+		//testEventDeletion(logicEngine);
 
 		//testEventEditing(logicEngine);
 		//testBreakdown(logicEngine);
 
 		//testUpdateDataCalendar(logicEngine);
 		//setupUICal(logicEngine);
+		testUpdateDataCalendar(logicEngine);
 
 	}
 	//testing HashMap for UI layer
@@ -189,12 +186,7 @@ public class TestDriver {
 	//need testing on updateDataCalendar
 	public static void testUpdateDataCalendar(LogicLayer llayer) {
 		llayer.createBreakdown();
-		//llayer.data.currentDays.get(llayer.data.currentDays.size()-1).printDay();
-		//System.out.println(llayer.data.calendar.currentView.size());
-		//llayer.data.calendar.printToConsole();
-		int i;
-		if ((i = 0)  < 5) {
-			
-		}
+		System.out.println(llayer.data.calendar.toString());
+
 	}
 }
