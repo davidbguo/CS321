@@ -16,20 +16,16 @@ public class UserTask extends Event implements java.io.Serializable{
 	 */
 	protected LocalDateTime startDateTime;
 	protected int userProficiency = 3;
-	protected String taskType;
-	protected int userGivenPriority;
 	protected double hoursLeft;
 	protected double actualMinTaskBlockHours, actualMaxTaskBlockHours;
 	protected double minTaskBlockHours, maxTaskBlockHours, minBreaktimeLengthHours, maxBreaktimeLengthHours;
 	protected double hoursTotalEstimate, maxHoursPerDay;
 	protected TaskTypeEnum type;
 	
-	public UserTask(String name, String taskType, LocalDateTime startDateTime, LocalDateTime endDateTime, TaskTypeEnum type, int userGivenPriority) {
+	public UserTask(String name, LocalDateTime startDateTime, LocalDateTime endDateTime, TaskTypeEnum type) {
 		this.name = name;
-		this.taskType = taskType;
 		this.endDateTime = endDateTime;
 		this.startDateTime = startDateTime;
-		this.userGivenPriority = userGivenPriority;
 		this.priority = 200;
 		this.dateTimeCreated = LocalDateTime.now();
 		//Temp For Testings
@@ -52,7 +48,7 @@ public class UserTask extends Event implements java.io.Serializable{
 		//return true;
 	}
 	public String toString(){
-		return "Name " + this.name + " UserTask: " + this.taskType + " " + this.endDateTime +"hours left "+ "\n" ;	
+		return "Name " + this.name + " UserTask: " + this.type + " " + this.endDateTime +"hours left "+ "\n" ;	
 	}
 
 	public void setPriority() {
@@ -63,4 +59,5 @@ public class UserTask extends Event implements java.io.Serializable{
 
 		
 	}
+
 }
