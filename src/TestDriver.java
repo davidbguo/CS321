@@ -21,12 +21,15 @@ public class TestDriver {
 		testEventDeletion(logicEngine);
 
 		//testEventEditing(logicEngine);
-		testBreakdown(logicEngine);
+		//testBreakdown(logicEngine);
 		//testUpdateDataCalendar(logicEngine);
-
+		setupUICal(logicEngine);
 
 	}
-
+	//testing HashMap for UI layer
+	public static void setupUICal(LogicLayer llayer){
+		llayer.getCalendarData();
+	}
 	//continue testing to see is pre existing tasks are being taken into consideration/represented properly
 	public static void setupLogicLayer(LogicLayer llayer) {
 			System.out.println("inside setup");

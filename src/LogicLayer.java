@@ -216,10 +216,14 @@ public class LogicLayer {
 
 	}
 
-
-	public ASCalendar viewBuilder(){
-		return data.calendar;
+	public HashMap<Integer,ASDay> getCalendarData(){
+		HashMap<Integer,ASDay> cal = new HashMap<Integer,ASDay>();
+		int key = 0; 
+		for(int i = 0; i<data.currentDays.size();i++){
+			ASDay curr = data.currentDays.get(i);
+			key = curr.getKey();
+			cal.put(key, curr);
+		}
+		return cal;
 	}
-
-
 }

@@ -103,7 +103,22 @@ public class ASDay {
     	
     	return detailSummary;
     } 
-    
+    public int getKey(){
+    	String key = null;
+    	key = "" + date.getYear();
+    	int month;
+    	if((month = this.date.getMonthValue())<10){
+    		key += "0";
+    	}
+    	key += month;
+    	int day;
+    	if((day = this.date.getDayOfMonth())<10){
+    		key += "0";
+    	}
+    	key += day;
+    		
+    	return Integer.parseInt(key);
+    }
     public void printDay() {
     	System.out.println(date);
     	for (int i = 0; i < eventsOfDay.size(); i ++) {
