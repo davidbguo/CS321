@@ -265,58 +265,78 @@ public class View implements ListSelectionListener, ActionListener {
         frame.setSize(600, 600);
         */
       String taskName = JOptionPane.showInputDialog("Enter take name: ");
-      String dueDate = JOptionPane.showInputDialog("Enter due date: ");
+      String dueDate = JOptionPane.showInputDialog("When is it due? (MM/DD/YYYY)");
+      String dueTime = JOptionPane.showInputDialog("What time is it due? (--:--)");
+      LocalDateTime start = LocalDateTime.now();
+      
+      int year = Integer.parseInt(dueDate.substring(6));
+      int month = Integer.parseInt(dueDate.substring(0,2));
+      int day = Integer.parseInt(dueDate.substring(3,5));
+      int hour = Integer.parseInt(dueTime.substring(0,2));
+      int minute = Integer.parseInt(dueTime.substring(3));
+      LocalDateTime end = LocalDateTime.of(year,month,day,hour,minute); 
       String taskType = JOptionPane.showInputDialog("Enter task type:\nReading, Presentation, Quest, Quiz, Test, Essay, Study, Prelab, Problem Set, Project");
       System.out.println(taskType);
+      
       switch(taskType)
       {
          case "reading":
             {
-               String pageNumbers = JOptionPane.showInputDialog("Enter number of pages");       
+               String pageNumbers = JOptionPane.showInputDialog("Enter number of pages");
+               UserTask task = new UserTask(taskName,start,end,TaskTypeEnum.READING);       
                break;
             }
          case "presentation":
             {
                String duration= JOptionPane.showInputDialog("Enter duration of presentation");
+               UserTask task = new UserTask(taskName,start,end,TaskTypeEnum.PRESENTATION); 
                break;
             }
          case "quest":
             {
                String duration= JOptionPane.showInputDialog("Enter duration of quest");
+               UserTask task = new UserTask(taskName,start,end,TaskTypeEnum.QUEST); 
                break;
             }
          case "quiz":
             {
                String duration= JOptionPane.showInputDialog("Enter duration of quiz");
+               UserTask task = new UserTask(taskName,start,end,TaskTypeEnum.QUIZ); 
                break;
             }
          case "test":
             {
                String duration= JOptionPane.showInputDialog("Enter duration of test");
+               UserTask task = new UserTask(taskName,start,end,TaskTypeEnum.TEST); 
                break;
             }
          case "essay":
             {
                String wordCount= JOptionPane.showInputDialog("Enter required word count");
+               UserTask task = new UserTask(taskName,start,end,TaskTypeEnum.ESSAY); 
                break;
             }
          case "study":
             {
                String credits= JOptionPane.showInputDialog("Enter number of credit hours");
+               UserTask task = new UserTask(taskName,start,end,TaskTypeEnum.STUDY); 
                break;
             }
             
          case "prelab":
             {
                String duration= JOptionPane.showInputDialog("Enter duration of prelab ");
+               UserTask task = new UserTask(taskName,start,end,TaskTypeEnum.PRELAB); 
                break;
             }
          case "problem set":
             {
                String numberOfQuestions= JOptionPane.showInputDialog("Enter number of questions ");
+               UserTask task = new UserTask(taskName,start,end,TaskTypeEnum.PROBLEMSET); 
                break;
             }
          case "project":
+            UserTask task = new UserTask(taskName,start,end,TaskTypeEnum.PROJECT); 
             break;
          default:
          
