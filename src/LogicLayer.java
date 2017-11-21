@@ -35,6 +35,14 @@ public class LogicLayer {
 
 
 	}
+	
+	public ArrayList<PreExistTask> getPETList(){
+		return data.preExistTaskList;
+	}
+	
+	public ArrayList<UserTask> getUTList(){
+		return data.priorityUserTaskList;
+	}
 
 	public void addPreExistTask(String name, DayOfWeek day, LocalTime start, LocalTime end, LocalDateTime endDateTime) {
 		PreExistTask newPet = new PreExistTask(name, day, start, end, endDateTime);
