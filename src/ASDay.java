@@ -104,20 +104,12 @@ public class ASDay {
     	return detailSummary;
     } 
     public int getKey(){
-    	String key = null;
-    	key = "" + date.getYear();
-    	int month;
-    	if((month = this.date.getMonthValue())<10){
-    		key += "0";
-    	}
-    	key += month;
-    	int day;
-    	if((day = this.date.getDayOfMonth())<10){
-    		key += "0";
-    	}
-    	key += day;
+    	int year = date.getYear();
+        int month = date.getMonthValue();
+        int day = date.getDayOfMonth();
+        int key = (year * 10000) + (month * 100) + day;
     		
-    	return Integer.parseInt(key);
+    	return key;
     }
     public String toString() {
     	String retVal = date + "\n";
