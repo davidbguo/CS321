@@ -1,10 +1,12 @@
 import java.time.*;
 import java.time.temporal.*;
 import java.util.*;
-
 public class LogicLayer {
 	protected DataStorage data = new DataStorage();
-
+	
+	public ArrayList<UserTask> getUserTasks(){
+		return data.priorityUserTaskList;
+	}
 	public void updateDataCalendar() {
 		System.out.println("inside updateDataCalendar");
 		ArrayList<ASMonth> monthList = new ArrayList<ASMonth>();
