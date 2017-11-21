@@ -8,15 +8,9 @@ public class UserTask extends Event implements java.io.Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	/* From Event.java
-	 * protected double priority;
-	protected LocalDateTime dateTimeCreated;
-	protected String name;
-	protected ArrayList<LocalDateTime> breakdown;
-	protected LocalDateTime endDateTime;
-	 */
+	
 	protected LocalDateTime startDateTime;
-	protected int userProficiency = 3;
+	//protected int userProficiency = 3;
 	protected double hoursLeft;
 	protected double actualMinTaskBlockHours, actualMaxTaskBlockHours;
 	protected double minTaskBlockHours, maxTaskBlockHours, minBreaktimeLengthHours, maxBreaktimeLengthHours;
