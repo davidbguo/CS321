@@ -29,8 +29,13 @@ public class UserTask extends Event implements java.io.Serializable{
 		this.startDateTime = startDateTime;
 		this.priority = 200;
 		this.dateTimeCreated = LocalDateTime.now();
-		//Temp For Testings
-		this.hoursTotalEstimate = 5.0;
+		this.type = type;
+		setUpVars();
+		setPriority();
+	}
+	
+	public void setUpVars() {
+		this.hoursTotalEstimate = type.getHourRequired();
 		this.hoursLeft = hoursTotalEstimate;
 		this.minTaskBlockHours = 0.5;
 		this.maxTaskBlockHours = 2.0;
@@ -39,14 +44,14 @@ public class UserTask extends Event implements java.io.Serializable{
 		this.maxBreaktimeLengthHours = (double)((int)(maxTaskBlockHours + 1)) * 5.0/60.0;
 		this.maxBreaktimeLengthHours = this.maxBreaktimeLengthHours > 20.0/60.0 ? 20.0/60.0 : this.maxBreaktimeLengthHours;
 		this.actualMaxTaskBlockHours = maxTaskBlockHours + maxBreaktimeLengthHours;
-		this.maxHoursPerDay = 8;
-		this.type = type;
-		//
-		setPriority();
+		double avgHoursPerDay = hoursTotalEstimate/this.startDateTime.until(endDateTime, ChronoUnit.DAYS);
+		this.maxHoursPerDay = 4 > avgHoursPerDay ? 4 : avgHoursPerDay;
+		
 	}
-	//to be implemented
+	
+	
 	public void addSubTasks(ArrayList<SubTask> subTasks) {
-		//return true;
+		breakdown.addAll(subTasks);
 	}
 
 	public String toString() {

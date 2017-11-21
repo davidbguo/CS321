@@ -8,13 +8,6 @@ public class PreExistTask extends Event implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/* From Event.javas
-	 * protected double priority;
-	protected LocalDateTime dateTimeCreated;
-	protected String name;
-	protected ArrayList<LocalDateTime> breakdown;
-	protected LocalDateTime endDateTime;
-	 */
 	protected DayOfWeek day;
 	protected LocalTime startTime;
 	protected LocalTime endTime;
@@ -27,6 +20,8 @@ public class PreExistTask extends Event implements java.io.Serializable {
 		this.startTime = start;
 		this.endTime = end;
 		this.endDateTime = endDateTime;
+		SubTask slot = new SubTask(name, day, start, end, dateTimeCreated);
+		breakdown.add(slot);
 	}
 	
 	public String toString(){
