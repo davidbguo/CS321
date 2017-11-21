@@ -5,11 +5,11 @@ import java.util.*;
 
 public class ASDay {
 
-	protected LinkedList<SubTask> eventsOfDay = new LinkedList<SubTask>();
-	protected String[] details;
-	protected LocalDate date;
-	protected double hoursLeft;
-	protected double hoursWorking;
+	protected LinkedList<SubTask> eventsOfDay = new LinkedList<SubTask>(); //ASDay is comprised of SubTask
+	protected String[] details;		//A List of all the subtask
+	protected LocalDate date;		//The date of the Day
+	protected double hoursLeft;		//Hours available in the Day
+	protected double hoursWorking;	//Hours working for the Day
     protected static final double MINIMUM_TASK_BLOCK_LENGTH = 0.25; //in hours
     
     public ASDay(LocalDate day, ArrayList<PreExistTask> preExistTasks) {
@@ -103,7 +103,7 @@ public class ASDay {
     	
     	return detailSummary;
     } 
-    public int getKey(){
+    public int getKey(){	//Returns a Key value as [YEAR][MONTH][DAY]
     	int year = date.getYear();
         int month = date.getMonthValue();
         int day = date.getDayOfMonth();
