@@ -43,6 +43,7 @@ public class View implements ListSelectionListener, ActionListener {
    HashMap<Integer, ASDay> currCalendar;
    LogicLayer llayer = new LogicLayer();
   
+   //temp for testing
    public static void setupLogicLayer(LogicLayer llayer) {
       System.out.println("inside setup");
       ArrayList<PreExistTask> petList = new ArrayList<PreExistTask>();
