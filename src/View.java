@@ -299,20 +299,25 @@ public class View implements ListSelectionListener, ActionListener {
       frame.setVisible(true);
       frame.setSize(500, 500);
       JPanel panel = new JPanel();
+               //convert arraylist into array
+      PreExistTask[] list = new PreExistTask[llayer.getPETList().size()];
+      for(int i=0;i<llayer.getPETList().size();i++)//fill the list
+         list[i] = llayer.getPETList().get(i);
+      JList taskList = new JList(list);
+      panel.add(taskList);
+      frame.add(panel);
    }
    private void editTask()
    {
       JFrame frame = new JFrame("Edit User Task");
       frame.setVisible(true);
-      frame.setSize(500, 500);
+      frame.setSize(600, 600);
       JPanel panel = new JPanel();
+      //convert arraylist into array
       UserTask[] list = new UserTask[llayer.getUTList().size()];
-      for(int i=0;i<llayer.getUTList().size();i++)
-      {
+      for(int i=0;i<llayer.getUTList().size();i++)//fill the list
          list[i] = llayer.getUTList().get(i);
-      }
       JList taskList = new JList(list);
-      
       panel.add(taskList);
       frame.add(panel);
    
