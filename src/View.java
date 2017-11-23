@@ -241,7 +241,7 @@ public class View implements ListSelectionListener, ActionListener {
       JMenu MENU, menu2;
         
         //menu1 and menu2 menu items
-      JMenuItem createNewTask, viewTasks, m2Item1, m2Item2,createPreTask,editTask,editPreTask;
+      JMenuItem createNewTask, viewTasks, m2Item1, m2Item2,createPreTask,editTask,editPreTask,deleteTask,deletePreTask;
         
         //Initialize menu items
       createNewTask = new JMenuItem("Create User Task");
@@ -252,6 +252,11 @@ public class View implements ListSelectionListener, ActionListener {
       editTask.addActionListener(this);
       editPreTask = new JMenuItem("Edit Pre-Existing Task");
       editPreTask.addActionListener(this);
+      deleteTask = new JMenuItem("Delete User Task");
+      deleteTask.addActionListener(this);
+      deletePreTask = new JMenuItem("Delete Pre-Existing Task");
+      deletePreTask.addActionListener(this);
+      
         
       viewTasks = new JMenuItem("View tasks");
       viewTasks.addActionListener(this);
@@ -264,6 +269,8 @@ public class View implements ListSelectionListener, ActionListener {
       MENU.add(createPreTask);
       MENU.add(editTask);
       MENU.add(editPreTask);
+      MENU.add(deleteTask);
+      MENU.add(deletePreTask);
       MENU.add(viewTasks);
         
       menu2 = new JMenu("menu2");
@@ -292,10 +299,15 @@ public class View implements ListSelectionListener, ActionListener {
          editTask();
       else if(e.getActionCommand().equals("Edit Pre-Existing Task"))
          editPreTask();
+      else if(e.getActionCommand().equals("Delete User Task"))
+         deleteTask();
+      else if(e.getActionCommand().equals("Delete Pre-Existing Task"))
+         deletePreTask();
+      
    }
    private void editPreTask()
    {
-      JFrame frame = new JFrame("Edit User Task");
+      JFrame frame = new JFrame("Edit Pre-Existing Task");
       frame.setVisible(true);
       frame.setSize(500, 500);
       JPanel panel = new JPanel();
@@ -307,19 +319,143 @@ public class View implements ListSelectionListener, ActionListener {
       panel.add(taskList);
       frame.add(panel);
    }
+   //EDIT USER TASK
    private void editTask()
    {
       JFrame frame = new JFrame("Edit User Task");
       frame.setVisible(true);
       frame.setSize(600, 600);
       JPanel panel = new JPanel();
+      panel.setLayout(new GridLayout(7,1));
       //convert arraylist into array
       UserTask[] list = new UserTask[llayer.getUTList().size()];
       for(int i=0;i<llayer.getUTList().size();i++)//fill the list
          list[i] = llayer.getUTList().get(i);
       JList taskList = new JList(list);
+      
+       //subpanel1 for getting date
+      JPanel subpanel1 = new JPanel();
+      JComboBox months = new JComboBox(monthOptions);
+      JComboBox days = new JComboBox(dayOptions);
+      String[] yearOptions={"2017","2018","2019","2020"};
+      JComboBox years = new JComboBox(yearOptions);
+      subpanel1.add(new JLabel("Select due date:"));
+      subpanel1.add(months);
+      subpanel1.add(days);
+      subpanel1.add(years);
+      //subpanel2 for getting time due
+      JPanel subpanel2 = new JPanel();
+      JComboBox hours = new JComboBox(hourOptions);
+      JComboBox mins = new JComboBox(minOptions);
+      subpanel2.add(new JLabel("Select time due:"));
+      subpanel2.add(hours);
+      subpanel2.add(mins);
+      //subpanel3 for getting name
+      JPanel subpanel3 = new JPanel();
+      JLabel nameLabel = new JLabel("Enter task name:");
+      JTextField nameBox = new JTextField(10);
+      subpanel3.add(nameLabel);
+      subpanel3.add(nameBox);
+      //panel4 for getting type of task
+      JPanel subpanel4 = new JPanel();
+      JLabel typeLabel = new JLabel("Select type of task:");
+      String[] types = {"Reading","Presentation","Quest","Quiz","Test","Essay","Study","Prelab","Problem set","Prelab"};
+      JComboBox typeBox = new JComboBox(types);
+      subpanel4.add(typeLabel);
+      subpanel4.add(typeBox);
+      //panel5 for button
+      JPanel subpanel5 = new JPanel();
+      JButton button = new JButton("Make Changes");
+      button.addActionListener(
+         new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+               String taskName = nameBox.getText();
+               String taskType = (String)typeBox.getSelectedItem();   
+               LocalDateTime start = LocalDateTime.now();
+               int year = Integer.parseInt((String)years.getSelectedItem());
+               int month = Integer.parseInt((String)months.getSelectedItem());
+               int day = Integer.parseInt((String)days.getSelectedItem());
+               int hour = Integer.parseInt((String)hours.getSelectedItem());
+               int minute = Integer.parseInt((String)mins.getSelectedItem());
+               LocalDateTime end = LocalDateTime.of(year,month,day,hour,minute);
+               UserTask task = (UserTask)taskList.getSelectedValue();
+               switch(taskType.toLowerCase())
+               {
+                  case "reading":
+                     {
+                        String pageNumbers = JOptionPane.showInputDialog("Enter number of pages");
+                        llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.READING);       
+                        break;
+                     }
+                  case "presentation":
+                     {
+                        String duration= JOptionPane.showInputDialog("Enter duration of presentation in hours");
+                        llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.PRESENTATION); 
+                        break;
+                     }
+                  case "quest":
+                     {
+                        String duration= JOptionPane.showInputDialog("Enter duration of quest in hours");
+                        llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.QUEST); 
+                        break;
+                     }
+                  case "quiz":
+                     {
+                        String duration= JOptionPane.showInputDialog("Enter duration of quiz in hours");
+                        llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.QUIZ); 
+                        break;
+                     }
+                  case "test":
+                     {
+                        String duration= JOptionPane.showInputDialog("Enter duration of test in hours");
+                        llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.TEST); 
+                        break;
+                     }
+                  case "essay":
+                     {
+                        String wordCount= JOptionPane.showInputDialog("Enter required word count");
+                        llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.ESSAY); 
+                        break;
+                     }
+                  case "study":
+                     {
+                        String credits= JOptionPane.showInputDialog("Enter number of credit hours");
+                        llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.STUDY); 
+                        break;
+                     }
+                  
+                  case "prelab":
+                     {
+                        String duration= JOptionPane.showInputDialog("Enter duration of prelab in hours");
+                        llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.PRELAB); 
+                        break;
+                     }
+                  case "problem set":
+                     {
+                        String numberOfQuestions= JOptionPane.showInputDialog("Enter number of questions ");
+                        llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.PROBLEMSET); 
+                        break;
+                     }
+                  case "project":
+                     llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.PROJECT); 
+                     break;
+               }
+               updateMonth();
+               frame.dispose();
+            }
+         });
+      subpanel5.add(button);     
+     
+      //add components
       panel.add(taskList);
       frame.add(panel);
+      
+      panel.add(subpanel3);
+      panel.add(subpanel4);
+      panel.add(subpanel1);
+      panel.add(subpanel2);
+      panel.add(subpanel5);
+   
    
    }
    private void createPreTask()
@@ -561,8 +697,32 @@ public class View implements ListSelectionListener, ActionListener {
      
    private void deleteTask() {
         //Delete task
-      System.out.println("TASK DELETED.");
-        
+      JFrame frame = new JFrame("Delete User Task");
+      frame.setVisible(true);
+      frame.setSize(600, 600);
+      JPanel panel = new JPanel();
+      //convert arraylist into array
+      UserTask[] list = new UserTask[llayer.getUTList().size()];
+      for(int i=0;i<llayer.getUTList().size();i++)//fill the list
+         list[i] = llayer.getUTList().get(i);
+      JList taskList = new JList(list);
+      panel.add(taskList);
+      frame.add(panel);
+   }
+   
+   private void deletePreTask()
+   {
+      JFrame frame = new JFrame("Delete Pre-Existing Task");
+      frame.setVisible(true);
+      frame.setSize(500, 500);
+      JPanel panel = new JPanel();
+               //convert arraylist into array
+      PreExistTask[] list = new PreExistTask[llayer.getPETList().size()];
+      for(int i=0;i<llayer.getPETList().size();i++)//fill the list
+         list[i] = llayer.getPETList().get(i);
+      JList taskList = new JList(list);
+      panel.add(taskList);
+      frame.add(panel);
    }
     
    private void viewTasks() {
@@ -571,6 +731,24 @@ public class View implements ListSelectionListener, ActionListener {
       JFrame frame = new JFrame("View Tasks");
       frame.setVisible(true);
       frame.setSize(600, 600);
+      JPanel panel = new JPanel();
+      panel.setLayout(new GridLayout(2,1));
+      //convert arraylist into array
+      UserTask[] list = new UserTask[llayer.getUTList().size()];
+      for(int i=0;i<llayer.getUTList().size();i++)//fill the list
+         list[i] = llayer.getUTList().get(i);
+      JList taskList = new JList(list);
+      
+      PreExistTask[] plist = new PreExistTask[llayer.getPETList().size()];
+      for(int i=0;i<llayer.getPETList().size();i++)//fill the list
+         plist[i] = llayer.getPETList().get(i);
+      JList ptaskList = new JList(plist);
+      
+      panel.add(taskList);
+      panel.add(ptaskList);
+      frame.add(panel);
+   
+   
    }
     
     /**
