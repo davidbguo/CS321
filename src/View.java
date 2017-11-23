@@ -48,6 +48,7 @@ public class View implements ListSelectionListener, ActionListener {
       System.out.println("inside setup");
       ArrayList<PreExistTask> petList = new ArrayList<PreExistTask>();
       /*
+      
       petList.add(new PreExistTask("MONDAY SLEEP", DayOfWeek.MONDAY, LocalTime.of(0, 0), LocalTime.of(9, 0), null));
       petList.add(new PreExistTask("MONDAY PET1", DayOfWeek.MONDAY, LocalTime.of(10, 0), LocalTime.of(2, 0), null));
       petList.add(new PreExistTask("MONDAY PET2", DayOfWeek.MONDAY, LocalTime.of(17, 0), LocalTime.of(22, 0), null));
@@ -221,11 +222,13 @@ public class View implements ListSelectionListener, ActionListener {
       JMenu MENU, menu2;
         
         //menu1 and menu2 menu items
-      JMenuItem createNewTask, viewTasks, m2Item1, m2Item2;
+      JMenuItem createNewTask, viewTasks, m2Item1, m2Item2,createPreTask;
         
         //Initialize menu items
       createNewTask = new JMenuItem("Create new task");
       createNewTask.addActionListener(this);
+      createPreTask = new JMenuItem("Create Pre-Existing Task");
+      createPreTask.addActionListener(this);
         
       viewTasks = new JMenuItem("View tasks");
       viewTasks.addActionListener(this);
@@ -235,6 +238,7 @@ public class View implements ListSelectionListener, ActionListener {
         //Initialize menus and menu items
       MENU = new JMenu("MENU");
       MENU.add(createNewTask);
+      MENU.add(createPreTask);
       MENU.add(viewTasks);
         
       menu2 = new JMenu("menu2");
@@ -258,48 +262,179 @@ public class View implements ListSelectionListener, ActionListener {
       else if(e.getActionCommand().equals("View tasks")) {
          viewTasks();
       }
+      else if(e.getActionCommand().equals("Create Pre-Existing Task"))
+      {
+         createPreTask();
+      }
    }
-    
-   private void createNewTask() {
-                   //Create new task       
-      JFrame frame = new JFrame("Create User Task");
+   private void createPreTask()
+   {
+      JFrame frame = new JFrame("Create Pre-Existing Task");
       frame.setVisible(true);
       frame.setSize(600, 600);
       JPanel panel = new JPanel();
-      panel.setLayout(new GridLayout(5,2));
-     //create components
+      panel.setLayout(new GridLayout(6,2));
+      
       JLabel nameLabel = new JLabel("Enter task name");
       JTextField nameBox = new JTextField(10);
-      JLabel typeLabel = new JLabel("Select type of task");
-      String[] types = {"Reading","Presentation","Quest","Quiz","Test","Essay","Study","Prelab","Problem set","Prelab"};
-      JComboBox typeBox = new JComboBox(types);
-      JLabel dateLabel = new JLabel("Enter due date (MM/DD/YYYY)");
-      JTextField dateBox = new JTextField(10);
-      JLabel timeLabel = new JLabel("Enter time due");
-      JTextField timeBox= new JTextField(10);
-      JButton addButton = new JButton("Add Task");
+      JLabel dayLabel = new JLabel("Select which day");
+      String[] days = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
+      JComboBox dayBox = new JComboBox(days);
+      JLabel startLabel = new JLabel("Enter start time (--:--)");
+      JTextField startBox = new JTextField(10);
+      JLabel endLabel = new JLabel("Enter end time (--:--)");
+      JTextField endBox= new JTextField(10);
+      JLabel lastLabel = new JLabel("Enter end date (MM/DD/YYYY)");
+      JTextField lastBox = new JTextField(10);
+      JButton addButton = new JButton("Add Pre-Existing Task");
       addButton.addActionListener(
          new ActionListener(){
             public void actionPerformed(ActionEvent e){
             
-            
-            
                String taskName = nameBox.getText();
-               String taskType = (String)typeBox.getSelectedItem();
-               String dueDate = dateBox.getText();
-               String timeDue = timeBox.getText();
-               LocalDateTime start = LocalDateTime.now();//--:--
-               int year = Integer.parseInt(dueDate.substring(6));
-               int month = Integer.parseInt(dueDate.substring(0,2));
-               int day = Integer.parseInt(dueDate.substring(3,5));
-               int hour = Integer.parseInt(timeDue.substring(0,2));
-               int minute = Integer.parseInt(timeDue.substring(3));
+               String day =(String)dayBox.getSelectedItem();
+               String start = startBox.getText();
+               String end = endBox.getText();
+               String last = lastBox.getText();
+               
+               System.out.println(day);
+               System.out.println(taskName);
+               int startHour = Integer.parseInt(start.substring(0,2));
+               int startMin = Integer.parseInt(start.substring(3));
+               int endHour = Integer.parseInt(end.substring(0,2));
+               int endMin = Integer.parseInt(end.substring(3));
+               
+               int lastYear = Integer.parseInt(last.substring(6));
+               int lastMonth = Integer.parseInt(last.substring(0,2));
+               int lastDay = Integer.parseInt(last.substring(3,5));
+              
+               LocalTime startTime = LocalTime.of(startHour,startMin);
+               LocalTime endTime = LocalTime.of(endHour,endMin);
+               LocalDateTime endDay = LocalDateTime.of(lastYear,lastMonth,lastDay,endHour,endMin);
+               switch(day)
+               {
+                  case "Monday":
+                     llayer.addPreExistTask(taskName,DayOfWeek.MONDAY,startTime,endTime,endDay);
+                     break;
+                  case "Tuesday":
+                     llayer.addPreExistTask(taskName,DayOfWeek.TUESDAY,startTime,endTime,endDay);
+                     break;
+                  case "Wednesday":
+                     llayer.addPreExistTask(taskName,DayOfWeek.WEDNESDAY,startTime,endTime,endDay);
+                     break;
+                  case "Thursday":
+                     llayer.addPreExistTask(taskName,DayOfWeek.THURSDAY,startTime,endTime,endDay);
+                     break;
+                  case "Friday":
+                     llayer.addPreExistTask(taskName,DayOfWeek.FRIDAY,startTime,endTime,endDay);
+                     break;
+                  case "Saturday":
+                     llayer.addPreExistTask(taskName,DayOfWeek.SATURDAY,startTime,endTime,endDay);
+                     break;
+                  case "Sunday":
+                     llayer.addPreExistTask(taskName,DayOfWeek.SUNDAY,startTime,endTime,endDay);
+                     break;
+               }
+               
+               updateMonth();
+            
+            }
+         });     
+   
+      
+      panel.add(nameLabel);
+      panel.add(nameBox);
+      panel.add(dayLabel);
+      panel.add(dayBox);
+      panel.add(startLabel);
+      panel.add(startBox);
+      panel.add(endLabel);
+      panel.add(endBox);
+      panel.add(lastLabel);
+      panel.add(lastBox);
+      panel.add(new JLabel());
+      panel.add(addButton);
+      frame.add(panel);
+   
+   }
+   
+   private void createNewTask() {
+      //Create new task       
+      JFrame frame = new JFrame("Create User Task");
+      frame.setVisible(true);
+      frame.setSize(400, 400);
+      JPanel panel = new JPanel();
+      panel.setLayout(new GridLayout(5,1));
+     //create components
+    
+     //subpanel1 for getting date
+      JPanel subpanel1 = new JPanel();
+      String[] monthOptions = {"1","2","3","4","5","6","7","8","9","10",
+         "11","12"};
+      String[] dayOptions={
+         "1","2","3","4","5","6","7","8","9","10",
+         "11","12","13","14","15","16","17","18","19","20",
+         "21","22","23","24","25","26","27","28","29","30","31"};
+      JComboBox months = new JComboBox(monthOptions);
+      JComboBox days = new JComboBox(dayOptions);
+      String[] yearOptions={"2017","2018","2019","2020"};
+      JComboBox years = new JComboBox(yearOptions);
+      subpanel1.add(new JLabel("Select due date:"));
+      subpanel1.add(months);
+      subpanel1.add(days);
+      subpanel1.add(years);
+      //end subpanel1
+      
+      //subpanel2 for getting time due
+      JPanel subpanel2 = new JPanel();
+      String[] hourOptions={
+         "1","2","3","4","5","6","7","8","9","10",
+         "11","12"};     
+      String[] minOptions={
+         "1","2","3","4","5","6","7","8","9","10",
+         "11","12","13","14","15","16","17","18","19","20",
+         "21","22","23","24","25","26","27","28","29","30",
+         "31","32","33","34","35","36","37","38","39","40",
+         "41","42","43","44","45","46","47","48","49","50",
+         "51","52","53","54","55","56","57","58","59","60"};
+      JComboBox hours = new JComboBox(hourOptions);
+      JComboBox mins = new JComboBox(minOptions);
+      subpanel2.add(new JLabel("Select time due:"));
+      subpanel2.add(hours);
+      subpanel2.add(mins);
+       //end subpanel2
+         
+      //subpanel3 for getting name
+      JPanel subpanel3 = new JPanel();
+      JLabel nameLabel = new JLabel("Enter task name:");
+      JTextField nameBox = new JTextField(10);
+      subpanel3.add(nameLabel);
+      subpanel3.add(nameBox);
+      //end subpanel3
+      
+      //panel4 for getting type of task
+      JPanel subpanel4 = new JPanel();
+      JLabel typeLabel = new JLabel("Select type of task:");
+      String[] types = {"Reading","Presentation","Quest","Quiz","Test","Essay","Study","Prelab","Problem set","Prelab"};
+      JComboBox typeBox = new JComboBox(types);
+      subpanel4.add(typeLabel);
+      subpanel4.add(typeBox);
+      
+      JPanel subpanel5 = new JPanel();
+      JButton addButton = new JButton("Add Task");
+      addButton.addActionListener(
+         new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+               String taskName = nameBox.getText();
+               String taskType = (String)typeBox.getSelectedItem();   
+               LocalDateTime start = LocalDateTime.now();
+               int year = Integer.parseInt((String)years.getSelectedItem());
+               int month = Integer.parseInt((String)months.getSelectedItem());
+               int day = Integer.parseInt((String)days.getSelectedItem());
+               int hour = Integer.parseInt((String)hours.getSelectedItem());
+               int minute = Integer.parseInt((String)mins.getSelectedItem());
                LocalDateTime end = LocalDateTime.of(year,month,day,hour,minute);
             
-            System.out.println(taskName);
-            System.out.println(dueDate);
-            System.out.println(timeDue);
-            System.out.println(taskType);
                switch(taskType.toLowerCase())
                {
                   case "reading":
@@ -365,28 +500,19 @@ public class View implements ListSelectionListener, ActionListener {
                
                }
                updateMonth();
-            
             }
-         });     
+         });
+      subpanel5.add(addButton);     
      
       //add components
-      panel.add(nameLabel);
-      panel.add(nameBox);
-      panel.add(typeLabel);
-      panel.add(typeBox);
-      panel.add(dateLabel);
-      panel.add(dateBox);
-      panel.add(timeLabel);
-      panel.add(timeBox);
-      panel.add(addButton);
-      panel.add(new JLabel());
-      panel.add(addButton);
-   
-      
-            
+      panel.add(subpanel3);
+      panel.add(subpanel4);
+      panel.add(subpanel1);
+      panel.add(subpanel2);
+      panel.add(subpanel5);
       frame.add(panel);    
    }
-    
+     
    private void deleteTask() {
         //Delete task
       System.out.println("TASK DELETED.");
