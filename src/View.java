@@ -24,6 +24,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.JList;
 
 import java.util.HashMap;
 
@@ -65,7 +66,7 @@ public class View implements ListSelectionListener, ActionListener {
    public static void setupLogicLayer(LogicLayer llayer) {
       System.out.println("inside setup");
       ArrayList<PreExistTask> petList = new ArrayList<PreExistTask>();
-      /*
+      
       
       petList.add(new PreExistTask("MONDAY SLEEP", DayOfWeek.MONDAY, LocalTime.of(0, 0), LocalTime.of(9, 0), null));
       petList.add(new PreExistTask("MONDAY PET1", DayOfWeek.MONDAY, LocalTime.of(10, 0), LocalTime.of(2, 0), null));
@@ -88,7 +89,7 @@ public class View implements ListSelectionListener, ActionListener {
       petList.add(new PreExistTask("SUNDAY SLEEP", DayOfWeek.SUNDAY, LocalTime.of(0, 0), LocalTime.of(9, 0), null));
       petList.add(new PreExistTask("SUNDAY PET1", DayOfWeek.SUNDAY, LocalTime.of(14, 0), LocalTime.of(16,29), null));
       petList.add(new PreExistTask("SUNDAY PET2", DayOfWeek.SUNDAY, LocalTime.of(22, 0), LocalTime.of(23, 30), null));
-   */
+   
    
       llayer.data.preExistTaskList = petList;
       UserTask ut1 = new UserTask("ut1", LocalDateTime.now(), LocalDateTime.now().plusDays(3), TaskTypeEnum.QUEST);
@@ -98,9 +99,9 @@ public class View implements ListSelectionListener, ActionListener {
       ut2.hoursLeft = 20;
       ut3.hoursLeft = 20;
       ArrayList<UserTask> utList = new ArrayList<UserTask>();
-      //utList.add(ut1);
-      //utList.add(ut2);
-      //utList.add(ut3);
+      utList.add(ut1);
+      utList.add(ut2);
+      utList.add(ut3);
       llayer.data.priorityUserTaskList = utList;
       llayer.data.userData.put("semStartYear", "2017");
       llayer.data.userData.put("semStartMonth", "9");
@@ -240,13 +241,17 @@ public class View implements ListSelectionListener, ActionListener {
       JMenu MENU, menu2;
         
         //menu1 and menu2 menu items
-      JMenuItem createNewTask, viewTasks, m2Item1, m2Item2,createPreTask;
+      JMenuItem createNewTask, viewTasks, m2Item1, m2Item2,createPreTask,editTask,editPreTask;
         
         //Initialize menu items
-      createNewTask = new JMenuItem("Create new task");
+      createNewTask = new JMenuItem("Create User Task");
       createNewTask.addActionListener(this);
       createPreTask = new JMenuItem("Create Pre-Existing Task");
       createPreTask.addActionListener(this);
+      editTask = new JMenuItem("Edit User Task");
+      editTask.addActionListener(this);
+      editPreTask = new JMenuItem("Edit Pre-Existing Task");
+      editPreTask.addActionListener(this);
         
       viewTasks = new JMenuItem("View tasks");
       viewTasks.addActionListener(this);
@@ -257,6 +262,8 @@ public class View implements ListSelectionListener, ActionListener {
       MENU = new JMenu("MENU");
       MENU.add(createNewTask);
       MENU.add(createPreTask);
+      MENU.add(editTask);
+      MENU.add(editPreTask);
       MENU.add(viewTasks);
         
       menu2 = new JMenu("menu2");
@@ -274,16 +281,41 @@ public class View implements ListSelectionListener, ActionListener {
    @Override
     public void actionPerformed(ActionEvent e) {
         //Check for which menu item fired the event and do something
-      if(e.getActionCommand().equals("Create new task")) {
+      if(e.getActionCommand().equals("Create User Task")) 
          createNewTask();
-      }
-      else if(e.getActionCommand().equals("View tasks")) {
+      
+      else if(e.getActionCommand().equals("View tasks")) 
          viewTasks();
-      }
       else if(e.getActionCommand().equals("Create Pre-Existing Task"))
-      {
          createPreTask();
+      else if(e.getActionCommand().equals("Edit User Task"))
+         editTask();
+      else if(e.getActionCommand().equals("Edit Pre-Existing Task"))
+         editPreTask();
+   }
+   private void editPreTask()
+   {
+      JFrame frame = new JFrame("Edit User Task");
+      frame.setVisible(true);
+      frame.setSize(500, 500);
+      JPanel panel = new JPanel();
+   }
+   private void editTask()
+   {
+      JFrame frame = new JFrame("Edit User Task");
+      frame.setVisible(true);
+      frame.setSize(500, 500);
+      JPanel panel = new JPanel();
+      UserTask[] list = new UserTask[llayer.getUTList().size()];
+      for(int i=0;i<llayer.getUTList().size();i++)
+      {
+         list[i] = llayer.getUTList().get(i);
       }
+      JList taskList = new JList(list);
+      
+      panel.add(taskList);
+      frame.add(panel);
+   
    }
    private void createPreTask()
    {
@@ -353,6 +385,7 @@ public class View implements ListSelectionListener, ActionListener {
                switch(day)//depending on day, add appropriate preExistTask
                {
                   case "Monday":
+                     System.out.println("day is monday");
                      llayer.addPreExistTask(taskName,DayOfWeek.MONDAY,startTime,endTime,endDay);
                      break;
                   case "Tuesday":
