@@ -42,6 +42,24 @@ public class View implements ListSelectionListener, ActionListener {
    JTextArea displayField;
    HashMap<Integer, ASDay> currCalendar;
    LogicLayer llayer = new LogicLayer();
+   String[] hourOptions={"00",
+         "01","02","03","04","05","06","07","08","09","10",
+         "11","12","13","14","15","16","17","18","19","20",
+         "21","22","23","24"};     
+   String[] minOptions={"00",
+         "01","02","03","04","05","06","07","08","09","10",
+         "11","12","13","14","15","16","17","18","19","20",
+         "21","22","23","24","25","26","27","28","29","30",
+         "31","32","33","34","35","36","37","38","39","40",
+         "41","42","43","44","45","46","47","48","49","50",
+         "51","52","53","54","55","56","57","58","59","60"};
+   String[] monthOptions = {"01","02","03","04","05","06","07","08","09","10",
+         "11","12"};
+   String[] dayOptions={
+         "01","02","03","04","05","06","07","08","09","10",
+         "11","12","13","14","15","16","17","18","19","20",
+         "21","22","23","24","25","26","27","28","29","30","31"};
+
   
    //temp for testing
    public static void setupLogicLayer(LogicLayer llayer) {
@@ -271,47 +289,68 @@ public class View implements ListSelectionListener, ActionListener {
    {
       JFrame frame = new JFrame("Create Pre-Existing Task");
       frame.setVisible(true);
-      frame.setSize(600, 600);
+      frame.setSize(500, 500);
       JPanel panel = new JPanel();
       panel.setLayout(new GridLayout(6,2));
-      
+     //sub panel for task name 
+      JPanel sub1 = new JPanel();
       JLabel nameLabel = new JLabel("Enter task name");
       JTextField nameBox = new JTextField(10);
+      sub1.add(nameLabel);
+      sub1.add(nameBox);
+      //sub panel for day
+      JPanel sub2 = new JPanel();
       JLabel dayLabel = new JLabel("Select which day");
-      String[] days = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
-      JComboBox dayBox = new JComboBox(days);
+      String[] daysofweek = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
+      JComboBox dayBox = new JComboBox(daysofweek);
+      sub2.add(dayLabel);
+      sub2.add(dayBox);
+      //sub panel for start time
+      JPanel sub3 = new JPanel();
       JLabel startLabel = new JLabel("Enter start time (--:--)");
-      JTextField startBox = new JTextField(10);
+      JComboBox starthours = new JComboBox(hourOptions);
+      JComboBox startmins = new JComboBox(minOptions);
+      sub3.add(startLabel);
+      sub3.add(starthours);
+      sub3.add(startmins);
+   //sub panel for end time
+      JPanel sub4 = new JPanel();
       JLabel endLabel = new JLabel("Enter end time (--:--)");
-      JTextField endBox= new JTextField(10);
+      JComboBox endhours = new JComboBox(hourOptions);
+      JComboBox endmins = new JComboBox(minOptions);
+      sub4.add(endLabel);
+      sub4.add(endhours);
+      sub4.add(endmins);
+   //sub panel for last day
+      JPanel sub5 = new JPanel();
       JLabel lastLabel = new JLabel("Enter end date (MM/DD/YYYY)");
-      JTextField lastBox = new JTextField(10);
+      JComboBox months = new JComboBox(monthOptions);
+      JComboBox days = new JComboBox(dayOptions);
+      String[] yearOptions={"2017","2018","2019","2020"};
+      JComboBox years = new JComboBox(yearOptions);
+      sub5.add(lastLabel);
+      sub5.add(months);
+      sub5.add(days);
+      sub5.add(years);
+   //sub panel for button
+      JPanel sub6 = new JPanel();
       JButton addButton = new JButton("Add Pre-Existing Task");
       addButton.addActionListener(
          new ActionListener(){
             public void actionPerformed(ActionEvent e){
-            
                String taskName = nameBox.getText();
-               String day =(String)dayBox.getSelectedItem();
-               String start = startBox.getText();
-               String end = endBox.getText();
-               String last = lastBox.getText();
-               
-               System.out.println(day);
-               System.out.println(taskName);
-               int startHour = Integer.parseInt(start.substring(0,2));
-               int startMin = Integer.parseInt(start.substring(3));
-               int endHour = Integer.parseInt(end.substring(0,2));
-               int endMin = Integer.parseInt(end.substring(3));
-               
-               int lastYear = Integer.parseInt(last.substring(6));
-               int lastMonth = Integer.parseInt(last.substring(0,2));
-               int lastDay = Integer.parseInt(last.substring(3,5));
-              
+               String day = (String)dayBox.getSelectedItem();
+               int startHour = Integer.parseInt((String)starthours.getSelectedItem());
+               int startMin = Integer.parseInt((String)startmins.getSelectedItem());
+               int endHour = Integer.parseInt((String)endhours.getSelectedItem());
+               int endMin = Integer.parseInt((String)endmins.getSelectedItem());
+               int lastYear = Integer.parseInt((String)years.getSelectedItem());
+               int lastMonth = Integer.parseInt((String)months.getSelectedItem());
+               int lastDay = Integer.parseInt((String)days.getSelectedItem());
                LocalTime startTime = LocalTime.of(startHour,startMin);
                LocalTime endTime = LocalTime.of(endHour,endMin);
                LocalDateTime endDay = LocalDateTime.of(lastYear,lastMonth,lastDay,endHour,endMin);
-               switch(day)
+               switch(day)//depending on day, add appropriate preExistTask
                {
                   case "Monday":
                      llayer.addPreExistTask(taskName,DayOfWeek.MONDAY,startTime,endTime,endDay);
@@ -337,25 +376,17 @@ public class View implements ListSelectionListener, ActionListener {
                }
                
                updateMonth();
-            
+               frame.dispose();
             }
          });     
-   
-      
-      panel.add(nameLabel);
-      panel.add(nameBox);
-      panel.add(dayLabel);
-      panel.add(dayBox);
-      panel.add(startLabel);
-      panel.add(startBox);
-      panel.add(endLabel);
-      panel.add(endBox);
-      panel.add(lastLabel);
-      panel.add(lastBox);
-      panel.add(new JLabel());
-      panel.add(addButton);
+      sub6.add(addButton);
+      panel.add(sub1);
+      panel.add(sub2);
+      panel.add(sub3);
+      panel.add(sub4);
+      panel.add(sub5);
+      panel.add(sub6);
       frame.add(panel);
-   
    }
    
    private void createNewTask() {
@@ -366,15 +397,8 @@ public class View implements ListSelectionListener, ActionListener {
       JPanel panel = new JPanel();
       panel.setLayout(new GridLayout(5,1));
      //create components
-    
      //subpanel1 for getting date
       JPanel subpanel1 = new JPanel();
-      String[] monthOptions = {"1","2","3","4","5","6","7","8","9","10",
-         "11","12"};
-      String[] dayOptions={
-         "1","2","3","4","5","6","7","8","9","10",
-         "11","12","13","14","15","16","17","18","19","20",
-         "21","22","23","24","25","26","27","28","29","30","31"};
       JComboBox months = new JComboBox(monthOptions);
       JComboBox days = new JComboBox(dayOptions);
       String[] yearOptions={"2017","2018","2019","2020"};
@@ -383,35 +407,19 @@ public class View implements ListSelectionListener, ActionListener {
       subpanel1.add(months);
       subpanel1.add(days);
       subpanel1.add(years);
-      //end subpanel1
-      
       //subpanel2 for getting time due
       JPanel subpanel2 = new JPanel();
-      String[] hourOptions={
-         "1","2","3","4","5","6","7","8","9","10",
-         "11","12"};     
-      String[] minOptions={
-         "1","2","3","4","5","6","7","8","9","10",
-         "11","12","13","14","15","16","17","18","19","20",
-         "21","22","23","24","25","26","27","28","29","30",
-         "31","32","33","34","35","36","37","38","39","40",
-         "41","42","43","44","45","46","47","48","49","50",
-         "51","52","53","54","55","56","57","58","59","60"};
       JComboBox hours = new JComboBox(hourOptions);
       JComboBox mins = new JComboBox(minOptions);
       subpanel2.add(new JLabel("Select time due:"));
       subpanel2.add(hours);
       subpanel2.add(mins);
-       //end subpanel2
-         
       //subpanel3 for getting name
       JPanel subpanel3 = new JPanel();
       JLabel nameLabel = new JLabel("Enter task name:");
       JTextField nameBox = new JTextField(10);
       subpanel3.add(nameLabel);
       subpanel3.add(nameBox);
-      //end subpanel3
-      
       //panel4 for getting type of task
       JPanel subpanel4 = new JPanel();
       JLabel typeLabel = new JLabel("Select type of task:");
@@ -419,7 +427,7 @@ public class View implements ListSelectionListener, ActionListener {
       JComboBox typeBox = new JComboBox(types);
       subpanel4.add(typeLabel);
       subpanel4.add(typeBox);
-      
+      //panel5 for button
       JPanel subpanel5 = new JPanel();
       JButton addButton = new JButton("Add Task");
       addButton.addActionListener(
@@ -434,7 +442,6 @@ public class View implements ListSelectionListener, ActionListener {
                int hour = Integer.parseInt((String)hours.getSelectedItem());
                int minute = Integer.parseInt((String)mins.getSelectedItem());
                LocalDateTime end = LocalDateTime.of(year,month,day,hour,minute);
-            
                switch(taskType.toLowerCase())
                {
                   case "reading":
@@ -445,25 +452,25 @@ public class View implements ListSelectionListener, ActionListener {
                      }
                   case "presentation":
                      {
-                        String duration= JOptionPane.showInputDialog("Enter duration of presentation");
+                        String duration= JOptionPane.showInputDialog("Enter duration of presentation in hours");
                         llayer.addUserTask(taskName,start,end,TaskTypeEnum.PRESENTATION); 
                         break;
                      }
                   case "quest":
                      {
-                        String duration= JOptionPane.showInputDialog("Enter duration of quest");
+                        String duration= JOptionPane.showInputDialog("Enter duration of quest in hours");
                         llayer.addUserTask(taskName,start,end,TaskTypeEnum.QUEST); 
                         break;
                      }
                   case "quiz":
                      {
-                        String duration= JOptionPane.showInputDialog("Enter duration of quiz");
+                        String duration= JOptionPane.showInputDialog("Enter duration of quiz in hours");
                         llayer.addUserTask(taskName,start,end,TaskTypeEnum.QUIZ); 
                         break;
                      }
                   case "test":
                      {
-                        String duration= JOptionPane.showInputDialog("Enter duration of test");
+                        String duration= JOptionPane.showInputDialog("Enter duration of test in hours");
                         llayer.addUserTask(taskName,start,end,TaskTypeEnum.TEST); 
                         break;
                      }
@@ -482,7 +489,7 @@ public class View implements ListSelectionListener, ActionListener {
                   
                   case "prelab":
                      {
-                        String duration= JOptionPane.showInputDialog("Enter duration of prelab ");
+                        String duration= JOptionPane.showInputDialog("Enter duration of prelab in hours");
                         llayer.addUserTask(taskName,start,end,TaskTypeEnum.PRELAB); 
                         break;
                      }
@@ -500,6 +507,7 @@ public class View implements ListSelectionListener, ActionListener {
                
                }
                updateMonth();
+               frame.dispose();
             }
          });
       subpanel5.add(addButton);     
