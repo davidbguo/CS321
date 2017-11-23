@@ -1,17 +1,24 @@
 import java.util.ArrayList;
 
+/*
+ * Our own version of a calendar object
+ * Variables:
+ * 			ArrayList<ASMonth> currentView, length is set of semester start and end date from user in data storage
+ * Methods:
+ * 			Constructor
+ * 			String toString(),Prints "Current Semester Calendar" and then loops through toString of all ASMonths in currentView[] 
+ * For FrontEnd:
+ * 			You might access currentView and toString()
+ */
+
 public class ASCalendar {
-	protected ArrayList<ASMonth> currentView; //ArrayList of Months in the Semester
+	protected ArrayList<ASMonth> currentView; 
 	
 	public ASCalendar() {
 		 currentView  = new ArrayList<ASMonth>();
 	}
-	
-    public void changeCurrentView(){ // Edit the current semester-TO-BE implemented
-    	
-    }
-    
-    public String toString() {	
+	  
+	public String toString() {	
     	String retVal = "CURRENT SEMESTER CALENDAR \n";
     	for (int i = 0; i < currentView.size(); i++) {
     		retVal += currentView.get(i).toString() + "\n";

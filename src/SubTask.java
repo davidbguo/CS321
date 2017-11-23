@@ -2,6 +2,28 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
+/*
+ * SubTask represents a single slot of time during the day assigned to a specify task
+ * Variables:
+ * 			LocalTime starTime
+ * 			LocalTime endTime, together with day and startTime, uniquely identifies a time slot
+ * 			LocalDate day
+ * 			DayOfWeek dayOfWeek
+ * 			double timeLength, time between startTime and endTime in hours
+ * 			String name, to connect it to a specific Event
+ * 			LocalDateTime dateCreated, link uniqueID of an Event to newly created SubTask
+ * Methods
+ * 			Constructor(String, LocalDate, LocalTime, LocalTimee, LocalDateTime)
+ * 				for UserTask type Event object
+ * 			Constructor(String DayOfWeek, LocalTime, LocalTime, LocalDateTime)
+ * 				for PreExistTask type of Event object
+ * 			printString(), old method used in testing of LogicLayer
+ * 			String toString(), prints name, day/dayOfWeek (depending on UserTask or PET), start, end, and timeLength
+ * For FrontEnd:
+ * 			ignore printString, you only might use toString. Constructors are for LogicLayer
+ */
+
+
 public class SubTask extends Event{
 
 	protected LocalTime startTime;
@@ -10,11 +32,8 @@ public class SubTask extends Event{
 	protected DayOfWeek dayOfWeek;
 	protected LocalDate day;
 	protected String name;
-	//LocalDateTime.of(0, 0, 0, 0, 0)) = startOfDay or endOfDay never delete
 	protected LocalDateTime dateCreated;
-	
-	
-	
+
 	//constructor for usertask
 	public SubTask(String name, LocalDate day, LocalTime start, LocalTime end, LocalDateTime dateCreated) {
 		this.name = name;

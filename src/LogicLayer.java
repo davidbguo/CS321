@@ -1,12 +1,47 @@
 import java.time.*;
 import java.time.temporal.*;
 import java.util.*;
+
+/*
+ * LogicLayer, 2nd tier does all computations, responds to FrontEnd. All you need should be here.
+ * Variables
+ * 			DataStorage data, instance of DataStorage for data storage
+ * Methods:
+ * 			ArrayList<UserTask> getUTList, returns list of all UserTasks
+ * 			ArrayList<PreExistTask> getPETList, return list of all PreExistTasks
+ * 			addPreExistTask(String, DayofWeek, LocalTime start, LocalTime end, LocalDateTime endDateTime)
+ * 			addUserTask(String, LocalDateTime start, LocalDateTime end, TaskTypeEnum)
+ * 			deletePreExistTask(PreExistTask)
+ * 			deleteUserTask(UserTask task)
+ * 			editPreExistTask(PreExistTask, String, DayOfWeek, LocalTime start, LocalTime end, LocalDateTime)
+ * 			editUserTask(UserTask, String, LocalDateTime start, LocalDateTime end, TaskTypeEnum)
+ * 			ArrayList<UserTask> listTasksNotDone, returns list of all tasks with hoursLeft not able to be scheduled
+ * 			HashMap<Integer,ASDay> getCalendarData(), returns data of all scheduled subtasks per day from the calendar obj in data
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * 			updateDataCalendar, takes data stored in currentDays and update calendar obj in data
+ *  		int findPreExistTask(PreExistTask), private helper method
+ * 			int findUserTask(UserTask), private helper method
+ * 			setCurrentDays, initializes currentDays[] in data with length based on semster start and end information from HashMap in data
+ * 			prioritize, update priorityUserTaskList to be accurately sorted
+ * 			createBreakdown, calls prioritize then creates breakdown for each task by order in priorityUserTaskList. calls updateDataCalendar at the end
+ * 			double findTaskBreakLength, helper method 
+ * 			breakdownForSingleDay(ASDay day, UserTask task), helper method to contains logic to breakdown for single day using openTimeSlots from ASDay and created SubTasks
+ * For FrontEnd:
+ * 			You will need to use all the methods listed in the first half of the Method Section.
+ * 			Most of it is pretty straightforward. Keep note of what inputs the methods needs.
+ * 			Special note to editing methods, the first arg is a PreExistTask obj or UserTask obj. Since you guys shouldn't be created such objects directly in the front end
+ * 			(look at the add methods that take in input string/localdatetime args for the logiclayer to do the creation)
+ * 			you may be wondering how you would pass a PreExistTask obj or UserTask obj from the frontend to the backend.
+ *  !!!--->	!!!!! What you need to do is call getUTList and getPETList first. This returns the ArrayList of all PreExistTask/UserTask objects.
+ * 			Then you can display them to the user. They will pick one. Then you return that object that has the old data inside, and the new data fills the rest of the edit method args.
+ * 			Note if the user didn't change one of the args (for example they didn't change the name), just pass in null. The method must always have 5/4 arg inputs. 
+ *  
+ * 
+ */
+
 public class LogicLayer {
 	protected DataStorage data = new DataStorage();
 	
-	public ArrayList<UserTask> getUserTasks(){
-		return data.priorityUserTaskList;
-	}
 	public void updateDataCalendar() {
 		System.out.println("inside updateDataCalendar");
 		ArrayList<ASMonth> monthList = new ArrayList<ASMonth>();
@@ -74,7 +109,6 @@ public class LogicLayer {
 		}
 		return -1;
 	}
-
 	
 	public void deletePreExistTask(PreExistTask task){
 		data.deletePreExistTask(findPreExistTask(task));
@@ -107,7 +141,7 @@ public class LogicLayer {
 		this.setCurrentDays();
 		this.createBreakdown();
 	}
-	public void editUserTask(UserTask task, String name, String taskType, LocalDateTime startDateTime
+	public void editUserTask(UserTask task, String name, LocalDateTime startDateTime
 			, LocalDateTime endDateTime, TaskTypeEnum type){
 		if(name == null)
 			name = task.name;
@@ -142,7 +176,7 @@ public class LogicLayer {
 	}
 
 	//use comparator for usertask
-		private void prioritize(){
+	private void prioritize(){
 		Collections.sort(data.priorityUserTaskList, new SortByPriority());
 	}
 
@@ -194,7 +228,6 @@ public class LogicLayer {
 	}
 
 
-	//so far works, need more restraints
 	protected void breakdownForSingleDay(ASDay day, UserTask task){
 		ArrayList<LocalTime> openSlots = day.getOpenTimeSlot();
 		double hoursAssigned = task.hoursLeft > task.maxHoursPerDay ? task.maxHoursPerDay : task.hoursLeft;

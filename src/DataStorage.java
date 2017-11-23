@@ -2,8 +2,30 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
+/*
+ * Class to hold all data stored, unfortunately not persisted beyond a singular run of the application
+ * Variables:
+ * 			ArrayList<PreExistTask> preExistTaskList
+ * 			ArrayList<UserTask> priorityUserTaskList
+ * 			HashMap<String, String> userData, place for miscellaneous data about the user like semester start and end date
+ * 			ArrayList<ASMonth> archivedMonths, not used
+ * 			ArrayList<ASDay> currentDays, main store of data to be manipulated
+ * 			ASCalendar calendar, final output based on currentDays[]
+ * Methods
+ * 			deletePreExistTask(int)
+ * 			deleteUserTask(int)
+ * 			editPreExistTask(int)
+ * 			editUserTask(int)
+ * 			boolean saveToFile(String), not used in final product
+ * 			DataStorage readFromFile(String), not used in final product
+ * For FrontEnd
+ * 			You should never call anything from here. This layer should only be used for LogicLayer
+ * 			
+ */
+
+
+
 public class DataStorage {
-	//protected Event [] currentEvents;
 	protected ArrayList<PreExistTask> preExistTaskList = new ArrayList<PreExistTask>();
 	protected ArrayList<UserTask> priorityUserTaskList = new ArrayList<UserTask>();
 	protected HashMap<String, String> userData = new HashMap<String, String>();
@@ -11,10 +33,7 @@ public class DataStorage {
 	protected ArrayList<ASDay> currentDays = new ArrayList<ASDay>();
 	protected ASCalendar calendar = new ASCalendar();
 	
-	
-	//constructor
-	public DataStorage(){}
-	
+
 	public void deletePreExistTask(int i){
 		this.preExistTaskList.remove(i);
 	}

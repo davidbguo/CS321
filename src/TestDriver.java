@@ -1,7 +1,11 @@
 import java.time.*;
 import java.util.ArrayList;
 
-
+/*
+ * Class with a main just for running tests of LogicLayer methods
+ * For FrontEnd:
+ * 			Ignore this completely. 
+ */
 
 public class TestDriver {
 
@@ -116,7 +120,7 @@ public class TestDriver {
 		System.out.println("UserTask Edit:"+ userTask);
 		
 		ll.editPreExistTask(preTask,"Test",null,null,null,null );
-		ll.editUserTask(userTask,"HELP",null,null,null,null );
+		ll.editUserTask(userTask,"HELP",null,null,null );
 		System.out.println("After---------------------");
 		System.out.println(ll.data.preExistTaskList);
 		System.out.println(ll.data.priorityUserTaskList);
