@@ -43,6 +43,7 @@ public class View implements ListSelectionListener, ActionListener {
    JTextArea displayField;
    HashMap<Integer, ASDay> currCalendar;
    LogicLayer llayer = new LogicLayer();
+   //USED FOR MAKING JCOMBOBOXES
    String[] hourOptions={"00",
          "01","02","03","04","05","06","07","08","09","10",
          "11","12","13","14","15","16","17","18","19","20",
@@ -68,7 +69,7 @@ public class View implements ListSelectionListener, ActionListener {
       ArrayList<PreExistTask> petList = new ArrayList<PreExistTask>();
       
       
-      petList.add(new PreExistTask("MONDAY SLEEP", DayOfWeek.MONDAY, LocalTime.of(0, 0), LocalTime.of(9, 0), null));
+      //petList.add(new PreExistTask("MONDAY SLEEP", DayOfWeek.MONDAY, LocalTime.of(0, 0), LocalTime.of(9, 0), null));
       petList.add(new PreExistTask("MONDAY PET1", DayOfWeek.MONDAY, LocalTime.of(10, 0), LocalTime.of(2, 0), null));
       petList.add(new PreExistTask("MONDAY PET2", DayOfWeek.MONDAY, LocalTime.of(17, 0), LocalTime.of(22, 0), null));
       petList.add(new PreExistTask("TUESDAY SLEEP", DayOfWeek.TUESDAY, LocalTime.of(0, 0), LocalTime.of(9, 0), null));
@@ -238,7 +239,7 @@ public class View implements ListSelectionListener, ActionListener {
       JMenuBar menuBar;
         
         //Individual menus
-      JMenu MENU, menu2;
+      JMenu MENU;
         
         //menu1 and menu2 menu items
       JMenuItem createNewTask, viewTasks, m2Item1, m2Item2,createPreTask,editTask,editPreTask,deleteTask,deletePreTask;
@@ -272,15 +273,10 @@ public class View implements ListSelectionListener, ActionListener {
       MENU.add(deleteTask);
       MENU.add(deletePreTask);
       MENU.add(viewTasks);
-        
-      menu2 = new JMenu("menu2");
-      menu2.add(m2Item1);
-      menu2.add(m2Item2);
-        
+     
         //Initialize menu bar and add menus
       menuBar = new JMenuBar();
       menuBar.add(MENU);
-      menuBar.add(menu2);
         
       return menuBar;
    }
@@ -305,20 +301,25 @@ public class View implements ListSelectionListener, ActionListener {
          deletePreTask();
       
    }
+   //EDIT A PRE-EXISTING TASK
    private void editPreTask()
    {
+   //SET UP FRAME
       JFrame frame = new JFrame("Edit Pre-Existing Task");
       frame.setVisible(true);
       frame.setSize(500, 500);
       JPanel panel = new JPanel();
-               //convert arraylist into array
+   //CONVERT ARRAYLIST INTO ARRAY
       PreExistTask[] list = new PreExistTask[llayer.getPETList().size()];
       for(int i=0;i<llayer.getPETList().size();i++)//fill the list
          list[i] = llayer.getPETList().get(i);
       JList taskList = new JList(list);
+      
+      //ADD COMPONENTS TO PANEL
       panel.add(taskList);
       frame.add(panel);
    }
+   
    //EDIT USER TASK
    private void editTask()
    {
@@ -327,13 +328,15 @@ public class View implements ListSelectionListener, ActionListener {
       frame.setSize(600, 600);
       JPanel panel = new JPanel();
       panel.setLayout(new GridLayout(7,1));
-      //convert arraylist into array
+      
+      //CREATE JLIST FOR UT
       UserTask[] list = new UserTask[llayer.getUTList().size()];
       for(int i=0;i<llayer.getUTList().size();i++)//fill the list
          list[i] = llayer.getUTList().get(i);
       JList taskList = new JList(list);
+      taskList.setFont(new Font("Arial",Font.BOLD,10));
       
-       //subpanel1 for getting date
+       //PANEL FOR DATE
       JPanel subpanel1 = new JPanel();
       JComboBox months = new JComboBox(monthOptions);
       JComboBox days = new JComboBox(dayOptions);
@@ -343,28 +346,33 @@ public class View implements ListSelectionListener, ActionListener {
       subpanel1.add(months);
       subpanel1.add(days);
       subpanel1.add(years);
-      //subpanel2 for getting time due
+      
+      //PANEL FOR TIME
       JPanel subpanel2 = new JPanel();
       JComboBox hours = new JComboBox(hourOptions);
       JComboBox mins = new JComboBox(minOptions);
       subpanel2.add(new JLabel("Select time due:"));
       subpanel2.add(hours);
       subpanel2.add(mins);
-      //subpanel3 for getting name
+      
+      //PANEL FOR NAME
       JPanel subpanel3 = new JPanel();
       JLabel nameLabel = new JLabel("Enter task name:");
       JTextField nameBox = new JTextField(10);
       subpanel3.add(nameLabel);
       subpanel3.add(nameBox);
-      //panel4 for getting type of task
+      
+      //PANEL FOR TYPE
       JPanel subpanel4 = new JPanel();
       JLabel typeLabel = new JLabel("Select type of task:");
       String[] types = {"Reading","Presentation","Quest","Quiz","Test","Essay","Study","Prelab","Problem set","Prelab"};
       JComboBox typeBox = new JComboBox(types);
       subpanel4.add(typeLabel);
       subpanel4.add(typeBox);
-      //panel5 for button
+      
+      //PANEL FOR BUTTON
       JPanel subpanel5 = new JPanel();
+      //CREATE BUTTON TO MAKE CHANGES
       JButton button = new JButton("Make Changes");
       button.addActionListener(
          new ActionListener(){
@@ -379,6 +387,7 @@ public class View implements ListSelectionListener, ActionListener {
                int minute = Integer.parseInt((String)mins.getSelectedItem());
                LocalDateTime end = LocalDateTime.of(year,month,day,hour,minute);
                UserTask task = (UserTask)taskList.getSelectedValue();
+               
                switch(taskType.toLowerCase())
                {
                   case "reading":
@@ -440,45 +449,47 @@ public class View implements ListSelectionListener, ActionListener {
                      llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.PROJECT); 
                      break;
                }
-               updateMonth();
                frame.dispose();
             }
          });
-      subpanel5.add(button);     
-     
-      //add components
+      subpanel5.add(button);
+           
+     //ADD COMPONENTS TO PANEL
       panel.add(taskList);
-      frame.add(panel);
-      
       panel.add(subpanel3);
       panel.add(subpanel4);
       panel.add(subpanel1);
       panel.add(subpanel2);
       panel.add(subpanel5);
-   
-   
+      frame.add(panel);
    }
+   
+   //CREATE A PRE-EXISTING TASK
    private void createPreTask()
    {
+   //CREATE THE FRAME AND PANEL
       JFrame frame = new JFrame("Create Pre-Existing Task");
       frame.setVisible(true);
       frame.setSize(500, 500);
       JPanel panel = new JPanel();
       panel.setLayout(new GridLayout(6,2));
-     //sub panel for task name 
+      
+   //PANEL FOR NAME
       JPanel sub1 = new JPanel();
       JLabel nameLabel = new JLabel("Enter task name");
       JTextField nameBox = new JTextField(10);
       sub1.add(nameLabel);
       sub1.add(nameBox);
-      //sub panel for day
+      
+   //PANEL FOR DAY
       JPanel sub2 = new JPanel();
       JLabel dayLabel = new JLabel("Select which day");
       String[] daysofweek = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
       JComboBox dayBox = new JComboBox(daysofweek);
       sub2.add(dayLabel);
       sub2.add(dayBox);
-      //sub panel for start time
+      
+   //PANEL FOR START TIME
       JPanel sub3 = new JPanel();
       JLabel startLabel = new JLabel("Enter start time (--:--)");
       JComboBox starthours = new JComboBox(hourOptions);
@@ -486,7 +497,8 @@ public class View implements ListSelectionListener, ActionListener {
       sub3.add(startLabel);
       sub3.add(starthours);
       sub3.add(startmins);
-   //sub panel for end time
+      
+   //PANEL FOR END TIME
       JPanel sub4 = new JPanel();
       JLabel endLabel = new JLabel("Enter end time (--:--)");
       JComboBox endhours = new JComboBox(hourOptions);
@@ -494,7 +506,8 @@ public class View implements ListSelectionListener, ActionListener {
       sub4.add(endLabel);
       sub4.add(endhours);
       sub4.add(endmins);
-   //sub panel for last day
+      
+   //PANEL FOR END DATE
       JPanel sub5 = new JPanel();
       JLabel lastLabel = new JLabel("Enter end date (MM/DD/YYYY)");
       JComboBox months = new JComboBox(monthOptions);
@@ -505,7 +518,8 @@ public class View implements ListSelectionListener, ActionListener {
       sub5.add(months);
       sub5.add(days);
       sub5.add(years);
-   //sub panel for button
+   
+   //PANEL FOR BUTTON W/ ACTION LISTENER TO ADD TASK
       JPanel sub6 = new JPanel();
       JButton addButton = new JButton("Add Pre-Existing Task");
       addButton.addActionListener(
@@ -520,13 +534,13 @@ public class View implements ListSelectionListener, ActionListener {
                int lastYear = Integer.parseInt((String)years.getSelectedItem());
                int lastMonth = Integer.parseInt((String)months.getSelectedItem());
                int lastDay = Integer.parseInt((String)days.getSelectedItem());
+               System.out.println("Start hour:" + startHour+ " Start min" + startMin);
                LocalTime startTime = LocalTime.of(startHour,startMin);
                LocalTime endTime = LocalTime.of(endHour,endMin);
                LocalDateTime endDay = LocalDateTime.of(lastYear,lastMonth,lastDay,endHour,endMin);
                switch(day)//depending on day, add appropriate preExistTask
                {
                   case "Monday":
-                     System.out.println("day is monday");
                      llayer.addPreExistTask(taskName,DayOfWeek.MONDAY,startTime,endTime,endDay);
                      break;
                   case "Tuesday":
@@ -548,12 +562,12 @@ public class View implements ListSelectionListener, ActionListener {
                      llayer.addPreExistTask(taskName,DayOfWeek.SUNDAY,startTime,endTime,endDay);
                      break;
                }
-               
-               updateMonth();
                frame.dispose();
             }
          });     
       sub6.add(addButton);
+      
+      //ADD COMPONENTS TO PANEL
       panel.add(sub1);
       panel.add(sub2);
       panel.add(sub3);
@@ -564,14 +578,14 @@ public class View implements ListSelectionListener, ActionListener {
    }
    
    private void createNewTask() {
-      //Create new task       
+      //CREATE FRAME AND PANEL
       JFrame frame = new JFrame("Create User Task");
       frame.setVisible(true);
       frame.setSize(400, 400);
       JPanel panel = new JPanel();
       panel.setLayout(new GridLayout(5,1));
-     //create components
-     //subpanel1 for getting date
+      
+     //PANEL FOR DATE
       JPanel subpanel1 = new JPanel();
       JComboBox months = new JComboBox(monthOptions);
       JComboBox days = new JComboBox(dayOptions);
@@ -581,27 +595,31 @@ public class View implements ListSelectionListener, ActionListener {
       subpanel1.add(months);
       subpanel1.add(days);
       subpanel1.add(years);
-      //subpanel2 for getting time due
+      
+      //PANEL FOR TIME
       JPanel subpanel2 = new JPanel();
       JComboBox hours = new JComboBox(hourOptions);
       JComboBox mins = new JComboBox(minOptions);
       subpanel2.add(new JLabel("Select time due:"));
       subpanel2.add(hours);
       subpanel2.add(mins);
-      //subpanel3 for getting name
+     
+     //PANEL FOR NAME
       JPanel subpanel3 = new JPanel();
       JLabel nameLabel = new JLabel("Enter task name:");
       JTextField nameBox = new JTextField(10);
       subpanel3.add(nameLabel);
       subpanel3.add(nameBox);
-      //panel4 for getting type of task
+      
+      //PANEL FOR TASK TYPE
       JPanel subpanel4 = new JPanel();
       JLabel typeLabel = new JLabel("Select type of task:");
       String[] types = {"Reading","Presentation","Quest","Quiz","Test","Essay","Study","Prelab","Problem set","Prelab"};
       JComboBox typeBox = new JComboBox(types);
       subpanel4.add(typeLabel);
       subpanel4.add(typeBox);
-      //panel5 for button
+      
+      //PANEL FOR BUTTON W/ ACTION LISTENER TO ADD TASK
       JPanel subpanel5 = new JPanel();
       JButton addButton = new JButton("Add Task");
       addButton.addActionListener(
@@ -680,13 +698,13 @@ public class View implements ListSelectionListener, ActionListener {
                   default:
                
                }
-               updateMonth();
                frame.dispose();
             }
          });
-      subpanel5.add(addButton);     
+      subpanel5.add(addButton);
+           
      
-      //add components
+      //ADD COMPONENTS TO PANEL
       panel.add(subpanel3);
       panel.add(subpanel4);
       panel.add(subpanel1);
@@ -694,61 +712,103 @@ public class View implements ListSelectionListener, ActionListener {
       panel.add(subpanel5);
       frame.add(panel);    
    }
-     
+   
+   //DELETE USER TASK  
    private void deleteTask() {
-        //Delete task
+   //CREATE FRAME AND PANEL
       JFrame frame = new JFrame("Delete User Task");
       frame.setVisible(true);
       frame.setSize(600, 600);
       JPanel panel = new JPanel();
-      //convert arraylist into array
+      
+      //CONVERT ARRAYLIST INTO ARRAY
       UserTask[] list = new UserTask[llayer.getUTList().size()];
       for(int i=0;i<llayer.getUTList().size();i++)//fill the list
          list[i] = llayer.getUTList().get(i);
       JList taskList = new JList(list);
+      taskList.setFont(new Font("Arial",Font.BOLD,10));
+      
+      //CREATE BUTTON W/ ACTIONLISTENER
+      JButton button = new JButton("Delete Task");
+      button.addActionListener(
+         new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+            
+               UserTask task = (UserTask)taskList.getSelectedValue();
+               llayer.deleteUserTask(task);
+                
+               frame.dispose();
+            }
+         });
+         
+      //ADD COMPONENTS TO PANEL   
+      panel.add(new JLabel("Select a task to delete"));
       panel.add(taskList);
+      panel.add(button);
       frame.add(panel);
    }
    
    private void deletePreTask()
    {
+   //CREATE PANEL AND FRAME
       JFrame frame = new JFrame("Delete Pre-Existing Task");
       frame.setVisible(true);
       frame.setSize(500, 500);
       JPanel panel = new JPanel();
-               //convert arraylist into array
+               
+   //CONVERT ARRAYLIST INTO ARRAY
       PreExistTask[] list = new PreExistTask[llayer.getPETList().size()];
       for(int i=0;i<llayer.getPETList().size();i++)//fill the list
          list[i] = llayer.getPETList().get(i);
       JList taskList = new JList(list);
+      taskList.setFont(new Font("Arial",Font.BOLD,10));
+      
+      //CREATE BUTTON WITH ACTION LISTENER
+      JButton button = new JButton("Delete Task");
+      button.addActionListener(
+         new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+            
+               PreExistTask task = (PreExistTask)taskList.getSelectedValue();
+               llayer.deletePreExistTask(task);
+                
+               frame.dispose();
+            }
+         });
+      
+      //ADD COMPONENENTS TO PANEL   
+      panel.add(new JLabel("Select a Pre-Existing Task to Delete"));
       panel.add(taskList);
+      panel.add(button);
       frame.add(panel);
    }
     
+    //VIEW LISTS OF PRE-EXISTING AND USER TASKS
    private void viewTasks() {
-        //View Task
+      
       System.out.println("VIEW TASK.");
       JFrame frame = new JFrame("View Tasks");
       frame.setVisible(true);
       frame.setSize(600, 600);
       JPanel panel = new JPanel();
-      panel.setLayout(new GridLayout(2,1));
-      //convert arraylist into array
+      
+      //CREATE JLIST FOR UT
       UserTask[] list = new UserTask[llayer.getUTList().size()];
       for(int i=0;i<llayer.getUTList().size();i++)//fill the list
          list[i] = llayer.getUTList().get(i);
       JList taskList = new JList(list);
-      
+      //CREATE JLIST FOR PET
       PreExistTask[] plist = new PreExistTask[llayer.getPETList().size()];
       for(int i=0;i<llayer.getPETList().size();i++)//fill the list
          plist[i] = llayer.getPETList().get(i);
       JList ptaskList = new JList(plist);
+      taskList.setFont(new Font("Arial",Font.BOLD,10));
+      ptaskList.setFont(new Font("Arial",Font.BOLD,10));
       
+      //ADD COMPONENTS TO PANEL
       panel.add(taskList);
       panel.add(ptaskList);
       frame.add(panel);
-   
-   
    }
     
     /**
