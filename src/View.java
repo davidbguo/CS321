@@ -309,14 +309,115 @@ public class View implements ListSelectionListener, ActionListener {
       frame.setVisible(true);
       frame.setSize(500, 500);
       JPanel panel = new JPanel();
+      panel.setLayout(new GridLayout(7,1));
    //CONVERT ARRAYLIST INTO ARRAY
       PreExistTask[] list = new PreExistTask[llayer.getPETList().size()];
       for(int i=0;i<llayer.getPETList().size();i++)//fill the list
          list[i] = llayer.getPETList().get(i);
       JList taskList = new JList(list);
       
+      //PANEL FOR NAME
+      JPanel sub1 = new JPanel();
+      JLabel nameLabel = new JLabel("Enter task name");
+      JTextField nameBox = new JTextField(10);
+      sub1.add(nameLabel);
+      sub1.add(nameBox);
+      
+   //PANEL FOR DAY
+      JPanel sub2 = new JPanel();
+      JLabel dayLabel = new JLabel("Select which day");
+      String[] daysofweek = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
+      JComboBox dayBox = new JComboBox(daysofweek);
+      sub2.add(dayLabel);
+      sub2.add(dayBox);
+      
+   //PANEL FOR START TIME
+      JPanel sub3 = new JPanel();
+      JLabel startLabel = new JLabel("Enter start time (--:--)");
+      JComboBox starthours = new JComboBox(hourOptions);
+      JComboBox startmins = new JComboBox(minOptions);
+      sub3.add(startLabel);
+      sub3.add(starthours);
+      sub3.add(startmins);
+      
+   //PANEL FOR END TIME
+      JPanel sub4 = new JPanel();
+      JLabel endLabel = new JLabel("Enter end time (--:--)");
+      JComboBox endhours = new JComboBox(hourOptions);
+      JComboBox endmins = new JComboBox(minOptions);
+      sub4.add(endLabel);
+      sub4.add(endhours);
+      sub4.add(endmins);
+      
+   //PANEL FOR END DATE
+      JPanel sub5 = new JPanel();
+      JLabel lastLabel = new JLabel("Enter end date (MM/DD/YYYY)");
+      JComboBox months = new JComboBox(monthOptions);
+      JComboBox days = new JComboBox(dayOptions);
+      String[] yearOptions={"2017","2018","2019","2020"};
+      JComboBox years = new JComboBox(yearOptions);
+      sub5.add(lastLabel);
+      sub5.add(months);
+      sub5.add(days);
+      sub5.add(years);
+   
+   //PANEL FOR BUTTON W/ ACTION LISTENER TO EDIT PRETASK
+      JPanel sub6 = new JPanel();
+      JButton addButton = new JButton("Edit Pre-Existing Task");
+      addButton.addActionListener(
+         new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+               String taskName = nameBox.getText();
+               String day = (String)dayBox.getSelectedItem();
+               int startHour = Integer.parseInt((String)starthours.getSelectedItem());
+               int startMin = Integer.parseInt((String)startmins.getSelectedItem());
+               int endHour = Integer.parseInt((String)endhours.getSelectedItem());
+               int endMin = Integer.parseInt((String)endmins.getSelectedItem());
+               int lastYear = Integer.parseInt((String)years.getSelectedItem());
+               int lastMonth = Integer.parseInt((String)months.getSelectedItem());
+               int lastDay = Integer.parseInt((String)days.getSelectedItem());
+               System.out.println("Start hour:" + startHour+ " Start min" + startMin);
+               LocalTime startTime = LocalTime.of(startHour,startMin);
+               LocalTime endTime = LocalTime.of(endHour,endMin);
+               LocalDateTime endDay = LocalDateTime.of(lastYear,lastMonth,lastDay,endHour,endMin);
+               PreExistTask task = (PreExistTask)taskList.getSelectedValue();
+               switch(day)
+               {
+                  case "Monday":
+                     llayer.editPreExistTask(task,taskName,DayOfWeek.MONDAY,startTime,endTime,endDay);
+                     break;
+                  case "Tuesday":
+                     llayer.editPreExistTask(task,taskName,DayOfWeek.TUESDAY,startTime,endTime,endDay);
+                     break;
+                  case "Wednesday":
+                     llayer.editPreExistTask(task,taskName,DayOfWeek.WEDNESDAY,startTime,endTime,endDay);
+                     break;
+                  case "Thursday":
+                     llayer.editPreExistTask(task,taskName,DayOfWeek.THURSDAY,startTime,endTime,endDay);
+                     break;
+                  case "Friday":
+                     llayer.editPreExistTask(task,taskName,DayOfWeek.FRIDAY,startTime,endTime,endDay);
+                     break;
+                  case "Saturday":
+                     llayer.editPreExistTask(task,taskName,DayOfWeek.SATURDAY,startTime,endTime,endDay);
+                     break;
+                  case "Sunday":
+                     llayer.editPreExistTask(task,taskName,DayOfWeek.SUNDAY,startTime,endTime,endDay);
+                     break;
+               }
+               frame.dispose();
+            }
+         });     
+      sub6.add(addButton);
+      
       //ADD COMPONENTS TO PANEL
       panel.add(taskList);
+      panel.add(sub1);
+      panel.add(sub2);
+      panel.add(sub3);
+      panel.add(sub4);
+      panel.add(sub5);
+      panel.add(sub6);
       frame.add(panel);
    }
    
@@ -694,9 +795,6 @@ public class View implements ListSelectionListener, ActionListener {
                   case "project":
                      llayer.addUserTask(taskName,start,end,TaskTypeEnum.PROJECT); 
                      break;
-               
-                  default:
-               
                }
                frame.dispose();
             }
