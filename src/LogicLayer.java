@@ -84,12 +84,14 @@ public class LogicLayer {
 		data.preExistTaskList.add(newPet);
 		setCurrentDays();
 		createBreakdown();
+		updateDataCalendar();
 	}
 
 	public void addUserTask(String name, LocalDateTime startDateTime, LocalDateTime endDateTime, TaskTypeEnum type) {
 		UserTask newTask = new UserTask(name, startDateTime, endDateTime, type);
 		data.priorityUserTaskList.add(newTask);
 		createBreakdown();
+		updateDataCalendar();
 	}
 
 	private int findPreExistTask(PreExistTask task) {
@@ -114,11 +116,13 @@ public class LogicLayer {
 		data.deletePreExistTask(findPreExistTask(task));
 		this.setCurrentDays();
 		this.createBreakdown();
+		updateDataCalendar();
 	}
 	public void deleteUserTask(UserTask task){
 		data.deleteUserTask(findUserTask(task));
 		this.prioritize();
 		this.createBreakdown();
+		updateDataCalendar();
 	}
 
 	public void editPreExistTask(PreExistTask task,String name, DayOfWeek day, LocalTime start, LocalTime end
@@ -140,6 +144,7 @@ public class LogicLayer {
 		data.editPreExistTask(findPreExistTask(task), newTask);
 		this.setCurrentDays();
 		this.createBreakdown();
+		updateDataCalendar();
 	}
 	public void editUserTask(UserTask task, String name, LocalDateTime startDateTime
 			, LocalDateTime endDateTime, TaskTypeEnum type){
@@ -157,6 +162,7 @@ public class LogicLayer {
 		data.editUserTask(findUserTask(task), newTask);
 		this.prioritize();
 		this.createBreakdown();
+		updateDataCalendar();
 
 	}
 
