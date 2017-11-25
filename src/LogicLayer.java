@@ -287,7 +287,17 @@ public class LogicLayer {
 		task.addSubTasks(subTasksToBeAdded);
 
 	}
-
+	public void writeToFile(){
+		this.data.saveToFile("cal.ser");
+	}
+	public void readFromFile(){
+		try{
+		this.data.readFromFile("cal.ser");
+		}catch(Exception FileNotFound){
+			System.out.println("cal.ser Not Found");
+			}
+	}
+	
 	public HashMap<Integer,ASDay> getCalendarData(){
 		HashMap<Integer,ASDay> cal = new HashMap<Integer,ASDay>();
 		int key = 0; 

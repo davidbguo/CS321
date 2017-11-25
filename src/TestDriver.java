@@ -85,7 +85,7 @@ public class TestDriver {
 		DataStorage data = new DataStorage();
 		data.preExistTaskList = ll.data.preExistTaskList;
 		data.saveToFile("Trial1.ser");
-		DataStorage dataOld = DataStorage.readFromFile("Trial1.ser");
+		DataStorage dataOld = data.readFromFile("Trial1.ser");
 		System.out.println("Done Reading! ");
 		
 		System.out.println(dataOld.preExistTaskList);

@@ -103,25 +103,25 @@ public enum TaskTypeEnum {
 				if(time==0)
 					s = 6;
 				else
-					s = 4*time;
+					s = 4*time; // 4 times the time required to take the test
 				break;
 			case QUIZ:
 				if(time==0)
 					s = 6;
 				else
-					s = 2*time;
+					s = 2*time; // 2 times the time required for the quiz
 				break;
 			case TEST:
 				if(time==0)
 					s = 12;
 				else
-					s = 4*time;
+					s = 4*time; // 4 times the time required for the test
 				break;
 			case STUDY:
 				if(time==0)
-					s = 3;
+					s = 9;	//base case is 9 hours
 				else
-					s = 3 * this.creditHour;
+					s = 3 * this.creditHour; // studying require is 3 times the credit hours.
 				break;
 			case PROBLEMSET:
 				if(this.problems == 0)

@@ -67,7 +67,7 @@ public class DataStorage {
 		}
 		return writeSuccess;
 	}
-	public static DataStorage readFromFile(String filename){
+	public DataStorage readFromFile(String filename){
 		DataStorage ds = new DataStorage();
 		try{
 			FileInputStream fis = new FileInputStream(filename);

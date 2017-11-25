@@ -243,7 +243,7 @@ public class View implements ListSelectionListener, ActionListener {
       JMenu MENU;
         
         //menu1 and menu2 menu items
-      JMenuItem createNewTask, viewTasks, m2Item1, m2Item2,createPreTask,editTask,editPreTask,deleteTask,deletePreTask;
+      JMenuItem createNewTask, viewTasks, m2Item1, m2Item2,createPreTask,editTask,editPreTask,deleteTask,deletePreTask,readFromFile,writeToFile;
         
         //Initialize menu items
       createNewTask = new JMenuItem("Create User Task");
@@ -258,6 +258,11 @@ public class View implements ListSelectionListener, ActionListener {
       deleteTask.addActionListener(this);
       deletePreTask = new JMenuItem("Delete Pre-Existing Task");
       deletePreTask.addActionListener(this);
+
+      readFromFile = new JMenuItem("Read From File");
+      readFromFile.addActionListener(this);
+      writeToFile = new JMenuItem("Save To File");
+      writeToFile.addActionListener(this);
       
         
       viewTasks = new JMenuItem("View tasks");
@@ -274,6 +279,8 @@ public class View implements ListSelectionListener, ActionListener {
       MENU.add(deleteTask);
       MENU.add(deletePreTask);
       MENU.add(viewTasks);
+      MENU.add(writeToFile);
+      MENU.add(readFromFile);
      
         //Initialize menu bar and add menus
       menuBar = new JMenuBar();
@@ -314,6 +321,11 @@ public class View implements ListSelectionListener, ActionListener {
          deletePreTask();
          currCalendar = llayer.getCalendarData();
       }
+      else if(e.getActionCommand().equals("Save To File"))
+    	 this.writeToFile();
+      else if(e.getActionCommand().equals("Read From File"))
+    	 this.readFromFile();
+
       
    }
    //EDIT A PRE-EXISTING TASK
@@ -922,6 +934,13 @@ public class View implements ListSelectionListener, ActionListener {
       panel.add(taskList);
       panel.add(ptaskList);
       frame.add(panel);
+   }
+   
+   public void writeToFile(){
+	   this.llayer("cal.ser");
+   }
+   public void readFromFile(){
+	   this.llayer("cal.ser");
    }
     
     /**
