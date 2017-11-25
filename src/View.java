@@ -2,6 +2,7 @@ import javax.swing.JOptionPane;
 import java.awt.*;
 import java.awt.event.*;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -47,14 +48,14 @@ public class View implements ListSelectionListener, ActionListener {
    String[] hourOptions={"00",
          "01","02","03","04","05","06","07","08","09","10",
          "11","12","13","14","15","16","17","18","19","20",
-         "21","22","23","24"};     
+         "21","22","23"};     
    String[] minOptions={"00",
          "01","02","03","04","05","06","07","08","09","10",
          "11","12","13","14","15","16","17","18","19","20",
          "21","22","23","24","25","26","27","28","29","30",
          "31","32","33","34","35","36","37","38","39","40",
          "41","42","43","44","45","46","47","48","49","50",
-         "51","52","53","54","55","56","57","58","59","60"};
+         "51","52","53","54","55","56","57","58","59"};
    String[] monthOptions = {"01","02","03","04","05","06","07","08","09","10",
          "11","12"};
    String[] dayOptions={
@@ -70,7 +71,7 @@ public class View implements ListSelectionListener, ActionListener {
       
       
       //petList.add(new PreExistTask("MONDAY SLEEP", DayOfWeek.MONDAY, LocalTime.of(0, 0), LocalTime.of(9, 0), null));
-      petList.add(new PreExistTask("MONDAY PET1", DayOfWeek.MONDAY, LocalTime.of(10, 0), LocalTime.of(2, 0), null));
+      petList.add(new PreExistTask("MONDAY PET1", DayOfWeek.MONDAY, LocalTime.of(10, 0), LocalTime.of(12, 0), null));
       petList.add(new PreExistTask("MONDAY PET2", DayOfWeek.MONDAY, LocalTime.of(17, 0), LocalTime.of(22, 0), null));
       petList.add(new PreExistTask("TUESDAY SLEEP", DayOfWeek.TUESDAY, LocalTime.of(0, 0), LocalTime.of(9, 0), null));
       petList.add(new PreExistTask("TUESDAY PET1", DayOfWeek.TUESDAY, LocalTime.of(12, 0), LocalTime.of(16, 0), null));
@@ -79,7 +80,7 @@ public class View implements ListSelectionListener, ActionListener {
       petList.add(new PreExistTask("WEDNESDAY PET1", DayOfWeek.WEDNESDAY, LocalTime.of(9, 0), LocalTime.of(11, 0), null));
       petList.add(new PreExistTask("WEDNESDAY PET2", DayOfWeek.WEDNESDAY, LocalTime.of(13, 0), LocalTime.of(17, 0), null));
       petList.add(new PreExistTask("THURSDAY SLEEP", DayOfWeek.THURSDAY, LocalTime.of(0, 0), LocalTime.of(9, 0), null));
-      petList.add(new PreExistTask("THURSDAY PET1", DayOfWeek.THURSDAY, LocalTime.of(17, 0), LocalTime.of(8, 0), null));
+      petList.add(new PreExistTask("THURSDAY PET1", DayOfWeek.THURSDAY, LocalTime.of(17, 0), LocalTime.of(18, 0), null));
       petList.add(new PreExistTask("THURSDAY PET2", DayOfWeek.THURSDAY, LocalTime.of(22, 0), LocalTime.of(23, 0), null));
       petList.add(new PreExistTask("FRIDAY SLEEP", DayOfWeek.FRIDAY, LocalTime.of(0, 0), LocalTime.of(9, 0), null));
       petList.add(new PreExistTask("FRIDAY PET1", DayOfWeek.FRIDAY, LocalTime.of(11, 30), LocalTime.of(16, 45), null));
@@ -104,12 +105,12 @@ public class View implements ListSelectionListener, ActionListener {
       utList.add(ut2);
       utList.add(ut3);
       llayer.data.priorityUserTaskList = utList;
-      llayer.data.userData.put("semStartYear", "2017");
-      llayer.data.userData.put("semStartMonth", "9");
-      llayer.data.userData.put("semStartDay", "1");
-      llayer.data.userData.put("semEndYear", "2017");
-      llayer.data.userData.put("semEndMonth", "12");
-      llayer.data.userData.put("semEndDay", "15");
+      llayer.data.userData.put("semStartYear", ""+LocalDate.now().getYear());
+      llayer.data.userData.put("semStartMonth", ""+LocalDate.now().getMonthValue());
+      llayer.data.userData.put("semStartDay", ""+LocalDate.now().getDayOfMonth());
+      llayer.data.userData.put("semEndYear", ""+LocalDate.now().plusMonths(3).getYear());
+      llayer.data.userData.put("semEndMonth", ""+LocalDate.now().plusMonths(3).getMonthValue());
+      llayer.data.userData.put("semEndDay", ""+LocalDate.now().plusMonths(3).getDayOfMonth());
    
    }  
 
@@ -155,7 +156,7 @@ public class View implements ListSelectionListener, ActionListener {
     //Initial display field at the bottom of the calendar
       displayField = new JTextArea();
       displayField.setSize(900,400);
-      displayField.setText("TEST STRING \nTEST STRING\nTEST STRING\n");
+      displayField.setText(" ");
       this.updateMonth();
    
    }
@@ -284,21 +285,35 @@ public class View implements ListSelectionListener, ActionListener {
    @Override
     public void actionPerformed(ActionEvent e) {
         //Check for which menu item fired the event and do something
-      if(e.getActionCommand().equals("Create User Task")) 
+      if(e.getActionCommand().equals("Create User Task")) {
          createNewTask();
-      
-      else if(e.getActionCommand().equals("View tasks")) 
+         currCalendar = llayer.getCalendarData();
+      }
+      else if(e.getActionCommand().equals("View tasks")) { 
          viewTasks();
-      else if(e.getActionCommand().equals("Create Pre-Existing Task"))
+         currCalendar = llayer.getCalendarData();
+      }
+      else if(e.getActionCommand().equals("Create Pre-Existing Task")) {
          createPreTask();
-      else if(e.getActionCommand().equals("Edit User Task"))
+         llayer.createBreakdown();
+         currCalendar = llayer.getCalendarData();
+      }
+      else if(e.getActionCommand().equals("Edit User Task")) {
          editTask();
-      else if(e.getActionCommand().equals("Edit Pre-Existing Task"))
+         currCalendar = llayer.getCalendarData();
+      }
+      else if(e.getActionCommand().equals("Edit Pre-Existing Task")) {
          editPreTask();
-      else if(e.getActionCommand().equals("Delete User Task"))
+         currCalendar = llayer.getCalendarData();
+      }
+      else if(e.getActionCommand().equals("Delete User Task")) {
          deleteTask();
-      else if(e.getActionCommand().equals("Delete Pre-Existing Task"))
+         currCalendar = llayer.getCalendarData();
+      }
+      else if(e.getActionCommand().equals("Delete Pre-Existing Task")) {
          deletePreTask();
+         currCalendar = llayer.getCalendarData();
+      }
       
    }
    //EDIT A PRE-EXISTING TASK

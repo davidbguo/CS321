@@ -41,7 +41,7 @@ public class SubTask extends Event{
 		this.dayOfWeek = this.day.getDayOfWeek();
 		this.endTime = end;
 		this.startTime = start;
-		this.timeLength = start.until(end, ChronoUnit.HOURS);
+		this.timeLength = start.until(end, ChronoUnit.MINUTES)/60.0;
 		this.dateCreated = dateCreated;
 	}
 	
@@ -52,7 +52,7 @@ public class SubTask extends Event{
 		this.dayOfWeek = dayOfWeek;
 		this.endTime = end;
 		this.startTime = start;
-		this.timeLength = start.until(end, ChronoUnit.HOURS);
+		this.timeLength = start.until(end, ChronoUnit.MINUTES)/60.0;
 		this.dateCreated = dateCreated;
 	}
 	
@@ -76,7 +76,7 @@ public class SubTask extends Event{
 			dayVal = "Recurring PET: " + this.dayOfWeek;
 		else
 			dayVal = "Date: " + this.day.toString();
-		String format = "%-35s %-30s %-20s %-20s %-30s";
+		String format = "%-40s %-40s %-40s %-40s %-40s";
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");		
 		return String.format(format, 
 				this.name, 

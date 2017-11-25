@@ -166,6 +166,11 @@ public class LogicLayer {
 
 	}
 
+	public void addUserData(String key, String val) {
+		data.userData.put(key, val);
+	}
+	
+	
 	public void setCurrentDays() {
 		System.out.println("inside setcurrentdays");
 		data.currentDays.clear();
@@ -205,6 +210,7 @@ public class LogicLayer {
 		int currDayCounter = daysDiff;
 		//System.out.println(tasksByPriority.size());
 		for (int i = 0 ; i < tasksByPriority.size(); i++) {
+			data.priorityUserTaskList.get(i).hoursLeft = data.priorityUserTaskList.get(i).hoursTotalEstimate;
 			//System.out.println("inside " + data.currentDays.get(currDayCounter).date);
 			currDayCounter = daysDiff;
 			while(tasksByPriority.get(i).hoursLeft > 0 && !data.currentDays.get(currDayCounter).date.equals(tasksByPriority.get(i).endDateTime.toLocalDate().plusDays(1))) {
@@ -216,7 +222,6 @@ public class LogicLayer {
 				currDayCounter++;
 			}
 		}
-		updateDataCalendar();
 	}
 
 	//helper function
