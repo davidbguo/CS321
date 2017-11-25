@@ -25,14 +25,16 @@ import java.util.*;
  * 
  */
 
-public class ASDay {
+public class ASDay implements java.io.Serializable{
 
 	protected LinkedList<SubTask> eventsOfDay = new LinkedList<SubTask>(); //ASDay is comprised of SubTask
 	protected LocalDate date;		//The date of the Day
 	protected double hoursLeft;		//Hours available in the Day
 	protected double hoursWorking;	//Hours working for the Day
     protected static final double MINIMUM_TASK_BLOCK_LENGTH = 0.25; //in hours
-    
+
+	private static final long serialVersionUID = 1L;
+	
     public ASDay(LocalDate day, ArrayList<PreExistTask> preExistTasks) {
     	this.date = day;
     	hoursLeft = 24;
