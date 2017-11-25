@@ -921,10 +921,10 @@ public class View implements ListSelectionListener, ActionListener {
    }
    
    public void writeToFile(){
-	   this.llayer("cal.ser");
+	   this.llayer.writeToFile();
    }
    public void readFromFile(){
-	   this.llayer("cal.ser");
+	   this.llayer.readFromFile();
    }
     
     /**
