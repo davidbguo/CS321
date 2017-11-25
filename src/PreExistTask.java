@@ -2,10 +2,26 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+
+/*
+ * PreExistTask is recurring activity user already knows he has
+ * Variables:
+ * 			final long serialVersionUID, probably not used in final product
+ * 			DayOfWeek day
+ * 			LocalTime startTime
+ * 			LocalTime endtime, together with startTime and day they define the time slot this activity takes
+ * Methods:
+ * 			Constructor(String, DayofWeek, LocalTime, LocalTime, LocalDateTime)
+ * 				creates one single subtask to fill the breakdown[]
+ * 				endDateTime is null and means never ending
+ * 				priority is also 0, so highest order priority
+ *  		String toString, prints name, day, startTime, endTime
+ *  For FrontEnd:
+ *  		You might access toString. For constructing needs, refer to LogicLayer methods instead of creating one directly
+ */
+
 public class PreExistTask extends Event implements java.io.Serializable {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	protected DayOfWeek day;

@@ -2,11 +2,32 @@ import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
+/*
+ * Our own version of a Day object.
+ * Variables: 
+ * 			LinkedList of Subtasks for the day.
+ * 			LocalDate date
+ * 			double hoursLeft open in the day
+ * 			double hoursWorking, total length of all subtasks assigned for the day
+ * 			final double Mininum-task-block-length, minimum manageable time slot is set to 15 minutes
+ * Method:
+ * 			Constructor(LocalDate, ArrayList<PreExistTask>), for LogicLayer use
+ * 			updateHoursLeft(), for LogicLayer use
+ * 			ArrayList<LocalTime> getOpenTimeSlots(), for LogicLayer use
+ * 			boolean insertSubTasks(ArrayList<SubTask>), for LogicLayer use
+ * 			boolean insertSubTask(SubTask), singuler for logiclayer use
+ * 			addPreeExistTasks(ArrayList<PreExistTask>), for logiclayer use
+ * 			int getKey() returns key value for View.java JTable as [YEAR][MONTH][DAY]
+ * 			String toString(), Prints the date and then loops through toString of all subTasks in eventsOfDay
+ * For FrontEnd:
+ * 			You can access all variable directly because nothing in private.
+ * 			You might want to use eventsOfDay, date, hoursLeft, hoursWorking, getKey(), and toString()
+ * 
+ */
 
 public class ASDay {
 
 	protected LinkedList<SubTask> eventsOfDay = new LinkedList<SubTask>(); //ASDay is comprised of SubTask
-	protected String[] details;		//A List of all the subtask
 	protected LocalDate date;		//The date of the Day
 	protected double hoursLeft;		//Hours available in the Day
 	protected double hoursWorking;	//Hours working for the Day
@@ -93,16 +114,7 @@ public class ASDay {
     	}
     	
     }
-    
-    public String[] getDailyEventsDetails(){
-    	return details;
-    }
-    
-    public String[] getDailyEventsSummary(){
-    	String[] detailSummary = new String[10]; //placeholder code
-    	
-    	return detailSummary;
-    } 
+     
     public int getKey(){	//Returns a Key value as [YEAR][MONTH][DAY]
     	int year = date.getYear();
         int month = date.getMonthValue();
@@ -111,6 +123,7 @@ public class ASDay {
     		
     	return key;
     }
+    
     public String toString() {
     	String retVal = date + "\n";
     	for (int i = 1; i < eventsOfDay.size()-1; i ++) {

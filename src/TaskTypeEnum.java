@@ -1,4 +1,45 @@
 
+/*
+ * Our enum class to define specific types of TaskTypes
+ * ENUMS: with hours suggested linked to each type
+ * 			READING 
+ * 				value depends on # of pages, default 2 hours
+ * 			PRESENTATION
+ * 				value depends on required length of presentation itself, default 4 hours
+ * 			QUEST
+ * 				value depends on credit hours of class, default 9 hours
+ * 			QUIZ
+ * 				value depends on credit hours of class, default 6 hours
+ * 			TEST
+ * 				value depends on credit hours of class, default 12 hours
+ * 			ESSAY
+ * 				value depends on work count required, default 4 hours
+ * 			STUDY, normal studying through out the week for a class
+ * 				value depends on credit hours of class, default 9 hours
+ * 			PRELAB
+ * 				value is depends on hours length of labtime, default is 0.75 hours
+ * 			PROBLEMSET
+ * 				value depends on # of problems, default 5 hours
+ * 			PROJECT
+ * 				Due date over two weeks won't be tracked otherwise value always 15
+ * Variables: all used to created hours estimated
+ * 			int pages
+ * 			int wordCount
+ * 			int creditHour
+ * 			int problems
+ * 			double time
+ * Methods:
+ * 			setTime(double), technically don't need to be used, since vars are accessible by all
+ * 			setPageNumber(int), technically don't need to be used, since vars are accessible by all
+ * 			setWordCount(int), technically don't need to be used, since vars are accessible by all
+ * 			setAttributes(double, int, int), technically don't need to be used, since vars are accessible by all
+ * 			double getHourRequired(), calculated suggested hours
+ * For FrontEnd:
+ * 			You likely shouldn't need to use any code directly from this class. This is for LogicLayer.
+ * 			However, to be aware of all the types of UserTasks we are trying to support and provide ways 
+ * 			for the user to properly input the necessary extra information needed to calculate an accurate hours suggested
+ */
+
 public enum TaskTypeEnum {
 					//modifying attributes
 	READING,		//pages the user must read
