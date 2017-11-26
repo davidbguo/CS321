@@ -301,6 +301,10 @@ public class LogicLayer {
 		}catch(Exception FileNotFound){
 			System.out.println("cal.ser Not Found");
 			}
+		this.prioritize();
+		this.setCurrentDays();
+		this.createBreakdown();
+		updateDataCalendar();
 	}
 	
 	public HashMap<Integer,ASDay> getCalendarData(){
