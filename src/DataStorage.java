@@ -85,37 +85,5 @@ public class DataStorage {
 		}
 		return ds;
 	}
-
-	
-/*
-	public boolean saveTreadSuccessoFile(String filename){
-		boolean writeSuccess = false;
-		try {
-			FileOutputStream fos = new FileOutputStream(filename);
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(this);
-			writeSuccess = true;
-			oos.close();
-		} catch(Exception e) {
-			writeSuccess = false;
-		}
-		return writeSuccess;
-	}
-
-	public static DataStorage readFromFile(String target){
-		boolean readSuccess = false;
-		DataStorage data1 = null;
-		try {
-			FileInputStream fis = new FileInputStream(target);
-			ObjectInputStream ois = new ObjectInputStream(fis);
-			data1 = (DataStorage) ois.readObject();
-			ois.close();
-		} catch (Exception e) {
-			readSuccess = false;
-		}
-		return data1;
-	}
-	
-	*/
 	
 }

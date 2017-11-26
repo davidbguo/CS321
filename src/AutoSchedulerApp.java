@@ -68,7 +68,7 @@ public class AutoSchedulerApp implements ListSelectionListener, ActionListener {
 
 	//temp for testing
 	public static void setupLogicLayer(LogicLayer llayer) {
-		System.out.println("inside setup");
+		/*System.out.println("inside setup");
 		ArrayList<PreExistTask> petList = new ArrayList<PreExistTask>();
 
 
@@ -106,7 +106,7 @@ public class AutoSchedulerApp implements ListSelectionListener, ActionListener {
 		utList.add(ut1);
 		utList.add(ut2);
 		utList.add(ut3);
-		llayer.data.priorityUserTaskList = utList;
+		llayer.data.priorityUserTaskList = utList;*/
 		llayer.data.userData.put("semStartYear", ""+LocalDate.now().getYear());
 		llayer.data.userData.put("semStartMonth", ""+LocalDate.now().getMonthValue());
 		llayer.data.userData.put("semStartDay", ""+1);
@@ -277,9 +277,7 @@ public class AutoSchedulerApp implements ListSelectionListener, ActionListener {
    
       viewTasks = new JMenuItem("View tasks");
       viewTasks.addActionListener(this);
-      m2Item1 = new JMenuItem("m2Item1");
-      m2Item2 = new JMenuItem("m2Item2");
-   
+      
    	//Initialize menus and menu items
       MENU = new JMenu("MENU");
       MENU.add(createNewTask);
