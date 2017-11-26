@@ -194,7 +194,7 @@ public class View implements ListSelectionListener, ActionListener {
   
    @Override
    public void valueChanged(ListSelectionEvent se) {
-      
+	  this.currCalendar = this.llayer.getCalendarData();
       int row = table.getSelectionModel().getLeadSelectionIndex();
       int rowSize = table.getRowCount();
       System.out.println("ROW COUNT: " + rowSize);
@@ -302,7 +302,6 @@ public class View implements ListSelectionListener, ActionListener {
       }
       else if(e.getActionCommand().equals("Create Pre-Existing Task")) {
          createPreTask();
-         llayer.createBreakdown();
          currCalendar = llayer.getCalendarData();
       }
       else if(e.getActionCommand().equals("Edit User Task")) {
@@ -375,7 +374,7 @@ public class View implements ListSelectionListener, ActionListener {
       sub4.add(endLabel);
       sub4.add(endhours);
       sub4.add(endmins);
-      
+   /*   
    //PANEL FOR END DATE
       JPanel sub5 = new JPanel();
       JLabel lastLabel = new JLabel("Enter end date (MM/DD/YYYY)");
@@ -387,7 +386,7 @@ public class View implements ListSelectionListener, ActionListener {
       sub5.add(months);
       sub5.add(days);
       sub5.add(years);
-   
+   */
    //PANEL FOR BUTTON W/ ACTION LISTENER TO EDIT PRETASK
       JPanel sub6 = new JPanel();
       JButton addButton = new JButton("Edit Pre-Existing Task");
@@ -400,13 +399,14 @@ public class View implements ListSelectionListener, ActionListener {
                int startMin = Integer.parseInt((String)startmins.getSelectedItem());
                int endHour = Integer.parseInt((String)endhours.getSelectedItem());
                int endMin = Integer.parseInt((String)endmins.getSelectedItem());
-               int lastYear = Integer.parseInt((String)years.getSelectedItem());
-               int lastMonth = Integer.parseInt((String)months.getSelectedItem());
-               int lastDay = Integer.parseInt((String)days.getSelectedItem());
+               //int lastYear = Integer.parseInt((String)years.getSelectedItem());
+               //int lastMonth = Integer.parseInt((String)months.getSelectedItem());
+               //int lastDay = Integer.parseInt((String)days.getSelectedItem());
                System.out.println("Start hour:" + startHour+ " Start min" + startMin);
                LocalTime startTime = LocalTime.of(startHour,startMin);
                LocalTime endTime = LocalTime.of(endHour,endMin);
-               LocalDateTime endDay = LocalDateTime.of(lastYear,lastMonth,lastDay,endHour,endMin);
+               //LocalDateTime endDay = LocalDateTime.of(lastYear,lastMonth,lastDay,endHour,endMin);
+               LocalDateTime endDay = null;
                PreExistTask task = (PreExistTask)taskList.getSelectedValue();
                switch(day)
                {
@@ -443,7 +443,7 @@ public class View implements ListSelectionListener, ActionListener {
       panel.add(sub2);
       panel.add(sub3);
       panel.add(sub4);
-      panel.add(sub5);
+      //panel.add(sub5);
       panel.add(sub6);
       frame.add(panel);
    }
@@ -634,7 +634,7 @@ public class View implements ListSelectionListener, ActionListener {
       sub4.add(endLabel);
       sub4.add(endhours);
       sub4.add(endmins);
-      
+   /*   
    //PANEL FOR END DATE
       JPanel sub5 = new JPanel();
       JLabel lastLabel = new JLabel("Enter end date (MM/DD/YYYY)");
@@ -645,7 +645,7 @@ public class View implements ListSelectionListener, ActionListener {
       sub5.add(lastLabel);
       sub5.add(months);
       sub5.add(days);
-      sub5.add(years);
+      sub5.add(years);*/
    
    //PANEL FOR BUTTON W/ ACTION LISTENER TO ADD TASK
       JPanel sub6 = new JPanel();
@@ -659,13 +659,14 @@ public class View implements ListSelectionListener, ActionListener {
                int startMin = Integer.parseInt((String)startmins.getSelectedItem());
                int endHour = Integer.parseInt((String)endhours.getSelectedItem());
                int endMin = Integer.parseInt((String)endmins.getSelectedItem());
-               int lastYear = Integer.parseInt((String)years.getSelectedItem());
-               int lastMonth = Integer.parseInt((String)months.getSelectedItem());
-               int lastDay = Integer.parseInt((String)days.getSelectedItem());
+               //int lastYear = Integer.parseInt((String)years.getSelectedItem());
+               //int lastMonth = Integer.parseInt((String)months.getSelectedItem());
+               //int lastDay = Integer.parseInt((String)days.getSelectedItem());
                System.out.println("Start hour:" + startHour+ " Start min" + startMin);
                LocalTime startTime = LocalTime.of(startHour,startMin);
                LocalTime endTime = LocalTime.of(endHour,endMin);
-               LocalDateTime endDay = LocalDateTime.of(lastYear,lastMonth,lastDay,endHour,endMin);
+               //LocalDateTime endDay = LocalDateTime.of(lastYear,lastMonth,lastDay,endHour,endMin);
+               LocalDateTime endDay = null;
                switch(day)//depending on day, add appropriate preExistTask
                {
                   case "Monday":
@@ -700,7 +701,7 @@ public class View implements ListSelectionListener, ActionListener {
       panel.add(sub2);
       panel.add(sub3);
       panel.add(sub4);
-      panel.add(sub5);
+      //panel.add(sub5);
       panel.add(sub6);
       frame.add(panel);
    }

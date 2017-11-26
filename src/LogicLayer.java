@@ -90,6 +90,8 @@ public class LogicLayer {
 	public void addUserTask(String name, LocalDateTime startDateTime, LocalDateTime endDateTime, TaskTypeEnum type) {
 		UserTask newTask = new UserTask(name, startDateTime, endDateTime, type);
 		data.priorityUserTaskList.add(newTask);
+		prioritize();
+		this.setCurrentDays();
 		createBreakdown();
 		updateDataCalendar();
 	}
@@ -109,6 +111,7 @@ public class LogicLayer {
 				return i;
 			}	
 		}
+		System.out.println("error");
 		return -1;
 	}
 	
@@ -121,6 +124,7 @@ public class LogicLayer {
 	public void deleteUserTask(UserTask task){
 		data.deleteUserTask(findUserTask(task));
 		this.prioritize();
+		this.setCurrentDays();
 		this.createBreakdown();
 		updateDataCalendar();
 	}
@@ -160,6 +164,7 @@ public class LogicLayer {
 		UserTask newTask = new UserTask(name, startDateTime, endDateTime, type);
 		newTask.dateTimeCreated = task.dateTimeCreated;
 		data.editUserTask(findUserTask(task), newTask);
+		this.setCurrentDays();
 		this.prioritize();
 		this.createBreakdown();
 		updateDataCalendar();

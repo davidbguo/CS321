@@ -41,7 +41,7 @@ public class PreExistTask extends Event implements java.io.Serializable {
 	}
 	
 	public String toString(){
-		String format = "%-35s %-25s %-35s %-35s";
+		String format = "%-40s\t %-40s\t %-40s\t %-40s";
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");		
 		return String.format(format, 
 				this.name, 

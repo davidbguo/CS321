@@ -78,7 +78,7 @@ public class UserTask extends Event implements java.io.Serializable{
 
 	public void setPriority() {
 		double timeToWork = LocalDateTime.now().until(this.endDateTime, ChronoUnit.DAYS);
-		this.priority = timeToWork;
+		this.priority = timeToWork+1;
 	}
 
 }
