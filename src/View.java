@@ -63,7 +63,7 @@ public class View implements ListSelectionListener, ActionListener {
 			"11","12","13","14","15","16","17","18","19","20",
 			"21","22","23","24","25","26","27","28","29","30","31"};
 	String[] yearOptions = {"2017", "2018", "2019", "2020", "2021"};
-
+//gg
 	//temp for testing
 	public static void setupLogicLayer(LogicLayer llayer) {
 		System.out.println("inside setup");
@@ -527,7 +527,8 @@ public class View implements ListSelectionListener, ActionListener {
 		sub6.add(addButton);
 
 		//ADD COMPONENTS TO PANEL
-		panel.add(taskList);
+		JScrollPane taskListScrollPane = new JScrollPane(taskList);
+		panel.add(taskListScrollPane);
 		panel.add(sub1);
 		panel.add(sub2);
 		panel.add(sub3);
@@ -672,7 +673,8 @@ public class View implements ListSelectionListener, ActionListener {
 		subpanel5.add(button);
 
 		//ADD COMPONENTS TO PANEL
-		panel.add(taskList);
+		JScrollPane taskListScrollPane = new JScrollPane(taskList);
+		panel.add(taskListScrollPane);
 		panel.add(subpanel3);
 		panel.add(subpanel4);
 		panel.add(subpanel1);
