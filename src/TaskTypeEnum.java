@@ -88,7 +88,7 @@ public enum TaskTypeEnum {
 		switch(this){
 			case READING:
 				if(pages>0)
-					s = (double) ((1/60.0)*pages); //1 page per minute
+					s = (double) ((3/60.0)*pages); //3 page per minute
 				else
 					s = 2; //else 2 hours of reading
 				break;
@@ -102,26 +102,26 @@ public enum TaskTypeEnum {
 				if(this.wordCount==0)
 					s = 4;
 				else
-					s = ((this.wordCount)/5.5)/60; // using information from rice.edu 
-							//at a pace of 5.5 wpm(words per minute)
+					s = ((this.wordCount)/500.0);  
+							//at a pace of 500 words per hour
 				break;
 			case QUEST:
 				if(time==0)
 					s = 6;
 				else
-					s = 4*time; // 4 times the time required to take the test
+					s = 2*creditHour; // 2 times the credit hours
 				break;
 			case QUIZ:
 				if(time==0)
-					s = 6;
+					s = 3;
 				else
-					s = 2*time; // 2 times the time required for the quiz
+					s = 1 * creditHour; // 2 times the credit hours
 				break;
 			case TEST:
 				if(time==0)
 					s = 12;
 				else
-					s = 4*time; // 4 times the time required for the test
+					s = 3*creditHour; // 3 times the credit hours
 				break;
 			case STUDY:
 				if(time==0)
@@ -136,7 +136,10 @@ public enum TaskTypeEnum {
 					s = this.problems/6;
 				break;
 			case PROJECT:
-				s = 4;
+				if (this.time == 0)
+					s = 15;
+				else
+					s = this.time/7.0*10.0;
 				break;
 			case PRELAB:
 				if(time==0)

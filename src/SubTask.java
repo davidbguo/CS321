@@ -83,7 +83,7 @@ public class SubTask extends Event{
 				dayVal, 
 				"Start: " + this.startTime.format(formatter), 
 				"End: " + this.endTime.format(formatter),
-				"Time Length Hours: " + this.timeLength);
+				"Time Length Hours: " + String.format("%.2f", this.timeLength));
 	}
 
 }

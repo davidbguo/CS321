@@ -64,16 +64,16 @@ public class UserTask extends Event implements java.io.Serializable{
 	
 
 	public String toString() {
-		String format = "%-35s %-15s %-35s %-35s %-15s %-15s %-15s";
+		String format = "%-35s %-35s %-35s %-35s %-30s %-30s %-30s";
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm MM-dd-yy");		
 		return String.format(format, 
 				this.name, 
 				"Type: " + this.type, 
 				"Start: " + this.startDateTime.format(formatter), 
 				"End: " + this.endDateTime.format(formatter),
-				"Hours Estimated: " + this.hoursTotalEstimate,
-				"Hours Unscheduled: " + this.hoursLeft,
-				"Priority: " + this.priority); 
+				"Hours Estimated: " + String.format("%.2f", this.hoursTotalEstimate),
+				"Hours Unscheduled: " + String.format("%.2f", this.hoursLeft),
+				"Priority: " + String.format("%.2f", this.priority)); 
 	}
 
 	public void setPriority() {
