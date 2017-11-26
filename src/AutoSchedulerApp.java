@@ -33,15 +33,17 @@ import java.util.HashMap;
  *
  * @author aasan
  */
-public class View implements ListSelectionListener, ActionListener {
+public class AutoSchedulerApp implements ListSelectionListener, ActionListener {
 
 	DefaultTableModel model;
 	JTable table;
 	Calendar cal = new GregorianCalendar();
 	JLabel label;         //label for month and year
 	JPanel panel;         //
+	JPanel panelInfo;
 	JScrollPane pane;     //contains table
-	JTextArea displayField;
+	JScrollPane displayField;
+	JTextArea displayFieldText;
 	HashMap<Integer, ASDay> currCalendar;
 	LogicLayer llayer = new LogicLayer();
 	//USED FOR MAKING JCOMBOBOXES
@@ -67,10 +69,10 @@ public class View implements ListSelectionListener, ActionListener {
 	//temp for testing
 	public static void setupLogicLayer(LogicLayer llayer) {
 		System.out.println("inside setup");
-		/*ArrayList<PreExistTask> petList = new ArrayList<PreExistTask>();
+		ArrayList<PreExistTask> petList = new ArrayList<PreExistTask>();
 
 
-		//petList.add(new PreExistTask("MONDAY SLEEP", DayOfWeek.MONDAY, LocalTime.of(0, 0), LocalTime.of(9, 0), null));
+		petList.add(new PreExistTask("MONDAY SLEEP", DayOfWeek.MONDAY, LocalTime.of(0, 0), LocalTime.of(9, 0), null));
 		petList.add(new PreExistTask("MONDAY PET1", DayOfWeek.MONDAY, LocalTime.of(10, 0), LocalTime.of(12, 0), null));
 		petList.add(new PreExistTask("MONDAY PET2", DayOfWeek.MONDAY, LocalTime.of(17, 0), LocalTime.of(22, 0), null));
 		petList.add(new PreExistTask("TUESDAY SLEEP", DayOfWeek.TUESDAY, LocalTime.of(0, 0), LocalTime.of(9, 0), null));
@@ -104,7 +106,7 @@ public class View implements ListSelectionListener, ActionListener {
 		utList.add(ut1);
 		utList.add(ut2);
 		utList.add(ut3);
-		llayer.data.priorityUserTaskList = utList;*/
+		llayer.data.priorityUserTaskList = utList;
 		llayer.data.userData.put("semStartYear", ""+LocalDate.now().getYear());
 		llayer.data.userData.put("semStartMonth", ""+LocalDate.now().getMonthValue());
 		llayer.data.userData.put("semStartDay", ""+1);
@@ -115,7 +117,7 @@ public class View implements ListSelectionListener, ActionListener {
 	}  
 
 
-	View() {
+	public AutoSchedulerApp() {
 		label = new JLabel();
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -154,10 +156,15 @@ public class View implements ListSelectionListener, ActionListener {
 		table.getColumnModel().getSelectionModel().addListSelectionListener(this);
 
 		//Initial display field at the bottom of the calendar
-		displayField = new JTextArea();
-		displayField.setSize(900,400);
-		displayField.setText(" ");
+		displayFieldText = new JTextArea();
+		displayFieldText.setSize(900,300);
+		displayFieldText.setText(" ");
 		this.updateMonth();
+		displayField = new JScrollPane(displayFieldText);
+		panelInfo = new JPanel();
+		panelInfo.setLayout(new BorderLayout());;
+		panelInfo.add(pane, BorderLayout.NORTH);
+		panelInfo.add(displayField, BorderLayout.CENTER);
 
 	}
 
@@ -206,7 +213,7 @@ public class View implements ListSelectionListener, ActionListener {
 			if(day != null) {
 				String month = cal.getDisplayName(Calendar.MONTH, Calendar.LONG_FORMAT, Locale.US);
 				int year = cal.get(Calendar.YEAR);
-				displayField.setText(month + " " + day + ", " + year);
+				displayFieldText.setText(month + " " + day + ", " + year);
 
 				//Build a int key out of the date corresponding to the chosen cell
 				//Format: 4 digit year, followed by 2 digit month, followed by 2 digit Day.
@@ -220,8 +227,8 @@ public class View implements ListSelectionListener, ActionListener {
 				//the Day chosen.
 				if(currCalendar.containsKey(key)) {
 					ASDay chosenASDay = currCalendar.get(key);
-					displayField.append("\n");
-					displayField.append(chosenASDay.toString());
+					displayFieldText.append("\n");
+					displayFieldText.append(chosenASDay.toString());
 				}
 			}
 
@@ -413,6 +420,7 @@ public class View implements ListSelectionListener, ActionListener {
 
 		//Add panel to frame
 		semesterFrame.setContentPane(panel);
+		
 
 	}
 
@@ -422,9 +430,11 @@ public class View implements ListSelectionListener, ActionListener {
 		//SET UP FRAME
 		JFrame frame = new JFrame("Edit Pre-Existing Task");
 		frame.setVisible(true);
-		frame.setSize(500, 500);
+		frame.setSize(700, 600);
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(7,1));
+		JPanel panelMain = new JPanel();
+		panelMain.setLayout(new BorderLayout());
+		panel.setLayout(new GridLayout(6,1));
 		//CONVERT ARRAYLIST INTO ARRAY
 		PreExistTask[] list = new PreExistTask[llayer.getPETList().size()];
 		for(int i=0;i<llayer.getPETList().size();i++)//fill the list
@@ -525,17 +535,18 @@ public class View implements ListSelectionListener, ActionListener {
 					}
 				});     
 		sub6.add(addButton);
-
+		
 		//ADD COMPONENTS TO PANEL
 		JScrollPane taskListScrollPane = new JScrollPane(taskList);
-		panel.add(taskListScrollPane);
+		panelMain.add(taskListScrollPane, BorderLayout.CENTER);
 		panel.add(sub1);
 		panel.add(sub2);
 		panel.add(sub3);
 		panel.add(sub4);
 		//panel.add(sub5);
 		panel.add(sub6);
-		frame.add(panel);
+		panelMain.add(panel, BorderLayout.AFTER_LAST_LINE);
+		frame.add(panelMain);
 	}
 
 	//EDIT USER TASK
@@ -543,9 +554,11 @@ public class View implements ListSelectionListener, ActionListener {
 	{
 		JFrame frame = new JFrame("Edit User Task");
 		frame.setVisible(true);
-		frame.setSize(600, 600);
+		frame.setSize(900, 600);
+		JPanel panelMain = new JPanel();
+		panelMain.setLayout(new BorderLayout());
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(7,1));
+		panel.setLayout(new GridLayout(6,1));
 
 		//CREATE JLIST FOR UT
 		UserTask[] list = new UserTask[llayer.getUTList().size()];
@@ -694,13 +707,14 @@ public class View implements ListSelectionListener, ActionListener {
 
 		//ADD COMPONENTS TO PANEL
 		JScrollPane taskListScrollPane = new JScrollPane(taskList);
-		panel.add(taskListScrollPane);
+		panelMain.add(taskListScrollPane, BorderLayout.CENTER);
 		panel.add(subpanel3);
 		panel.add(subpanel4);
 		panel.add(subpanel1);
 		panel.add(subpanel2);
 		panel.add(subpanel5);
-		frame.add(panel);
+		panelMain.add(panel,BorderLayout.AFTER_LAST_LINE);
+		frame.add(panelMain);
 	}
 
 	//CREATE A PRE-EXISTING TASK
@@ -976,9 +990,10 @@ public class View implements ListSelectionListener, ActionListener {
 		//CREATE FRAME AND PANEL
 		JFrame frame = new JFrame("Delete User Task");
 		frame.setVisible(true);
-		frame.setSize(600, 600);
+		frame.setSize(900, 600);
 		JPanel panel = new JPanel();
-
+		panel.setLayout(new BorderLayout());
+		
 		//CONVERT ARRAYLIST INTO ARRAY
 		UserTask[] list = new UserTask[llayer.getUTList().size()];
 		for(int i=0;i<llayer.getUTList().size();i++)//fill the list
@@ -999,10 +1014,19 @@ public class View implements ListSelectionListener, ActionListener {
 					}
 				});
 
-		//ADD COMPONENTS TO PANEL   
-		panel.add(new JLabel("Select a task to delete"));
-		panel.add(taskList);
-		panel.add(button);
+		//CREATE SUBPANELS
+		JScrollPane taskScroll = new JScrollPane(taskList);
+		JPanel sub1 = new JPanel();
+		sub1.setLayout(new BorderLayout());
+		sub1.add(new JLabel("Select a Task to Delete"), BorderLayout.NORTH);
+		sub1.add(taskScroll, BorderLayout.CENTER);
+		
+		JPanel sub2 = new JPanel();
+		sub2.add(button);
+		
+		//ADD COMPONENENTS TO PANEL   		
+		panel.add(sub1, BorderLayout.CENTER);
+		panel.add(sub2, BorderLayout.AFTER_LAST_LINE);
 		frame.add(panel);
 	}
 
@@ -1011,9 +1035,10 @@ public class View implements ListSelectionListener, ActionListener {
 		//CREATE PANEL AND FRAME
 		JFrame frame = new JFrame("Delete Pre-Existing Task");
 		frame.setVisible(true);
-		frame.setSize(500, 500);
+		frame.setSize(700, 500);
 		JPanel panel = new JPanel();
-
+		panel.setLayout(new BorderLayout());
+		
 		//CONVERT ARRAYLIST INTO ARRAY
 		PreExistTask[] list = new PreExistTask[llayer.getPETList().size()];
 		for(int i=0;i<llayer.getPETList().size();i++)//fill the list
@@ -1034,10 +1059,19 @@ public class View implements ListSelectionListener, ActionListener {
 					}
 				});
 
-		//ADD COMPONENENTS TO PANEL   
-		panel.add(new JLabel("Select a Pre-Existing Task to Delete"));
-		panel.add(taskList);
-		panel.add(button);
+		//CREATE SUBPANELS
+		JScrollPane taskScroll = new JScrollPane(taskList);
+		JPanel sub1 = new JPanel();
+		sub1.setLayout(new BorderLayout());
+		sub1.add(new JLabel("Select a Pre-Existing Task to Delete"), BorderLayout.NORTH);
+		sub1.add(taskScroll, BorderLayout.CENTER);
+		
+		JPanel sub2 = new JPanel();
+		sub2.add(button);
+		
+		//ADD COMPONENENTS TO PANEL   		
+		panel.add(sub1, BorderLayout.CENTER);
+		panel.add(sub2, BorderLayout.AFTER_LAST_LINE);
 		frame.add(panel);
 	}
 
@@ -1047,8 +1081,9 @@ public class View implements ListSelectionListener, ActionListener {
 		System.out.println("VIEW TASK.");
 		JFrame frame = new JFrame("View Tasks");
 		frame.setVisible(true);
-		frame.setSize(600, 600);
+		frame.setSize(900, 600);
 		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(2,1));
 
 		//CREATE JLIST FOR UT
 		UserTask[] list = new UserTask[llayer.getUTList().size()];
@@ -1064,8 +1099,20 @@ public class View implements ListSelectionListener, ActionListener {
 		ptaskList.setFont(new Font("Arial",Font.BOLD,10));
 
 		//ADD COMPONENTS TO PANEL
-		panel.add(taskList);
-		panel.add(ptaskList);
+		JPanel panelUT = new JPanel();
+		panelUT.setLayout(new BorderLayout());
+		panelUT.add(new JLabel("Your Requested Tasks"), BorderLayout.NORTH);
+		JScrollPane taskListScrollPane = new JScrollPane(taskList);
+		panelUT.add(taskListScrollPane, BorderLayout.CENTER);
+		
+		JPanel panelPET = new JPanel();
+		panelPET.setLayout(new BorderLayout());
+		panelPET.add(new JLabel("Your Pre-existing Tasks"), BorderLayout.NORTH);
+		JScrollPane ptaskListScrollPane = new JScrollPane(ptaskList);
+		panelPET.add(ptaskListScrollPane, BorderLayout.CENTER);
+		
+		panel.add(panelUT);
+		panel.add(panelPET);
 		frame.add(panel);
 	}
 
@@ -1111,7 +1158,7 @@ public class View implements ListSelectionListener, ActionListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		//Create and set up the content pane
-		View view = new View();
+		AutoSchedulerApp view = new AutoSchedulerApp();
 		frame.setJMenuBar(view.createMenuBar());
 		view.setUpCalendar();
 		//frame.setContentPane(view.createContentPane());
@@ -1121,8 +1168,8 @@ public class View implements ListSelectionListener, ActionListener {
 		frame.setVisible(true);
 
 		frame.add(view.panel,BorderLayout.NORTH);
-		frame.add(view.pane,BorderLayout.CENTER);
-		frame.add(view.displayField, BorderLayout.SOUTH);
+		frame.add(view.panelInfo,BorderLayout.CENTER);
+		//frame.add(view.displayField, BorderLayout.SOUTH);
 
 	}
 

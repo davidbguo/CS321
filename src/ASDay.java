@@ -127,7 +127,7 @@ public class ASDay implements java.io.Serializable{
     }
     
     public String toString() {
-    	String retVal = date + "\n";
+    	String retVal = "";
     	for (int i = 1; i < eventsOfDay.size()-1; i ++) {
     		retVal += eventsOfDay.get(i).toString() + "\n";
     	}

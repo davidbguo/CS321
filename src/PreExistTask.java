@@ -40,8 +40,9 @@ public class PreExistTask extends Event implements java.io.Serializable {
 		breakdown.add(slot);
 	}
 	
+	@Override
 	public String toString(){
-		String format = "%-20s\t\t %-20s\t\t %-20s\t\t %-20s";
+		String format = "%-40s\t\t%40s\t\t%30s\t\t%30s";
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");		
 		return String.format(format, 
 				this.name, 

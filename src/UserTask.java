@@ -62,9 +62,9 @@ public class UserTask extends Event implements java.io.Serializable{
 		
 	}
 	
-
+	@Override
 	public String toString() {
-		String format = "%-20s\t\t %-20s\t\t %-20s\t\t %-20s\t\t %-20s\t %-20s\t %-20s";
+		String format = "%-30s\t\t%-30s\t\t%-30s\t\t%-30s\t\t%-30s\t\t%-30s\t\t%-30s";
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm MM-dd-yy");		
 		return String.format(format, 
 				this.name, 

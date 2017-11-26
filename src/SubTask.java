@@ -76,14 +76,14 @@ public class SubTask extends Event{
 			dayVal = "Recurring PET: " + this.dayOfWeek;
 		else
 			dayVal = "Date: " + this.day.toString();
-		String format = "%-20s\t\t %-20s\t\t %-20s\t\t %-20s\t\t %-20s";
+		String format = "%-30s\t\t%-20s\t%-20s\t%-20s";
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");		
 		return String.format(format, 
 				this.name, 
-				dayVal, 
+				 
 				"Start: " + this.startTime.format(formatter), 
 				"End: " + this.endTime.format(formatter),
-				"Time Length Hours: " + String.format("%.2f", this.timeLength));
+				"Time Length (Hr): " + String.format("%.2f", this.timeLength));
 	}
 
 }
