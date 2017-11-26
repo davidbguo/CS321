@@ -67,7 +67,7 @@ public class View implements ListSelectionListener, ActionListener {
 	//temp for testing
 	public static void setupLogicLayer(LogicLayer llayer) {
 		System.out.println("inside setup");
-		ArrayList<PreExistTask> petList = new ArrayList<PreExistTask>();
+		/*ArrayList<PreExistTask> petList = new ArrayList<PreExistTask>();
 
 
 		//petList.add(new PreExistTask("MONDAY SLEEP", DayOfWeek.MONDAY, LocalTime.of(0, 0), LocalTime.of(9, 0), null));
@@ -104,10 +104,10 @@ public class View implements ListSelectionListener, ActionListener {
 		utList.add(ut1);
 		utList.add(ut2);
 		utList.add(ut3);
-		llayer.data.priorityUserTaskList = utList;
+		llayer.data.priorityUserTaskList = utList;*/
 		llayer.data.userData.put("semStartYear", ""+LocalDate.now().getYear());
 		llayer.data.userData.put("semStartMonth", ""+LocalDate.now().getMonthValue());
-		llayer.data.userData.put("semStartDay", ""+LocalDate.now().getDayOfMonth());
+		llayer.data.userData.put("semStartDay", ""+1);
 		llayer.data.userData.put("semEndYear", ""+LocalDate.now().plusMonths(3).getYear());
 		llayer.data.userData.put("semEndMonth", ""+LocalDate.now().plusMonths(3).getMonthValue());
 		llayer.data.userData.put("semEndDay", ""+LocalDate.now().plusMonths(3).getDayOfMonth());
@@ -617,9 +617,9 @@ public class View implements ListSelectionListener, ActionListener {
 						}
 						case "presentation":
 						{
-							String duration= JOptionPane.showInputDialog("Enter duration of presentation in hours");
+							String duration= JOptionPane.showInputDialog("Enter duration of final presentation in minutes");
 							TaskTypeEnum type = TaskTypeEnum.PRESENTATION;
-							type.setTime(Integer.parseInt(duration));
+							type.setTime(((double) Integer.parseInt(duration))/60.0);
 							llayer.editUserTask(task,taskName,start,end,type); 
 							break;
 						}
@@ -660,14 +660,15 @@ public class View implements ListSelectionListener, ActionListener {
 							String credits= JOptionPane.showInputDialog("Enter number of credit hours");
 							TaskTypeEnum type = TaskTypeEnum.STUDY;
 							type.setCreditHour(Integer.parseInt(credits));
-							llayer.editUserTask(task,taskName,start,end,type); 
+							llayer.editUserTask(task,taskName,start,end,type);
+							break;
 						}
 
 						case "prelab":
 						{
-							String duration= JOptionPane.showInputDialog("Enter duration of Lab in hours");
+							String duration= JOptionPane.showInputDialog("Enter duration of Lab in minutes");
 							TaskTypeEnum type = TaskTypeEnum.PRELAB;
-							type.setTime(Integer.parseInt(duration));
+							type.setTime(((double) Integer.parseInt(duration))/60.0);
 							llayer.editUserTask(task,taskName,start,end,type); 
 							break;
 						}
@@ -885,9 +886,9 @@ public class View implements ListSelectionListener, ActionListener {
 						}
 						case "presentation":
 						{
-							String duration= JOptionPane.showInputDialog("Enter duration of presentation in hours");
+							String duration= JOptionPane.showInputDialog("Enter duration of final presentation in minutes");
 							TaskTypeEnum type = TaskTypeEnum.PRESENTATION;
-							type.setTime(Integer.parseInt(duration));
+							type.setTime(((double) Integer.parseInt(duration))/60.0);
 							llayer.addUserTask(taskName,start,end,type); 
 							break;
 						}
@@ -928,14 +929,15 @@ public class View implements ListSelectionListener, ActionListener {
 							String credits= JOptionPane.showInputDialog("Enter number of credit hours");
 							TaskTypeEnum type = TaskTypeEnum.STUDY;
 							type.setCreditHour(Integer.parseInt(credits));
-							llayer.addUserTask(taskName,start,end,type); 
+							llayer.addUserTask(taskName,start,end,type);
+							break;
 						}
 
 						case "prelab":
 						{
-							String duration= JOptionPane.showInputDialog("Enter duration of lab in hours");
+							String duration= JOptionPane.showInputDialog("Enter duration of lab in minutes");
 							TaskTypeEnum type = TaskTypeEnum.PRELAB;
-							type.setTime(Integer.parseInt(duration));
+							type.setTime(((double) Integer.parseInt(duration))/60.0);
 							llayer.addUserTask(taskName,start,end,type); 
 							break;
 						}
