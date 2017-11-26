@@ -146,8 +146,9 @@ public enum TaskTypeEnum {
 					s = .75; //default set at  45 mins
 				else
 					s = .75*time;
+				break;
 			default:
-				s = 0;
+				s = 0.00;
 			}
 		return s;
 	}
