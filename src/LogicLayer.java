@@ -62,6 +62,7 @@ public class LogicLayer {
 				if (counter + monthDayCount == data.currentDays.size())
 					break;
 				temp = data.currentDays.get(counter+monthDayCount);
+				//System.out.println(temp.date);
 
 			}
 			counter += monthDayCount;
@@ -172,19 +173,22 @@ public class LogicLayer {
 	}
 
 	public void addUserData(String key, String val) {
-		data.userData.put(key, val);
+		//System.out.println(key + " " + val);
+		data.userData.replace(key, val);
+		System.out.println(data.userData.toString());
 	}
 	
 	
 	public void setCurrentDays() {
 		System.out.println("inside setcurrentdays");
 		data.currentDays.clear();
+		System.out.println(data.userData.get("semStartYear") + data.userData.get("semStartMonth") + data.userData.get("semStartDay"));
 		LocalDate semStart = LocalDate.of(Integer.parseInt(data.userData.get("semStartYear")), Integer.parseInt(data.userData.get("semStartMonth")), Integer.parseInt(data.userData.get("semStartDay")));
 		LocalDate semEnd = LocalDate.of(Integer.parseInt(data.userData.get("semEndYear")), Integer.parseInt(data.userData.get("semEndMonth")), Integer.parseInt(data.userData.get("semEndDay")));
 		semEnd = semEnd.plusDays(1);
 		LocalDate current = semStart;
+		System.out.println(semStart + " " + semEnd);
 		while (!current.equals(semEnd)) {
-			//System.out.println(current);
 			ASDay newTemp = new ASDay(current, data.preExistTaskList);
 			data.currentDays.add(newTemp);
 			current = current.plusDays(1);
@@ -297,10 +301,15 @@ public class LogicLayer {
 	}
 	public void readFromFile(){
 		try{
-		this.data.readFromFile("cal.ser");
+		data = this.data.readFromFile("cal.ser");
 		}catch(Exception FileNotFound){
 			System.out.println("cal.ser Not Found");
 			}
+		/*setCurrentDays();
+		prioritize();
+		createBreakdown();
+		updateDataCalendar();*/
+		
 	}
 	
 	public HashMap<Integer,ASDay> getCalendarData(){
