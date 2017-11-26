@@ -521,13 +521,17 @@ public class View implements ListSelectionListener, ActionListener {
                   case "reading":
                      {
                         String pageNumbers = JOptionPane.showInputDialog("Enter number of pages");
-                        llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.READING);       
+                        TaskTypeEnum temp = TaskTypeEnum.READING;
+                        temp.setPageNumer(Integer.parseInt(pageNumbers));
+                        llayer.editUserTask(task,taskName,start,end,temp.READING);   
                         break;
                      }
                   case "presentation":
                      {
                         String duration= JOptionPane.showInputDialog("Enter duration of presentation in hours");
-                        llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.PRESENTATION); 
+                        TaskTypeEnum temp = TaskTypeEnum.PRESENTATION;
+                        temp.setTime(Double.parseDouble(duration));
+                        llayer.editUserTask(task,taskName,start,end,temp.PRESENTATION); 
                         break;
                      }
                   case "quest":

@@ -297,14 +297,10 @@ public class LogicLayer {
 	}
 	public void readFromFile(){
 		try{
-		this.data.readFromFile("cal.ser");
+		data = this.data.readFromFile("cal.ser");
 		}catch(Exception FileNotFound){
 			System.out.println("cal.ser Not Found");
 			}
-		this.prioritize();
-		this.setCurrentDays();
-		this.createBreakdown();
-		updateDataCalendar();
 	}
 	
 	public HashMap<Integer,ASDay> getCalendarData(){
