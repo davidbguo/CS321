@@ -521,64 +521,69 @@ public class View implements ListSelectionListener, ActionListener {
                   case "reading":
                      {
                         String pageNumbers = JOptionPane.showInputDialog("Enter number of pages");
-                        TaskTypeEnum temp = TaskTypeEnum.READING;
-                        temp.setPageNumer(Integer.parseInt(pageNumbers));
-                        llayer.editUserTask(task,taskName,start,end,temp.READING);   
+                        llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.READING); 
+                        task.type.setPageNumer(Integer.parseInt(pageNumbers));
                         break;
                      }
                   case "presentation":
                      {
                         String duration= JOptionPane.showInputDialog("Enter duration of presentation in hours");
-                        TaskTypeEnum temp = TaskTypeEnum.PRESENTATION;
-                        temp.setTime(Double.parseDouble(duration));
-                        llayer.editUserTask(task,taskName,start,end,temp.PRESENTATION); 
+                        llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.PRESENTATION); 
+                        task.type.setTime(Double.parseDouble(duration));
                         break;
                      }
                   case "quest":
                      {
                         String duration= JOptionPane.showInputDialog("Enter duration of quest in hours");
                         llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.QUEST); 
+                        task.type.setTime(Double.parseDouble(duration));
                         break;
                      }
                   case "quiz":
                      {
                         String duration= JOptionPane.showInputDialog("Enter duration of quiz in hours");
                         llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.QUIZ); 
+                        task.type.setTime(Double.parseDouble(duration));
                         break;
                      }
                   case "test":
                      {
                         String duration= JOptionPane.showInputDialog("Enter duration of test in hours");
                         llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.TEST); 
+                        task.type.setTime(Double.parseDouble(duration));
                         break;
                      }
                   case "essay":
                      {
                         String wordCount= JOptionPane.showInputDialog("Enter required word count");
                         llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.ESSAY); 
+                        task.type.setWordCount(Integer.parseInt(wordCount));
                         break;
                      }
                   case "study":
                      {
                         String credits= JOptionPane.showInputDialog("Enter number of credit hours");
-                        llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.STUDY); 
+                        llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.STUDY);
+                        task.type.setCreditHour(Integer.parseInt(credits));
                         break;
                      }
                   
                   case "prelab":
                      {
                         String duration= JOptionPane.showInputDialog("Enter duration of prelab in hours");
-                        llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.PRELAB); 
+                        llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.PRELAB);
+                        task.type.setTime(Integer.parseInt(duration));
                         break;
                      }
                   case "problem set":
                      {
                         String numberOfQuestions= JOptionPane.showInputDialog("Enter number of questions ");
                         llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.PROBLEMSET); 
+                        task.type.setProblems(Integer.parseInt(numberOfQuestions));
                         break;
                      }
                   case "project":
-                     llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.PROJECT); 
+                     llayer.editUserTask(task,taskName,start,end,TaskTypeEnum.PROJECT);
                      break;
                }
                frame.dispose();

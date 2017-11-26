@@ -58,6 +58,12 @@ public enum TaskTypeEnum {
 	protected double time = 0;
 	protected int creditHour = 0;
 	protected int problems = 0;
+	public void setProblems(int prob){
+		this.problems = prob;
+	}
+	public void setCreditHour(int creditHours){
+		this.creditHour = creditHours;
+	}
 	public void setTime(double time){
 		this.time = time;
 	}
