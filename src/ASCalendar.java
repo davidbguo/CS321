@@ -11,7 +11,11 @@ import java.util.ArrayList;
  * 			You might access currentView and toString()
  */
 
-public class ASCalendar {
+public class ASCalendar implements java.io.Serializable{
+	
+	private static final long serialVersionUID = 1L;
+
+	
 	protected ArrayList<ASMonth> currentView; 
 	
 	public ASCalendar() {
